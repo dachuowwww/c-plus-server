@@ -1,0 +1,1 @@
+/usr/bin/c++   -fPIC -Wall -Wextra -std=c++20 -pthread -Wno-unused-parameter -Wno-attributes   -fPIC CMakeFiles/server.dir/server.cpp.o  -o ../bin/server  -Wl,-rpath,/home/dachuo/my_socket/build/lib ../lib/libPINE_SHARED.so 

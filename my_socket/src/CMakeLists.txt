@@ -1,0 +1,10 @@
+file(GLOB_RECURSE PINE_SOURCES ${PROJECT_SOURCE_DIR}/src/*.cpp)
+add_library(PINE_SHARED SHARED ${PINE_SOURCES})
+#target need variable name
+target_include_directories(PINE_SHARED 
+PUBLIC
+$<BUILD_INTERFACE:${PINE_SRC_INCLUDE_DIR}>
+$<INSTALL_INTERFACE:include>
+PRIVATE
+${PINE_SRC_INCLUDE_DIR}
+)
