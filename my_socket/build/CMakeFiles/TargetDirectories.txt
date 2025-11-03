@@ -1,0 +1,16 @@
+/home/dachuo/my_socket/build/CMakeFiles/rebuild_cache.dir
+/home/dachuo/my_socket/build/CMakeFiles/edit_cache.dir
+/home/dachuo/my_socket/build/CMakeFiles/clang_tidy.dir
+/home/dachuo/my_socket/build/CMakeFiles/cpplint.dir
+/home/dachuo/my_socket/build/CMakeFiles/check_format.dir
+/home/dachuo/my_socket/build/CMakeFiles/format.dir
+/home/dachuo/my_socket/build/src/CMakeFiles/rebuild_cache.dir
+/home/dachuo/my_socket/build/src/CMakeFiles/edit_cache.dir
+/home/dachuo/my_socket/build/src/CMakeFiles/PINE_SHARED.dir
+/home/dachuo/my_socket/build/test/CMakeFiles/rebuild_cache.dir
+/home/dachuo/my_socket/build/test/CMakeFiles/edit_cache.dir
+/home/dachuo/my_socket/build/test/CMakeFiles/test_thread_poll.dir
+/home/dachuo/my_socket/build/test/CMakeFiles/server.dir
+/home/dachuo/my_socket/build/test/CMakeFiles/multiple_client.dir
+/home/dachuo/my_socket/build/test/CMakeFiles/check_tests.dir
+/home/dachuo/my_socket/build/test/CMakeFiles/build_tests.dir

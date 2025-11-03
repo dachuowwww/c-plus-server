@@ -1,0 +1,72 @@
+[
+{
+  "directory": "/home/dachuo/my_socket/build/src",
+  "command": "/usr/bin/c++  -DPINE_SHARED_EXPORTS -I/home/dachuo/my_socket/src/include   -fPIC -Wall -Wextra -std=c++20 -pthread -Wno-unused-parameter -Wno-attributes -fPIC   -std=gnu++2a -o CMakeFiles/PINE_SHARED.dir/Acceptor.cpp.o -c /home/dachuo/my_socket/src/Acceptor.cpp",
+  "file": "/home/dachuo/my_socket/src/Acceptor.cpp"
+},
+{
+  "directory": "/home/dachuo/my_socket/build/src",
+  "command": "/usr/bin/c++  -DPINE_SHARED_EXPORTS -I/home/dachuo/my_socket/src/include   -fPIC -Wall -Wextra -std=c++20 -pthread -Wno-unused-parameter -Wno-attributes -fPIC   -std=gnu++2a -o CMakeFiles/PINE_SHARED.dir/Buffer.cpp.o -c /home/dachuo/my_socket/src/Buffer.cpp",
+  "file": "/home/dachuo/my_socket/src/Buffer.cpp"
+},
+{
+  "directory": "/home/dachuo/my_socket/build/src",
+  "command": "/usr/bin/c++  -DPINE_SHARED_EXPORTS -I/home/dachuo/my_socket/src/include   -fPIC -Wall -Wextra -std=c++20 -pthread -Wno-unused-parameter -Wno-attributes -fPIC   -std=gnu++2a -o CMakeFiles/PINE_SHARED.dir/Channel.cpp.o -c /home/dachuo/my_socket/src/Channel.cpp",
+  "file": "/home/dachuo/my_socket/src/Channel.cpp"
+},
+{
+  "directory": "/home/dachuo/my_socket/build/src",
+  "command": "/usr/bin/c++  -DPINE_SHARED_EXPORTS -I/home/dachuo/my_socket/src/include   -fPIC -Wall -Wextra -std=c++20 -pthread -Wno-unused-parameter -Wno-attributes -fPIC   -std=gnu++2a -o CMakeFiles/PINE_SHARED.dir/Connection.cpp.o -c /home/dachuo/my_socket/src/Connection.cpp",
+  "file": "/home/dachuo/my_socket/src/Connection.cpp"
+},
+{
+  "directory": "/home/dachuo/my_socket/build/src",
+  "command": "/usr/bin/c++  -DPINE_SHARED_EXPORTS -I/home/dachuo/my_socket/src/include   -fPIC -Wall -Wextra -std=c++20 -pthread -Wno-unused-parameter -Wno-attributes -fPIC   -std=gnu++2a -o CMakeFiles/PINE_SHARED.dir/Epoll.cpp.o -c /home/dachuo/my_socket/src/Epoll.cpp",
+  "file": "/home/dachuo/my_socket/src/Epoll.cpp"
+},
+{
+  "directory": "/home/dachuo/my_socket/build/src",
+  "command": "/usr/bin/c++  -DPINE_SHARED_EXPORTS -I/home/dachuo/my_socket/src/include   -fPIC -Wall -Wextra -std=c++20 -pthread -Wno-unused-parameter -Wno-attributes -fPIC   -std=gnu++2a -o CMakeFiles/PINE_SHARED.dir/Error.cpp.o -c /home/dachuo/my_socket/src/Error.cpp",
+  "file": "/home/dachuo/my_socket/src/Error.cpp"
+},
+{
+  "directory": "/home/dachuo/my_socket/build/src",
+  "command": "/usr/bin/c++  -DPINE_SHARED_EXPORTS -I/home/dachuo/my_socket/src/include   -fPIC -Wall -Wextra -std=c++20 -pthread -Wno-unused-parameter -Wno-attributes -fPIC   -std=gnu++2a -o CMakeFiles/PINE_SHARED.dir/EventLoop.cpp.o -c /home/dachuo/my_socket/src/EventLoop.cpp",
+  "file": "/home/dachuo/my_socket/src/EventLoop.cpp"
+},
+{
+  "directory": "/home/dachuo/my_socket/build/src",
+  "command": "/usr/bin/c++  -DPINE_SHARED_EXPORTS -I/home/dachuo/my_socket/src/include   -fPIC -Wall -Wextra -std=c++20 -pthread -Wno-unused-parameter -Wno-attributes -fPIC   -std=gnu++2a -o CMakeFiles/PINE_SHARED.dir/InetAddress.cpp.o -c /home/dachuo/my_socket/src/InetAddress.cpp",
+  "file": "/home/dachuo/my_socket/src/InetAddress.cpp"
+},
+{
+  "directory": "/home/dachuo/my_socket/build/src",
+  "command": "/usr/bin/c++  -DPINE_SHARED_EXPORTS -I/home/dachuo/my_socket/src/include   -fPIC -Wall -Wextra -std=c++20 -pthread -Wno-unused-parameter -Wno-attributes -fPIC   -std=gnu++2a -o CMakeFiles/PINE_SHARED.dir/Server.cpp.o -c /home/dachuo/my_socket/src/Server.cpp",
+  "file": "/home/dachuo/my_socket/src/Server.cpp"
+},
+{
+  "directory": "/home/dachuo/my_socket/build/src",
+  "command": "/usr/bin/c++  -DPINE_SHARED_EXPORTS -I/home/dachuo/my_socket/src/include   -fPIC -Wall -Wextra -std=c++20 -pthread -Wno-unused-parameter -Wno-attributes -fPIC   -std=gnu++2a -o CMakeFiles/PINE_SHARED.dir/Socket.cpp.o -c /home/dachuo/my_socket/src/Socket.cpp",
+  "file": "/home/dachuo/my_socket/src/Socket.cpp"
+},
+{
+  "directory": "/home/dachuo/my_socket/build/src",
+  "command": "/usr/bin/c++  -DPINE_SHARED_EXPORTS -I/home/dachuo/my_socket/src/include   -fPIC -Wall -Wextra -std=c++20 -pthread -Wno-unused-parameter -Wno-attributes -fPIC   -std=gnu++2a -o CMakeFiles/PINE_SHARED.dir/ThreadPool.cpp.o -c /home/dachuo/my_socket/src/ThreadPool.cpp",
+  "file": "/home/dachuo/my_socket/src/ThreadPool.cpp"
+},
+{
+  "directory": "/home/dachuo/my_socket/build/test",
+  "command": "/usr/bin/c++   -I/home/dachuo/my_socket/test/include -I/home/dachuo/my_socket/src/include   -fPIC -Wall -Wextra -std=c++20 -pthread -Wno-unused-parameter -Wno-attributes   -std=gnu++2a -o CMakeFiles/test_thread_poll.dir/test_thread_poll.cpp.o -c /home/dachuo/my_socket/test/test_thread_poll.cpp",
+  "file": "/home/dachuo/my_socket/test/test_thread_poll.cpp"
+},
+{
+  "directory": "/home/dachuo/my_socket/build/test",
+  "command": "/usr/bin/c++   -I/home/dachuo/my_socket/test/include -I/home/dachuo/my_socket/src/include   -fPIC -Wall -Wextra -std=c++20 -pthread -Wno-unused-parameter -Wno-attributes   -std=gnu++2a -o CMakeFiles/server.dir/server.cpp.o -c /home/dachuo/my_socket/test/server.cpp",
+  "file": "/home/dachuo/my_socket/test/server.cpp"
+},
+{
+  "directory": "/home/dachuo/my_socket/build/test",
+  "command": "/usr/bin/c++   -I/home/dachuo/my_socket/test/include -I/home/dachuo/my_socket/src/include   -fPIC -Wall -Wextra -std=c++20 -pthread -Wno-unused-parameter -Wno-attributes   -std=gnu++2a -o CMakeFiles/multiple_client.dir/multiple_client.cpp.o -c /home/dachuo/my_socket/test/multiple_client.cpp",
+  "file": "/home/dachuo/my_socket/test/multiple_client.cpp"
+}
+]
