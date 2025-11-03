@@ -16,7 +16,7 @@ class EventLoop {
   EventLoop &operator=(const EventLoop &) = delete;
   EventLoop(EventLoop &&) = delete;
   EventLoop &operator=(EventLoop &&) = delete;
-  void Update(Channel *);
+  void Update(Channel * channel);
   void Loop();
-  void Delete(Channel *);
+  void Delete(Channel * channel);
 };

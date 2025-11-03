@@ -27,15 +27,16 @@ class ThreadPool {
   void StopThreads();
 
   template <typename F, typename... Args>
-  auto Add(F &&f, Args &&... args)
-      -> std::future<typename std::invoke_result_t<std::decay_t<F>, std::decay_t<Args>...>> {
-    using return_type = typename std::invoke_result_t<std::decay_t<F>, std::decay_t<Args>...>;
+  auto Add(F &&f, Args &&... args) -> std::future<typename std::invoke_result<F,Args...>::type> {
+    using return_type = typename std::invoke_result<F,Args...>::type;
     auto task =
         std::make_shared<std::packaged_task<return_type()>>(std::bind(std::forward<F>(f), std::forward<Args>(args)...));
     auto res = task->get_future();
     {
       std::unique_lock<std::mutex> lock(mtx_);
-      if (stop_) throw std::runtime_error("ThreadPool has been stopped");
+      if (stop_) {
+        throw std::runtime_error("ThreadPool has been stopped");
+      }
       tasks_.emplace([task]() { (*task)(); });
     }
     cv_.notify_one();

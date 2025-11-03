@@ -11,13 +11,13 @@ using std::make_shared;
 using std::shared_ptr;
 
 Channel::Channel(shared_ptr<EventLoop> loop, int fd)
-    : loop_(loop), fd_(fd), events_(0), revents_(0), in_epoll_(false) {}
+    : loop_(std::move(loop)), fd_(fd), events_(0), revents_(0), in_epoll_(false) {}
 
-Channel::~Channel() {}
+Channel::~Channel() = default;
 
-void Channel::SetReadCallback(function<void()> &cb) { read_call_back_ = cb; }
-void Channel::SetWriteCallback(function<void()> &cb) { write_call_back_ = cb; }
-void Channel::SetCloseCallback(function<void()> &cb) { close_call_back_ = cb; }
+void Channel::SetReadCallback(const function<void()> &cb) { read_call_back_ = cb; }
+void Channel::SetWriteCallback(const function<void()> &cb) { write_call_back_ = cb; }
+void Channel::SetCloseCallback(const function<void()> &cb) { close_call_back_ = cb; }
 
 int Channel::GetFd() const { return fd_; }
 uint32_t Channel::GetEvents() const { return events_; }

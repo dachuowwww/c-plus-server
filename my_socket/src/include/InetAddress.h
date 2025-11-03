@@ -6,7 +6,7 @@ class InetAddress {
   socklen_t addr_len_;
 
  public:
-  InetAddress(const char *, const uint16_t);
+  InetAddress(const char * ip,uint16_t port);
   InetAddress();
   ~InetAddress();
   InetAddress(const InetAddress &) = delete;

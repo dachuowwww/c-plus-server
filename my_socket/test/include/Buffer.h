@@ -12,7 +12,7 @@ class Buffer {
   Buffer &operator=(const Buffer &) = delete;
   Buffer(Buffer &&) = delete;
   Buffer &operator=(Buffer &&) = delete;
-  void Append(const char *, const ssize_t);
+  void Append(const char * data, const ssize_t len);
   ssize_t GetSize();
   const char *ReadAll();
   void Clear();

@@ -14,7 +14,7 @@ using std::shared_ptr;
 
 const int SERV_BUFFER = 1024;
 Connection::Connection(shared_ptr<EventLoop> loop, shared_ptr<TCPSocket> socket)
-    : loop_(loop), conn_socket_(socket), input_buffer_(new Buffer()), output_buffer_(new Buffer()), connected_(true) {
+    : loop_(std::move(loop)), conn_socket_(socket), input_buffer_(new Buffer()), output_buffer_(new Buffer()), connected_(true) {
   conn_channel_.reset(new Channel(loop_, conn_socket_->GetFd()));
   function<void()> cb1 = std::bind(&Connection::Echo, this);
   conn_channel_->SetReadCallback(cb1);
@@ -23,9 +23,9 @@ Connection::Connection(shared_ptr<EventLoop> loop, shared_ptr<TCPSocket> socket)
   // conn_channel->SetThreadPool(true);
 }
 
-Connection::~Connection() {}
+Connection::~Connection() = default;
 
-void Connection::SetRemoveConnection(function<void(shared_ptr<TCPSocket>)> &cb) { remove_ = cb; }
+void Connection::SetRemoveConnection(const function<void(shared_ptr<TCPSocket>)> &cb) { remove_ = cb; }
 bool Connection::IsInEpoll() const { return conn_channel_->IfInEpoll(); }
 int Connection::GetFd() const { return conn_channel_->GetFd(); }
 void Connection::EnableReading() { conn_channel_->EnableReading(); }

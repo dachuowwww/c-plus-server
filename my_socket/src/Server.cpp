@@ -39,7 +39,7 @@ Server::Server(EventLoop *loop) : main_reactor_(loop) {
   acceptor_->EnableListening();
 }
 
-Server::~Server() {}
+Server::~Server() = default;
 
 void Server::NewConnection(const shared_ptr<TCPSocket> conn_socket) {
   int fd = conn_socket->GetFd();

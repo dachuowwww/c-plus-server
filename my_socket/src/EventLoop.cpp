@@ -5,9 +5,9 @@
 #include "Epoll.h"
 #include "ThreadPool.h"
 
-EventLoop::EventLoop(/* args */) { ep_.reset(new Epoll()); }
+EventLoop::EventLoop(/* args */) : ep_(nullptr) { ep_.reset(new Epoll()); }
 
-EventLoop::~EventLoop() {}
+EventLoop::~EventLoop() = default;
 
 void EventLoop::Update(Channel *channel) {
   if (!(channel->IfInEpoll())) {

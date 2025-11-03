@@ -1,6 +1,7 @@
 #pragma once
 #include <functional>
 #include <memory>
+#include <atomic>
 class EventLoop;
 class TCPSocket;
 class Channel;
@@ -21,13 +22,13 @@ class Connection {
   unique_ptr<Buffer> output_buffer_;
 
  public:
-  Connection(shared_ptr<EventLoop>, shared_ptr<TCPSocket>);
+  Connection(shared_ptr<EventLoop> loop, shared_ptr<TCPSocket> conn_socket);
   ~Connection();
   Connection(const Connection &) = delete;
   Connection &operator=(const Connection &) = delete;
   Connection(Connection &&) = delete;
   Connection &operator=(Connection &&) = delete;
-  void SetRemoveConnection(function<void(shared_ptr<TCPSocket>)> &);
+  void SetRemoveConnection(const function<void(shared_ptr<TCPSocket>)> &remove);
   void RemoveConnection();
   bool IsInEpoll() const;
   int GetFd() const;

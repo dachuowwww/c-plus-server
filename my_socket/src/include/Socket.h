@@ -22,6 +22,6 @@ class TCPSocket {
   void Listen() const;
   void Bind();
   void SetNonblocking() const;
-  void Accept(const int);
+  void Accept(int serv_fd);
   void Connect() const;
 };

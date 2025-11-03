@@ -24,7 +24,7 @@ Acceptor::Acceptor(EventLoop *loop) : loop_(loop) {
 
 Acceptor::~Acceptor() { close(accept_socket_->GetFd()); }
 
-void Acceptor::SetNewConnectionCallback(std::function<void(shared_ptr<TCPSocket>)> &cb) {
+void Acceptor::SetNewConnectionCallback(const std::function<void(shared_ptr<TCPSocket>)> &cb) {
   new_connection_callback_ = cb;
 }
 

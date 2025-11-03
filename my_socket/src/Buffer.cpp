@@ -3,7 +3,7 @@
 
 Buffer::Buffer() : buffer_("") {}
 
-Buffer::~Buffer() {}
+Buffer::~Buffer() = default;
 
 void Buffer::Append(const char *data, ssize_t len) { buffer_.append(data, len); }
 

@@ -17,7 +17,7 @@ class Acceptor {
   function<void(shared_ptr<TCPSocket>)> new_connection_callback_;
 
  public:
-  explicit Acceptor(EventLoop *);
+  explicit Acceptor(EventLoop * loop);
   ~Acceptor();
 
   Acceptor(const Acceptor &) = delete;
@@ -25,7 +25,7 @@ class Acceptor {
   Acceptor(Acceptor &&) = delete;
   Acceptor &operator=(Acceptor &&) = delete;
 
-  void SetNewConnectionCallback(function<void(shared_ptr<TCPSocket>)> &);
+  void SetNewConnectionCallback(const function<void(shared_ptr<TCPSocket>)> & cd);
   void Accept();
   bool IsInEpoll() const;
   int GetFd() const;

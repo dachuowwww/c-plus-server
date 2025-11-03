@@ -17,14 +17,14 @@ class Server {
   std::vector<std::shared_ptr<EventLoop>> subreactors_;     // 子Reactor
   std::unique_ptr<ThreadPool> thread_pool_;                 // 线程池，用于处理客户端请求
  public:
-  explicit Server(EventLoop *);
+  explicit Server(EventLoop * loop);
   ~Server();
   Server(const Server &) = delete;
   Server &operator=(const Server &) = delete;
   Server(Server &&) = delete;
   Server &operator=(Server &&) = delete;
-  void NewConnection(std::shared_ptr<TCPSocket>);
-  void RemoveConnection(std::shared_ptr<TCPSocket>);
+  void NewConnection(std::shared_ptr<TCPSocket> conn_sock);
+  void RemoveConnection(std::shared_ptr<TCPSocket> conn_sock);
 
   // void OpenThreadPool();
 };
