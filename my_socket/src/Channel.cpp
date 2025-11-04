@@ -10,11 +10,8 @@ using std::function;
 using std::make_shared;
 using std::shared_ptr;
 
-Channel::Channel(shared_ptr<EventLoop> loop, int fd)
-    : loop_(std::move(loop)), fd_(fd), events_(0), revents_(0), in_epoll_(false) {}
-
+Channel::Channel(shared_ptr<EventLoop> loop, int fd) : loop_(std::move(loop)), fd_(fd) {}
 Channel::~Channel() = default;
-
 void Channel::SetReadCallback(const function<void()> &cb) { read_call_back_ = cb; }
 void Channel::SetWriteCallback(const function<void()> &cb) { write_call_back_ = cb; }
 void Channel::SetCloseCallback(const function<void()> &cb) { close_call_back_ = cb; }
@@ -73,7 +70,7 @@ void Channel::DisableWriting() {
   }
 }
 
-void Channel::SetRevents(uint32_t revt) { revents_ = revt; }
+void Channel::SetRevents(uint32_t revents) { revents_ = revents; }
 void Channel::HandleEvent() {
   // if(revents & EPOLLRDHUP && close){
   //     close();

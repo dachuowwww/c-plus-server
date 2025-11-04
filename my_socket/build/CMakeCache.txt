@@ -242,6 +242,9 @@ PINE_BUILD_SUPPORT_DIR:PATH=/home/dachuo/my_socket/build_support
 //Path to clang-10.0.0 bin directory
 PINE_CLANG_SEARCH_PATH:PATH=/usr/bin
 
+//Path to pine source include directory
+PINE_INCLUDE_DIR:PATH=/home/dachuo/my_socket/src/include
+
 //Value Computed by CMake
 PINE_SOURCE_DIR:STATIC=/home/dachuo/my_socket
 

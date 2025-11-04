@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../src/include/EventLoop.h
+functional
+-
+memory
+-
+
+../src/include/Server.h
+map
+-
+memory
+-
+vector
+-
+
+/home/dachuo/my_socket/test/server.cpp
+Server.h
+/home/dachuo/my_socket/test/Server.h
+EventLoop.h
+/home/dachuo/my_socket/test/EventLoop.h
+

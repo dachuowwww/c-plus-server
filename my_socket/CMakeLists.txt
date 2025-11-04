@@ -29,8 +29,8 @@ message(STATUS "CMake EXE LINKER Flags:${CMAKE_EXE_LINKER_FLAGS}")
 message(STATUS "CMake SHARED LINKER Flags:${CMAKE_SHARED_LINKER_FLAGS}")
 
 # Include directories
-set(PINE_SRC_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/src/include" CACHE PATH "Path to pine source include directory")
-set(PINE_TESTS_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/test/include" CACHE PATH "Path to pine test include directory")
+set(PINE_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/src/include" CACHE PATH "Path to pine source include directory")
+# set(PINE_TESTS_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/test/include" CACHE PATH "Path to pine test include directory")
 # include_directories(${PINE_SRC_INCLUDE_DIR} ${PINE_TESTS_INCLUDE_DIR})
 # Output directories
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
@@ -93,7 +93,7 @@ add_custom_target(format ${PINE_BUILD_SUPPORT_DIR}/run_clang_format.py
 
     COMMENT "Running clang-format on source files..."
 )
-add_custom_target(check_format ${PINE_BUILD_SUPPORT_DIR}/run_clang_format.py
+add_custom_target(check-format ${PINE_BUILD_SUPPORT_DIR}/run_clang_format.py
     ${CLANG_FORMAT_BIN}
     ${PINE_BUILD_SUPPORT_DIR}/clang_format_exclusions.txt
     --source_dirs
@@ -120,7 +120,7 @@ add_custom_target(cpplint echo '${PINE_LINT_FILES}' | xargs -n12 -P8
 
 
 
-add_custom_target(clang_tidy ${PINE_BUILD_SUPPORT_DIR}/run_clang_tidy.py
+add_custom_target(clang-tidy ${PINE_BUILD_SUPPORT_DIR}/run_clang_tidy.py
     -clang-tidy-binary ${CLANG_TIDY_BIN}
     -p ${CMAKE_BINARY_DIR}
 

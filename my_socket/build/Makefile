@@ -111,17 +111,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named clang_tidy
+# Target rules for targets named clang-tidy
 
 # Build rule for target.
-clang_tidy: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 clang_tidy
-.PHONY : clang_tidy
+clang-tidy: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 clang-tidy
+.PHONY : clang-tidy
 
 # fast build rule for target.
-clang_tidy/fast:
-	$(MAKE) -f CMakeFiles/clang_tidy.dir/build.make CMakeFiles/clang_tidy.dir/build
-.PHONY : clang_tidy/fast
+clang-tidy/fast:
+	$(MAKE) -f CMakeFiles/clang-tidy.dir/build.make CMakeFiles/clang-tidy.dir/build
+.PHONY : clang-tidy/fast
 
 #=============================================================================
 # Target rules for targets named cpplint
@@ -137,17 +137,17 @@ cpplint/fast:
 .PHONY : cpplint/fast
 
 #=============================================================================
-# Target rules for targets named check_format
+# Target rules for targets named check-format
 
 # Build rule for target.
-check_format: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 check_format
-.PHONY : check_format
+check-format: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 check-format
+.PHONY : check-format
 
 # fast build rule for target.
-check_format/fast:
-	$(MAKE) -f CMakeFiles/check_format.dir/build.make CMakeFiles/check_format.dir/build
-.PHONY : check_format/fast
+check-format/fast:
+	$(MAKE) -f CMakeFiles/check-format.dir/build.make CMakeFiles/check-format.dir/build
+.PHONY : check-format/fast
 
 #=============================================================================
 # Target rules for targets named format
@@ -215,6 +215,19 @@ multiple_client/fast:
 .PHONY : multiple_client/fast
 
 #=============================================================================
+# Target rules for targets named client
+
+# Build rule for target.
+client: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 client
+.PHONY : client
+
+# fast build rule for target.
+client/fast:
+	$(MAKE) -f test/CMakeFiles/client.dir/build.make test/CMakeFiles/client.dir/build
+.PHONY : client/fast
+
+#=============================================================================
 # Target rules for targets named check_tests
 
 # Build rule for target.
@@ -248,14 +261,15 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... clang_tidy"
+	@echo "... clang-tidy"
 	@echo "... cpplint"
-	@echo "... check_format"
+	@echo "... check-format"
 	@echo "... format"
 	@echo "... PINE_SHARED"
 	@echo "... test_thread_poll"
 	@echo "... server"
 	@echo "... multiple_client"
+	@echo "... client"
 	@echo "... check_tests"
 	@echo "... build_tests"
 .PHONY : help

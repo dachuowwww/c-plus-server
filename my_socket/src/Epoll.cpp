@@ -3,16 +3,13 @@
 #include <iostream>
 #include "Channel.h"
 #include "Error.h"
-Epoll::Epoll(/* args */) : epoll_fd_(0), events_(nullptr) ,ev_() {
+Epoll::Epoll() {
   epoll_fd_ = epoll_create1(0);
   Errif(epoll_fd_ == -1, "epoll create error");
   events_ = new epoll_event[MAXEVENTS];
   Errif(events_ == nullptr, "epoll events new error");
   memset(events_, 0, sizeof(*events_) * MAXEVENTS);
 }
-
-Epoll::~Epoll() = default;
-
 std::vector<Channel *> Epoll::Poll(int timeout) {
   std::vector<Channel *> active_channels;
   int nfds = epoll_wait(epoll_fd_, events_, MAXEVENTS, timeout);

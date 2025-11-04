@@ -1,0 +1,36 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../src/include/ThreadPool.h
+condition_variable
+-
+functional
+-
+future
+-
+memory
+-
+mutex
+-
+queue
+-
+thread
+-
+utility
+-
+vector
+-
+
+/home/dachuo/my_socket/test/test_thread_poll.cpp
+iostream
+-
+string
+-
+ThreadPool.h
+/home/dachuo/my_socket/test/ThreadPool.h
+

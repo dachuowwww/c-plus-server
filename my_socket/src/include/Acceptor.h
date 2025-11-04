@@ -5,19 +5,17 @@ class TCPSocket;
 class Channel;
 #include <functional>
 #include <memory>
-using std::function;
-using std::shared_ptr;
 
 class Acceptor {
  private:
-  shared_ptr<EventLoop> loop_;
-  shared_ptr<InetAddress> listen_addr_;
-  shared_ptr<TCPSocket> accept_socket_;
+  std::shared_ptr<EventLoop> loop_;
+  std::shared_ptr<InetAddress> listen_addr_;
+  std::shared_ptr<TCPSocket> accept_socket_;
   std::unique_ptr<Channel> accept_channel_;
-  function<void(shared_ptr<TCPSocket>)> new_connection_callback_;
+  std::function<void(std::shared_ptr<TCPSocket> &)> new_connection_callback_;
 
  public:
-  explicit Acceptor(EventLoop * loop);
+  explicit Acceptor(EventLoop *loop);
   ~Acceptor();
 
   Acceptor(const Acceptor &) = delete;
@@ -25,9 +23,9 @@ class Acceptor {
   Acceptor(Acceptor &&) = delete;
   Acceptor &operator=(Acceptor &&) = delete;
 
-  void SetNewConnectionCallback(const function<void(shared_ptr<TCPSocket>)> & cd);
+  void SetNewConnectionCallback(const std::function<void(std::shared_ptr<TCPSocket> &)> &cb);
   void Accept();
-  bool IsInEpoll() const;
-  int GetFd() const;
+  [[nodiscard]] bool IsInEpoll() const;
+  [[nodiscard]] int GetFd() const;
   void EnableListening();
 };

@@ -14,18 +14,19 @@ using std::shared_ptr;
 
 const int SERV_BUFFER = 1024;
 Connection::Connection(shared_ptr<EventLoop> loop, shared_ptr<TCPSocket> socket)
-    : loop_(std::move(loop)), conn_socket_(socket), input_buffer_(new Buffer()), output_buffer_(new Buffer()), connected_(true) {
-  conn_channel_.reset(new Channel(loop_, conn_socket_->GetFd()));
+    : loop_(std::move(loop)),
+      conn_socket_(std::move(socket)),
+      input_buffer_(std::make_unique<Buffer>()),
+      output_buffer_(std::make_unique<Buffer>()) {
+  conn_channel_ = std::make_unique<Channel>(loop_, conn_socket_->GetFd());
   function<void()> cb1 = std::bind(&Connection::Echo, this);
   conn_channel_->SetReadCallback(cb1);
   function<void()> cb2 = std::bind(&Connection::RemoveConnection, this);
   conn_channel_->SetCloseCallback(cb2);
   // conn_channel->SetThreadPool(true);
 }
-
 Connection::~Connection() = default;
-
-void Connection::SetRemoveConnection(const function<void(shared_ptr<TCPSocket>)> &cb) { remove_ = cb; }
+void Connection::SetRemoveConnection(const function<void(shared_ptr<TCPSocket> &)> &cb) { remove_ = cb; }
 bool Connection::IsInEpoll() const { return conn_channel_->IfInEpoll(); }
 int Connection::GetFd() const { return conn_channel_->GetFd(); }
 void Connection::EnableReading() { conn_channel_->EnableReading(); }
@@ -36,12 +37,12 @@ void Connection::Echo() {
   }
   char buf[SERV_BUFFER];
   while (true) {
-    bzero(&buf, sizeof(buf));
+    memset(&buf, 0, sizeof(buf));
     ssize_t bytes_read = read(conn_socket_->GetFd(), buf, sizeof(buf));
     if (bytes_read > 0) {
-      input_buffer_->Append(buf, bytes_read);
+      input_buffer_->GetData(buf);
       // cout<<bytes_read<<" bytes message from client fd "<<conn_socket->GetFd()<<" : "<<buf<<endl;
-      // write(conn_socket->GetFd(), buf, bytes_read);
+      // write(conn_socket_->GetFd(), buf, bytes_read);
     } else if (bytes_read == -1 && errno == EINTR) {  // 客户端正常中断、继续读取
       cout << "continue reading" << endl;
       continue;

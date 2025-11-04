@@ -2,13 +2,13 @@
 #include <arpa/inet.h>
 class InetAddress {
  private:
-  sockaddr_in addr_;
-  socklen_t addr_len_;
+  sockaddr_in addr_ = {};
+  socklen_t addr_len_ = 0;
 
  public:
-  InetAddress(const char * ip,uint16_t port);
+  InetAddress(const char *ip, uint16_t port);
   InetAddress();
-  ~InetAddress();
+  ~InetAddress() = default;
   InetAddress(const InetAddress &) = delete;
   InetAddress &operator=(const InetAddress &) = delete;
   InetAddress(InetAddress &&) = delete;

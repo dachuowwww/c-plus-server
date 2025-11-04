@@ -49,14 +49,15 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/clang_tidy.dir/DependInfo.cmake"
+  "CMakeFiles/clang-tidy.dir/DependInfo.cmake"
   "CMakeFiles/cpplint.dir/DependInfo.cmake"
-  "CMakeFiles/check_format.dir/DependInfo.cmake"
+  "CMakeFiles/check-format.dir/DependInfo.cmake"
   "CMakeFiles/format.dir/DependInfo.cmake"
   "src/CMakeFiles/PINE_SHARED.dir/DependInfo.cmake"
   "test/CMakeFiles/test_thread_poll.dir/DependInfo.cmake"
   "test/CMakeFiles/server.dir/DependInfo.cmake"
   "test/CMakeFiles/multiple_client.dir/DependInfo.cmake"
+  "test/CMakeFiles/client.dir/DependInfo.cmake"
   "test/CMakeFiles/check_tests.dir/DependInfo.cmake"
   "test/CMakeFiles/build_tests.dir/DependInfo.cmake"
   )

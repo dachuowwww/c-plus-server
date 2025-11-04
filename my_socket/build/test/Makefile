@@ -156,6 +156,21 @@ multiple_client/fast:
 .PHONY : multiple_client/fast
 
 # Convenience name for target.
+test/CMakeFiles/client.dir/rule:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/client.dir/rule
+.PHONY : test/CMakeFiles/client.dir/rule
+
+# Convenience name for target.
+client: test/CMakeFiles/client.dir/rule
+
+.PHONY : client
+
+# fast build rule for target.
+client/fast:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f test/CMakeFiles/client.dir/build.make test/CMakeFiles/client.dir/build
+.PHONY : client/fast
+
+# Convenience name for target.
 test/CMakeFiles/check_tests.dir/rule:
 	cd /home/dachuo/my_socket/build && $(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/check_tests.dir/rule
 .PHONY : test/CMakeFiles/check_tests.dir/rule
@@ -184,6 +199,33 @@ build_tests: test/CMakeFiles/build_tests.dir/rule
 build_tests/fast:
 	cd /home/dachuo/my_socket/build && $(MAKE) -f test/CMakeFiles/build_tests.dir/build.make test/CMakeFiles/build_tests.dir/build
 .PHONY : build_tests/fast
+
+client.o: client.cpp.o
+
+.PHONY : client.o
+
+# target to build an object file
+client.cpp.o:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f test/CMakeFiles/client.dir/build.make test/CMakeFiles/client.dir/client.cpp.o
+.PHONY : client.cpp.o
+
+client.i: client.cpp.i
+
+.PHONY : client.i
+
+# target to preprocess a source file
+client.cpp.i:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f test/CMakeFiles/client.dir/build.make test/CMakeFiles/client.dir/client.cpp.i
+.PHONY : client.cpp.i
+
+client.s: client.cpp.s
+
+.PHONY : client.s
+
+# target to generate assembly for a file
+client.cpp.s:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f test/CMakeFiles/client.dir/build.make test/CMakeFiles/client.dir/client.cpp.s
+.PHONY : client.cpp.s
 
 multiple_client.o: multiple_client.cpp.o
 
@@ -277,8 +319,12 @@ help:
 	@echo "... test_thread_poll"
 	@echo "... server"
 	@echo "... multiple_client"
+	@echo "... client"
 	@echo "... check_tests"
 	@echo "... build_tests"
+	@echo "... client.o"
+	@echo "... client.i"
+	@echo "... client.s"
 	@echo "... multiple_client.o"
 	@echo "... multiple_client.i"
 	@echo "... multiple_client.s"

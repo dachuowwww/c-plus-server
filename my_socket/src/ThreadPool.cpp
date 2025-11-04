@@ -8,14 +8,14 @@ using std::endl;
 using std::mutex;
 using std::unique_lock;
 
-ThreadPool::ThreadPool(unsigned int size) : stop_(false) {
+ThreadPool::ThreadPool(unsigned int size) {
   if (size <= 0) {
     size = 1;
   }
   std::cout << "ThreadPool has started with " << size << " threads" << std::endl;
   threads_.reserve(size);  // 预留内存空间
   Errif(threads_.capacity() < size, "Threads vector reserve failed");
-  for (int i = 0; i < size; ++i) {
+  for (unsigned int i = 0; i < size; ++i) {
     threads_.emplace_back([this] {
       while (true) {
         std::function<void()> task;

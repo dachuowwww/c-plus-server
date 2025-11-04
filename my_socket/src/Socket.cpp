@@ -11,12 +11,11 @@
 using std::cout;
 using std::endl;
 using std::shared_ptr;
-TCPSocket::TCPSocket(shared_ptr<InetAddress> InetAddr) : addr_(std::move(InetAddr)), addr_size_(sizeof(*(addr_->AddrEntity()))) {
+TCPSocket::TCPSocket(shared_ptr<InetAddress> InetAddr) : addr_(std::move(InetAddr)) {
+  addr_size_ = sizeof(*(addr_->AddrEntity()));
   sock_fd_ = socket(AF_INET, SOCK_STREAM, 0);
   Errif(sock_fd_ == -1, "socket create error");
 }
-
-TCPSocket::~TCPSocket() = default;
 
 int TCPSocket::GetFd() const { return sock_fd_; }
 

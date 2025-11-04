@@ -14,7 +14,7 @@ foreach(pine_test_source ${PINE_TEST_SOURCES})
     #depend on all tests
     add_dependencies(build_tests ${pine_test_name})
     add_dependencies(check_tests ${pine_test_name})
-    target_include_directories(${pine_test_name} PRIVATE ${PINE_TESTS_INCLUDE_DIR})
+    target_include_directories(${pine_test_name} PRIVATE ${PINE_INCLUDE_DIR})
     target_link_libraries(${pine_test_name} PINE_SHARED)
     # Set output directory for test executables,cuz global output directory is not suitable for test executables
     set_target_properties(${pine_test_name} 

@@ -5,10 +5,8 @@
 #include "Epoll.h"
 #include "ThreadPool.h"
 
-EventLoop::EventLoop(/* args */) : ep_(nullptr) { ep_.reset(new Epoll()); }
-
+EventLoop::EventLoop(/* args */) { ep_ = std::make_unique<Epoll>(); }
 EventLoop::~EventLoop() = default;
-
 void EventLoop::Update(Channel *channel) {
   if (!(channel->IfInEpoll())) {
     ep_->AddChannel(channel);
@@ -21,7 +19,7 @@ void EventLoop::Loop() {
   while (true) {
     std::vector<Channel *> chs;
     chs = ep_->Poll();
-    for (auto it : chs) {
+    for (auto *it : chs) {  // more clare
       it->HandleEvent();
     }
   }

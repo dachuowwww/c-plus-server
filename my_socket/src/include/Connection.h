@@ -1,39 +1,36 @@
 #pragma once
+#include <atomic>
 #include <functional>
 #include <memory>
-#include <atomic>
 class EventLoop;
 class TCPSocket;
 class Channel;
 class Buffer;
 
-using std::function;
-using std::shared_ptr;
-using std::unique_ptr;
 class Connection {
  private:
-  shared_ptr<EventLoop> loop_;
-  shared_ptr<TCPSocket> conn_socket_;
-  unique_ptr<Channel> conn_channel_;
-  function<void(shared_ptr<TCPSocket>)> remove_;
-  std::atomic<bool> connected_;
+  std::shared_ptr<EventLoop> loop_;
+  std::shared_ptr<TCPSocket> conn_socket_;
+  std::unique_ptr<Channel> conn_channel_;
+  std::function<void(std::shared_ptr<TCPSocket> &)> remove_;
+  std::atomic<bool> connected_ = true;
 
-  unique_ptr<Buffer> input_buffer_;
-  unique_ptr<Buffer> output_buffer_;
+  std::unique_ptr<Buffer> input_buffer_;
+  std::unique_ptr<Buffer> output_buffer_;
 
  public:
-  Connection(shared_ptr<EventLoop> loop, shared_ptr<TCPSocket> conn_socket);
+  Connection(std::shared_ptr<EventLoop> loop, std::shared_ptr<TCPSocket> conn_socket);
   ~Connection();
   Connection(const Connection &) = delete;
   Connection &operator=(const Connection &) = delete;
   Connection(Connection &&) = delete;
   Connection &operator=(Connection &&) = delete;
-  void SetRemoveConnection(const function<void(shared_ptr<TCPSocket>)> &remove);
+  void SetRemoveConnection(const std::function<void(std::shared_ptr<TCPSocket> &)> &cb);
   void RemoveConnection();
-  bool IsInEpoll() const;
-  int GetFd() const;
+  [[nodiscard]] bool IsInEpoll() const;
+  [[nodiscard]] int GetFd() const;
   void EnableReading();
   void Echo();
 
-  bool IsConnected() const;
+  [[nodiscard]] bool IsConnected() const;
 };

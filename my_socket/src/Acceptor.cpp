@@ -12,19 +12,19 @@ using std::make_shared;
 using std::shared_ptr;
 
 Acceptor::Acceptor(EventLoop *loop) : loop_(loop) {
-  listen_addr_.reset(new InetAddress("127.0.0.1", 8888));
-  accept_socket_.reset(new TCPSocket(listen_addr_));
+  listen_addr_ = make_shared<InetAddress>("127.0.0.1", 8888);
+  accept_socket_ = make_shared<TCPSocket>(listen_addr_);
   accept_socket_->Bind();
   accept_socket_->Listen();
 
-  accept_channel_.reset(new Channel(loop_, accept_socket_->GetFd()));
+  accept_channel_ = std::make_unique<Channel>(loop_, accept_socket_->GetFd());
   std::function<void()> cb = std::bind(&Acceptor::Accept, this);
   accept_channel_->SetReadCallback(cb);
 }
 
 Acceptor::~Acceptor() { close(accept_socket_->GetFd()); }
 
-void Acceptor::SetNewConnectionCallback(const std::function<void(shared_ptr<TCPSocket>)> &cb) {
+void Acceptor::SetNewConnectionCallback(const std::function<void(shared_ptr<TCPSocket> &)> &cb) {
   new_connection_callback_ = cb;
 }
 
