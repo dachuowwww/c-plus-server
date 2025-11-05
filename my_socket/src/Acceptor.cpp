@@ -38,7 +38,7 @@ void Acceptor::Accept() {
 }
 
 void Acceptor::EnableListening() {
-  accept_channel_->EnableReading();
+  accept_channel_->EnableServReading();
   cout << "Server started at ip: " << accept_socket_->GetIP() << ",port: " << accept_socket_->GetPort() << endl;
 }
 bool Acceptor::IsInEpoll() const { return accept_channel_->IfInEpoll(); }

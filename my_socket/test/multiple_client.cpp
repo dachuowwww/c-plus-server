@@ -1,8 +1,8 @@
+#include <fcntl.h>
 #include <unistd.h>
 #include <cstring>
 #include <functional>
 #include <iostream>
-#include <fcntl.h>
 
 #include "Buffer.h"
 #include "Error.h"
@@ -34,6 +34,7 @@ void OneClient(int msgs, int wait) {
   SetSocketTimeout(sock->GetFd(), 10);  // 10秒超时时间
 
   int sockfd = sock->GetFd();
+  cout << "thread " << std::this_thread::get_id() << " socket fd = " << sockfd << endl;
 
   Buffer output_buffer{};
   Buffer input_buffer{};
@@ -53,7 +54,7 @@ void OneClient(int msgs, int wait) {
     ssize_t read_bytes = read(sockfd, buf, sizeof(buf));  // 从服务器socket读到缓冲区，返回已读数据大小
     if (read_bytes > 0) {
       input_buffer.GetData(buf);
-      cout << "send message successfully,no." << count++ << " message from server: " << input_buffer.ReadAll() << endl;
+      cout << "no." << count++ << " message from server: " << input_buffer.ReadAll() << endl;
       input_buffer.Clear();        // 清空缓冲区
     } else if (read_bytes == 0) {  // read返回0，表示EOF，通常是服务器断开链接，等会儿进行测试
       close(sockfd);
@@ -71,48 +72,48 @@ void OneClient(int msgs, int wait) {
       close(sockfd);
       Errif(true, "socket read error");
     }
-  // while (count < msgs) {
-  //   size_t write_bytes = write(sockfd, send_buffer.ReadAll(), send_buffer.GetSize());
-  //   cout << "client had sent: " << msg << endl;
-  //   if (write_bytes == 0) {
-  //     printf("socket already disconnected, can't write any more!\n");
-  //     break;
-  //   }
-  //   // int already_read = 0;
-  //   char buf[1024] = {};  // 这个buf大小无所谓
-  //   while (true) {
-  //     ssize_t read_bytes = read(sockfd, buf, sizeof(buf));
-  //     if (read_bytes > 0) {
-  //       read_buffer.GetData(buf);
-  //       printf("count: %d, message from server: %s\n", count++, read_buffer.ReadAll());
-  //       break;
-  //       // already_read += read_bytes;
-  //     } else if (read_bytes == 0) {  // EOF
-  //       printf("server disconnected!\n");
-  //       exit(EXIT_SUCCESS);
-  //      } //else if (read_bytes == -1 && errno == EINTR) {
-  //     //   // 中断，继续读取
-  //     //   continue;
-  //     // } else if (read_bytes == -1 && ((errno == EAGAIN) || (errno == EWOULDBLOCK))) {
-  //     //   // 读超时或者数据读完
-  //     //   break;
-  //     // } else if (read_bytes == -1) {
-  //     //   Errif(true, "socket read error");
-  //     // }
-  //     // if (already_read >= send_buffer.GetSize()) {
-        
-  //     //   already_read = 0;
-  //     //   break;
-  //     // }
-  //   }
-  //   read_buffer.Clear();
-  // }
+    // while (count < msgs) {
+    //   size_t write_bytes = write(sockfd, send_buffer.ReadAll(), send_buffer.GetSize());
+    //   cout << "client had sent: " << msg << endl;
+    //   if (write_bytes == 0) {
+    //     printf("socket already disconnected, can't write any more!\n");
+    //     break;
+    //   }
+    //   // int already_read = 0;
+    //   char buf[1024] = {};  // 这个buf大小无所谓
+    //   while (true) {
+    //     ssize_t read_bytes = read(sockfd, buf, sizeof(buf));
+    //     if (read_bytes > 0) {
+    //       read_buffer.GetData(buf);
+    //       printf("count: %d, message from server: %s\n", count++, read_buffer.ReadAll());
+    //       break;
+    //       // already_read += read_bytes;
+    //     } else if (read_bytes == 0) {  // EOF
+    //       printf("server disconnected!\n");
+    //       exit(EXIT_SUCCESS);
+    //      } //else if (read_bytes == -1 && errno == EINTR) {
+    //     //   // 中断，继续读取
+    //     //   continue;
+    //     // } else if (read_bytes == -1 && ((errno == EAGAIN) || (errno == EWOULDBLOCK))) {
+    //     //   // 读超时或者数据读完
+    //     //   break;
+    //     // } else if (read_bytes == -1) {
+    //     //   Errif(true, "socket read error");
+    //     // }
+    //     // if (already_read >= send_buffer.GetSize()) {
+
+    //     //   already_read = 0;
+    //     //   break;
+    //     // }
+    //   }
+    //   read_buffer.Clear();
+    // }
   }
   delete sock;
 }
 
 int main(int argc, char *argv[]) {
-  int threads = 10000;
+  int threads = 100;
   int msgs = 10;
   int wait = 0;
   int o = 0;
@@ -141,7 +142,7 @@ int main(int argc, char *argv[]) {
   for (int i = 0; i < threads; ++i) {
     poll->Add(OneClient, msgs, wait);
   }
-  usleep(100000);
+  //usleep(100000);
   delete poll;
   return 0;
 }

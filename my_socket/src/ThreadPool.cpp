@@ -20,7 +20,7 @@ ThreadPool::ThreadPool(unsigned int size) {
       while (true) {
         std::function<void()> task;
         {
-          std::unique_lock<std::mutex> lock(mtx_);
+          unique_lock<std::mutex> lock(mtx_);
           cv_.wait(lock, [this] { return stop_ || !tasks_.empty(); });
           if (stop_ && tasks_.empty()) {
             return;
@@ -31,7 +31,7 @@ ThreadPool::ThreadPool(unsigned int size) {
         task();  // 执行任务
       }
     });
-    Errif(!threads_.back().joinable(), "Thread creation failed");
+    Errif(!threads_.back().joinable(), "Thread creation failed");  // 线程创建失败
   }
 }
 

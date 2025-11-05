@@ -1,7 +1,7 @@
 file(GLOB_RECURSE PINE_TEST_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
 
 # Add custom targets for building and running tests
-add_custom_target(build_tests COMMAND ${CMAKE_CTEST_COMMAND} --show-only)
+add_custom_target(build_tests COMMAND ${CMAKE_CTEST_COMMAND} --show-only) 
 add_custom_target(check_tests COMMAND ${CMAKE_CTEST_COMMAND} --verbose)
 
 foreach(pine_test_source ${PINE_TEST_SOURCES})
