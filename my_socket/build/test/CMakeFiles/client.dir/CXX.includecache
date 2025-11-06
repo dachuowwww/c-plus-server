@@ -10,7 +10,25 @@
 string
 -
 
+../src/include/Connection.h
+atomic
+-
+functional
+-
+memory
+-
+
 ../src/include/Error.h
+
+../src/include/InetAddress.h
+arpa/inet.h
+-
+
+../src/include/Socket.h
+arpa/inet.h
+-
+memory
+-
 
 /home/dachuo/my_socket/test/client.cpp
 arpa/inet.h
@@ -25,8 +43,12 @@ iostream
 -
 Buffer.h
 /home/dachuo/my_socket/test/Buffer.h
+Connection.h
+/home/dachuo/my_socket/test/Connection.h
 Error.h
 /home/dachuo/my_socket/test/Error.h
-fcntl.h
-/home/dachuo/my_socket/test/fcntl.h
+InetAddress.h
+/home/dachuo/my_socket/test/InetAddress.h
+Socket.h
+/home/dachuo/my_socket/test/Socket.h
 

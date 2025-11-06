@@ -106,12 +106,12 @@ test/preinstall:
 .PHONY : test/preinstall
 
 # Recursive "clean" directory target.
-test/clean: test/CMakeFiles/test_thread_poll.dir/clean
-test/clean: test/CMakeFiles/server.dir/clean
 test/clean: test/CMakeFiles/multiple_client.dir/clean
 test/clean: test/CMakeFiles/client.dir/clean
-test/clean: test/CMakeFiles/check_tests.dir/clean
-test/clean: test/CMakeFiles/build_tests.dir/clean
+test/clean: test/CMakeFiles/test_thread_poll.dir/clean
+test/clean: test/CMakeFiles/check-tests.dir/clean
+test/clean: test/CMakeFiles/server.dir/clean
+test/clean: test/CMakeFiles/build-tests.dir/clean
 
 .PHONY : test/clean
 
@@ -251,60 +251,6 @@ src/CMakeFiles/PINE_SHARED.dir/clean:
 .PHONY : src/CMakeFiles/PINE_SHARED.dir/clean
 
 #=============================================================================
-# Target rules for target test/CMakeFiles/test_thread_poll.dir
-
-# All Build rule for target.
-test/CMakeFiles/test_thread_poll.dir/all: src/CMakeFiles/PINE_SHARED.dir/all
-	$(MAKE) -f test/CMakeFiles/test_thread_poll.dir/build.make test/CMakeFiles/test_thread_poll.dir/depend
-	$(MAKE) -f test/CMakeFiles/test_thread_poll.dir/build.make test/CMakeFiles/test_thread_poll.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num=22,23 "Built target test_thread_poll"
-.PHONY : test/CMakeFiles/test_thread_poll.dir/all
-
-# Build rule for subdir invocation for target.
-test/CMakeFiles/test_thread_poll.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/dachuo/my_socket/build/CMakeFiles 14
-	$(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/test_thread_poll.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/dachuo/my_socket/build/CMakeFiles 0
-.PHONY : test/CMakeFiles/test_thread_poll.dir/rule
-
-# Convenience name for target.
-test_thread_poll: test/CMakeFiles/test_thread_poll.dir/rule
-
-.PHONY : test_thread_poll
-
-# clean rule for target.
-test/CMakeFiles/test_thread_poll.dir/clean:
-	$(MAKE) -f test/CMakeFiles/test_thread_poll.dir/build.make test/CMakeFiles/test_thread_poll.dir/clean
-.PHONY : test/CMakeFiles/test_thread_poll.dir/clean
-
-#=============================================================================
-# Target rules for target test/CMakeFiles/server.dir
-
-# All Build rule for target.
-test/CMakeFiles/server.dir/all: src/CMakeFiles/PINE_SHARED.dir/all
-	$(MAKE) -f test/CMakeFiles/server.dir/build.make test/CMakeFiles/server.dir/depend
-	$(MAKE) -f test/CMakeFiles/server.dir/build.make test/CMakeFiles/server.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num=20,21 "Built target server"
-.PHONY : test/CMakeFiles/server.dir/all
-
-# Build rule for subdir invocation for target.
-test/CMakeFiles/server.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/dachuo/my_socket/build/CMakeFiles 14
-	$(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/server.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/dachuo/my_socket/build/CMakeFiles 0
-.PHONY : test/CMakeFiles/server.dir/rule
-
-# Convenience name for target.
-server: test/CMakeFiles/server.dir/rule
-
-.PHONY : server
-
-# clean rule for target.
-test/CMakeFiles/server.dir/clean:
-	$(MAKE) -f test/CMakeFiles/server.dir/build.make test/CMakeFiles/server.dir/clean
-.PHONY : test/CMakeFiles/server.dir/clean
-
-#=============================================================================
 # Target rules for target test/CMakeFiles/multiple_client.dir
 
 # All Build rule for target.
@@ -359,64 +305,118 @@ test/CMakeFiles/client.dir/clean:
 .PHONY : test/CMakeFiles/client.dir/clean
 
 #=============================================================================
-# Target rules for target test/CMakeFiles/check_tests.dir
+# Target rules for target test/CMakeFiles/test_thread_poll.dir
 
 # All Build rule for target.
-test/CMakeFiles/check_tests.dir/all: test/CMakeFiles/test_thread_poll.dir/all
-test/CMakeFiles/check_tests.dir/all: test/CMakeFiles/server.dir/all
-test/CMakeFiles/check_tests.dir/all: test/CMakeFiles/multiple_client.dir/all
-test/CMakeFiles/check_tests.dir/all: test/CMakeFiles/client.dir/all
-	$(MAKE) -f test/CMakeFiles/check_tests.dir/build.make test/CMakeFiles/check_tests.dir/depend
-	$(MAKE) -f test/CMakeFiles/check_tests.dir/build.make test/CMakeFiles/check_tests.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num= "Built target check_tests"
-.PHONY : test/CMakeFiles/check_tests.dir/all
+test/CMakeFiles/test_thread_poll.dir/all: src/CMakeFiles/PINE_SHARED.dir/all
+	$(MAKE) -f test/CMakeFiles/test_thread_poll.dir/build.make test/CMakeFiles/test_thread_poll.dir/depend
+	$(MAKE) -f test/CMakeFiles/test_thread_poll.dir/build.make test/CMakeFiles/test_thread_poll.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num=22,23 "Built target test_thread_poll"
+.PHONY : test/CMakeFiles/test_thread_poll.dir/all
 
 # Build rule for subdir invocation for target.
-test/CMakeFiles/check_tests.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/dachuo/my_socket/build/CMakeFiles 20
-	$(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/check_tests.dir/all
+test/CMakeFiles/test_thread_poll.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/dachuo/my_socket/build/CMakeFiles 14
+	$(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/test_thread_poll.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/dachuo/my_socket/build/CMakeFiles 0
-.PHONY : test/CMakeFiles/check_tests.dir/rule
+.PHONY : test/CMakeFiles/test_thread_poll.dir/rule
 
 # Convenience name for target.
-check_tests: test/CMakeFiles/check_tests.dir/rule
+test_thread_poll: test/CMakeFiles/test_thread_poll.dir/rule
 
-.PHONY : check_tests
+.PHONY : test_thread_poll
 
 # clean rule for target.
-test/CMakeFiles/check_tests.dir/clean:
-	$(MAKE) -f test/CMakeFiles/check_tests.dir/build.make test/CMakeFiles/check_tests.dir/clean
-.PHONY : test/CMakeFiles/check_tests.dir/clean
+test/CMakeFiles/test_thread_poll.dir/clean:
+	$(MAKE) -f test/CMakeFiles/test_thread_poll.dir/build.make test/CMakeFiles/test_thread_poll.dir/clean
+.PHONY : test/CMakeFiles/test_thread_poll.dir/clean
 
 #=============================================================================
-# Target rules for target test/CMakeFiles/build_tests.dir
+# Target rules for target test/CMakeFiles/check-tests.dir
 
 # All Build rule for target.
-test/CMakeFiles/build_tests.dir/all: test/CMakeFiles/test_thread_poll.dir/all
-test/CMakeFiles/build_tests.dir/all: test/CMakeFiles/server.dir/all
-test/CMakeFiles/build_tests.dir/all: test/CMakeFiles/multiple_client.dir/all
-test/CMakeFiles/build_tests.dir/all: test/CMakeFiles/client.dir/all
-	$(MAKE) -f test/CMakeFiles/build_tests.dir/build.make test/CMakeFiles/build_tests.dir/depend
-	$(MAKE) -f test/CMakeFiles/build_tests.dir/build.make test/CMakeFiles/build_tests.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num= "Built target build_tests"
-.PHONY : test/CMakeFiles/build_tests.dir/all
+test/CMakeFiles/check-tests.dir/all: test/CMakeFiles/multiple_client.dir/all
+test/CMakeFiles/check-tests.dir/all: test/CMakeFiles/client.dir/all
+test/CMakeFiles/check-tests.dir/all: test/CMakeFiles/test_thread_poll.dir/all
+test/CMakeFiles/check-tests.dir/all: test/CMakeFiles/server.dir/all
+	$(MAKE) -f test/CMakeFiles/check-tests.dir/build.make test/CMakeFiles/check-tests.dir/depend
+	$(MAKE) -f test/CMakeFiles/check-tests.dir/build.make test/CMakeFiles/check-tests.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num= "Built target check-tests"
+.PHONY : test/CMakeFiles/check-tests.dir/all
 
 # Build rule for subdir invocation for target.
-test/CMakeFiles/build_tests.dir/rule: cmake_check_build_system
+test/CMakeFiles/check-tests.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/dachuo/my_socket/build/CMakeFiles 20
-	$(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/build_tests.dir/all
+	$(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/check-tests.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/dachuo/my_socket/build/CMakeFiles 0
-.PHONY : test/CMakeFiles/build_tests.dir/rule
+.PHONY : test/CMakeFiles/check-tests.dir/rule
 
 # Convenience name for target.
-build_tests: test/CMakeFiles/build_tests.dir/rule
+check-tests: test/CMakeFiles/check-tests.dir/rule
 
-.PHONY : build_tests
+.PHONY : check-tests
 
 # clean rule for target.
-test/CMakeFiles/build_tests.dir/clean:
-	$(MAKE) -f test/CMakeFiles/build_tests.dir/build.make test/CMakeFiles/build_tests.dir/clean
-.PHONY : test/CMakeFiles/build_tests.dir/clean
+test/CMakeFiles/check-tests.dir/clean:
+	$(MAKE) -f test/CMakeFiles/check-tests.dir/build.make test/CMakeFiles/check-tests.dir/clean
+.PHONY : test/CMakeFiles/check-tests.dir/clean
+
+#=============================================================================
+# Target rules for target test/CMakeFiles/server.dir
+
+# All Build rule for target.
+test/CMakeFiles/server.dir/all: src/CMakeFiles/PINE_SHARED.dir/all
+	$(MAKE) -f test/CMakeFiles/server.dir/build.make test/CMakeFiles/server.dir/depend
+	$(MAKE) -f test/CMakeFiles/server.dir/build.make test/CMakeFiles/server.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num=20,21 "Built target server"
+.PHONY : test/CMakeFiles/server.dir/all
+
+# Build rule for subdir invocation for target.
+test/CMakeFiles/server.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/dachuo/my_socket/build/CMakeFiles 14
+	$(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/server.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/dachuo/my_socket/build/CMakeFiles 0
+.PHONY : test/CMakeFiles/server.dir/rule
+
+# Convenience name for target.
+server: test/CMakeFiles/server.dir/rule
+
+.PHONY : server
+
+# clean rule for target.
+test/CMakeFiles/server.dir/clean:
+	$(MAKE) -f test/CMakeFiles/server.dir/build.make test/CMakeFiles/server.dir/clean
+.PHONY : test/CMakeFiles/server.dir/clean
+
+#=============================================================================
+# Target rules for target test/CMakeFiles/build-tests.dir
+
+# All Build rule for target.
+test/CMakeFiles/build-tests.dir/all: test/CMakeFiles/multiple_client.dir/all
+test/CMakeFiles/build-tests.dir/all: test/CMakeFiles/client.dir/all
+test/CMakeFiles/build-tests.dir/all: test/CMakeFiles/test_thread_poll.dir/all
+test/CMakeFiles/build-tests.dir/all: test/CMakeFiles/server.dir/all
+	$(MAKE) -f test/CMakeFiles/build-tests.dir/build.make test/CMakeFiles/build-tests.dir/depend
+	$(MAKE) -f test/CMakeFiles/build-tests.dir/build.make test/CMakeFiles/build-tests.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num= "Built target build-tests"
+.PHONY : test/CMakeFiles/build-tests.dir/all
+
+# Build rule for subdir invocation for target.
+test/CMakeFiles/build-tests.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/dachuo/my_socket/build/CMakeFiles 20
+	$(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/build-tests.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/dachuo/my_socket/build/CMakeFiles 0
+.PHONY : test/CMakeFiles/build-tests.dir/rule
+
+# Convenience name for target.
+build-tests: test/CMakeFiles/build-tests.dir/rule
+
+.PHONY : build-tests
+
+# clean rule for target.
+test/CMakeFiles/build-tests.dir/clean:
+	$(MAKE) -f test/CMakeFiles/build-tests.dir/build.make test/CMakeFiles/build-tests.dir/clean
+.PHONY : test/CMakeFiles/build-tests.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

@@ -18,9 +18,10 @@ class TCPSocket {
   [[nodiscard]] int GetFd() const;
   [[nodiscard]] char *GetIP() const;
   [[nodiscard]] uint16_t GetPort() const;
+  [[nodiscard]] bool IsBlocking() const;
   void Listen() const;
   void Bind();
-  void SetNonblocking() const;
+  void SetNonBlocking() const;
   void Accept(int serv_fd);
   void Connect() const;
 };

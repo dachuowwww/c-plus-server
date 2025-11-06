@@ -33,12 +33,13 @@ void Acceptor::Accept() {
   std::shared_ptr<InetAddress> clnt_addr = std::make_shared<InetAddress>();
   auto clnt_socket = make_shared<TCPSocket>(clnt_addr);
   clnt_socket->Accept(accept_socket_->GetFd());
-  clnt_socket->SetNonblocking();
+  clnt_socket->SetNonBlocking();
   new_connection_callback_(clnt_socket);
 }
 
 void Acceptor::EnableListening() {
-  accept_channel_->EnableServReading();
+  accept_channel_
+      ->EnableServReading();  // 监听连接事件，不使用ET模式,如果使用ET模式(EnableReading)，高并发下可能漏掉连接请求
   cout << "Server started at ip: " << accept_socket_->GetIP() << ",port: " << accept_socket_->GetPort() << endl;
 }
 bool Acceptor::IsInEpoll() const { return accept_channel_->IfInEpoll(); }

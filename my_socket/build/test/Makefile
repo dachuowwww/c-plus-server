@@ -111,36 +111,6 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-test/CMakeFiles/test_thread_poll.dir/rule:
-	cd /home/dachuo/my_socket/build && $(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/test_thread_poll.dir/rule
-.PHONY : test/CMakeFiles/test_thread_poll.dir/rule
-
-# Convenience name for target.
-test_thread_poll: test/CMakeFiles/test_thread_poll.dir/rule
-
-.PHONY : test_thread_poll
-
-# fast build rule for target.
-test_thread_poll/fast:
-	cd /home/dachuo/my_socket/build && $(MAKE) -f test/CMakeFiles/test_thread_poll.dir/build.make test/CMakeFiles/test_thread_poll.dir/build
-.PHONY : test_thread_poll/fast
-
-# Convenience name for target.
-test/CMakeFiles/server.dir/rule:
-	cd /home/dachuo/my_socket/build && $(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/server.dir/rule
-.PHONY : test/CMakeFiles/server.dir/rule
-
-# Convenience name for target.
-server: test/CMakeFiles/server.dir/rule
-
-.PHONY : server
-
-# fast build rule for target.
-server/fast:
-	cd /home/dachuo/my_socket/build && $(MAKE) -f test/CMakeFiles/server.dir/build.make test/CMakeFiles/server.dir/build
-.PHONY : server/fast
-
-# Convenience name for target.
 test/CMakeFiles/multiple_client.dir/rule:
 	cd /home/dachuo/my_socket/build && $(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/multiple_client.dir/rule
 .PHONY : test/CMakeFiles/multiple_client.dir/rule
@@ -171,34 +141,64 @@ client/fast:
 .PHONY : client/fast
 
 # Convenience name for target.
-test/CMakeFiles/check_tests.dir/rule:
-	cd /home/dachuo/my_socket/build && $(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/check_tests.dir/rule
-.PHONY : test/CMakeFiles/check_tests.dir/rule
+test/CMakeFiles/test_thread_poll.dir/rule:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/test_thread_poll.dir/rule
+.PHONY : test/CMakeFiles/test_thread_poll.dir/rule
 
 # Convenience name for target.
-check_tests: test/CMakeFiles/check_tests.dir/rule
+test_thread_poll: test/CMakeFiles/test_thread_poll.dir/rule
 
-.PHONY : check_tests
+.PHONY : test_thread_poll
 
 # fast build rule for target.
-check_tests/fast:
-	cd /home/dachuo/my_socket/build && $(MAKE) -f test/CMakeFiles/check_tests.dir/build.make test/CMakeFiles/check_tests.dir/build
-.PHONY : check_tests/fast
+test_thread_poll/fast:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f test/CMakeFiles/test_thread_poll.dir/build.make test/CMakeFiles/test_thread_poll.dir/build
+.PHONY : test_thread_poll/fast
 
 # Convenience name for target.
-test/CMakeFiles/build_tests.dir/rule:
-	cd /home/dachuo/my_socket/build && $(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/build_tests.dir/rule
-.PHONY : test/CMakeFiles/build_tests.dir/rule
+test/CMakeFiles/check-tests.dir/rule:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/check-tests.dir/rule
+.PHONY : test/CMakeFiles/check-tests.dir/rule
 
 # Convenience name for target.
-build_tests: test/CMakeFiles/build_tests.dir/rule
+check-tests: test/CMakeFiles/check-tests.dir/rule
 
-.PHONY : build_tests
+.PHONY : check-tests
 
 # fast build rule for target.
-build_tests/fast:
-	cd /home/dachuo/my_socket/build && $(MAKE) -f test/CMakeFiles/build_tests.dir/build.make test/CMakeFiles/build_tests.dir/build
-.PHONY : build_tests/fast
+check-tests/fast:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f test/CMakeFiles/check-tests.dir/build.make test/CMakeFiles/check-tests.dir/build
+.PHONY : check-tests/fast
+
+# Convenience name for target.
+test/CMakeFiles/server.dir/rule:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/server.dir/rule
+.PHONY : test/CMakeFiles/server.dir/rule
+
+# Convenience name for target.
+server: test/CMakeFiles/server.dir/rule
+
+.PHONY : server
+
+# fast build rule for target.
+server/fast:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f test/CMakeFiles/server.dir/build.make test/CMakeFiles/server.dir/build
+.PHONY : server/fast
+
+# Convenience name for target.
+test/CMakeFiles/build-tests.dir/rule:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/build-tests.dir/rule
+.PHONY : test/CMakeFiles/build-tests.dir/rule
+
+# Convenience name for target.
+build-tests: test/CMakeFiles/build-tests.dir/rule
+
+.PHONY : build-tests
+
+# fast build rule for target.
+build-tests/fast:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f test/CMakeFiles/build-tests.dir/build.make test/CMakeFiles/build-tests.dir/build
+.PHONY : build-tests/fast
 
 client.o: client.cpp.o
 
@@ -316,12 +316,12 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... test_thread_poll"
-	@echo "... server"
 	@echo "... multiple_client"
 	@echo "... client"
-	@echo "... check_tests"
-	@echo "... build_tests"
+	@echo "... test_thread_poll"
+	@echo "... check-tests"
+	@echo "... server"
+	@echo "... build-tests"
 	@echo "... client.o"
 	@echo "... client.i"
 	@echo "... client.s"

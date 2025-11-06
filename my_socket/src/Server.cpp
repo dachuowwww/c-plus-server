@@ -1,6 +1,5 @@
 #include "Server.h"
 #include <unistd.h>
-#include <functional>
 #include <iostream>
 #include "Acceptor.h"
 #include "Channel.h"
@@ -39,12 +38,19 @@ Server::Server(EventLoop *loop) : main_reactor_(loop) {
   acceptor_->EnableListening();
 }
 Server::~Server() = default;
+
+void Server::OnConnect(const function<void(Connection *)> &cb) { new_connection_callback_ = cb; }
+
+void Server::Handle(Connection *conn) { new_connection_callback_(conn); }
+
 void Server::NewConnection(const shared_ptr<TCPSocket> &conn_socket) {
   int fd = conn_socket->GetFd();
   int idx = static_cast<int>(fd % subreactors_.size());
   auto clnt_conn = std::make_unique<Connection>(subreactors_[idx], conn_socket);
-  function<void(shared_ptr<TCPSocket> &)> cb = std::bind(&Server::RemoveConnection, this, std::placeholders::_1);
-  clnt_conn->SetRemoveConnection(cb);
+  function<void(Connection *)> cb1 = std::bind(&Server::Handle, this, std::placeholders::_1);
+  clnt_conn->SetHandleReadFunc(cb1);
+  function<void(shared_ptr<TCPSocket> &)> cb2 = std::bind(&Server::RemoveConnection, this, std::placeholders::_1);
+  clnt_conn->SetRemoveConnection(cb2);
   clnt_conn->EnableReading();
   connections_[conn_socket->GetFd()] = std::move(clnt_conn);
 }

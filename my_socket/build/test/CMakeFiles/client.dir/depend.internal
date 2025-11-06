@@ -3,5 +3,8 @@
 
 test/CMakeFiles/client.dir/client.cpp.o
  ../src/include/Buffer.h
+ ../src/include/Connection.h
  ../src/include/Error.h
+ ../src/include/InetAddress.h
+ ../src/include/Socket.h
  /home/dachuo/my_socket/test/client.cpp

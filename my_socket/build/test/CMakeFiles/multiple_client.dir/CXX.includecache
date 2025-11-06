@@ -10,6 +10,14 @@
 string
 -
 
+../src/include/Connection.h
+atomic
+-
+functional
+-
+memory
+-
+
 ../src/include/Error.h
 
 ../src/include/InetAddress.h
@@ -55,6 +63,8 @@ iostream
 -
 Buffer.h
 /home/dachuo/my_socket/test/Buffer.h
+Connection.h
+/home/dachuo/my_socket/test/Connection.h
 Error.h
 /home/dachuo/my_socket/test/Error.h
 InetAddress.h

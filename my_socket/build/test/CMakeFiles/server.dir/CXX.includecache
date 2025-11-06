@@ -6,6 +6,14 @@
 
 #IncludeRegexTransform: 
 
+../src/include/Connection.h
+atomic
+-
+functional
+-
+memory
+-
+
 ../src/include/EventLoop.h
 functional
 -
@@ -19,10 +27,16 @@ memory
 -
 vector
 -
+functional
+-
 
 /home/dachuo/my_socket/test/server.cpp
 Server.h
 /home/dachuo/my_socket/test/Server.h
+iostream
+-
+Connection.h
+/home/dachuo/my_socket/test/Connection.h
 EventLoop.h
 /home/dachuo/my_socket/test/EventLoop.h
 

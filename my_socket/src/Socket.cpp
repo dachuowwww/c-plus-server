@@ -28,7 +28,7 @@ void TCPSocket::Bind() {
   Errif(::bind(sock_fd_, (sockaddr *)addr_->AddrEntity(), addr_size_) == -1, "socket bind error");
 }
 
-void TCPSocket::SetNonblocking() const { fcntl(sock_fd_, F_SETFL, fcntl(sock_fd_, F_GETFL) | O_NONBLOCK); }
+void TCPSocket::SetNonBlocking() const { fcntl(sock_fd_, F_SETFL, fcntl(sock_fd_, F_GETFL) | O_NONBLOCK); }
 
 void TCPSocket::Accept(const int serv_fd) {
   sock_fd_ = ::accept(serv_fd, (sockaddr *)addr_->AddrEntity(), &addr_size_);
@@ -38,4 +38,9 @@ void TCPSocket::Accept(const int serv_fd) {
 
 void TCPSocket::Connect() const {
   Errif(::connect(sock_fd_, (sockaddr *)addr_->AddrEntity(), addr_size_) == -1, "socket connect error");
+}
+
+bool TCPSocket::IsBlocking() const {
+  int flags = fcntl(sock_fd_, F_GETFL, 0);
+  return !(flags & O_NONBLOCK);
 }

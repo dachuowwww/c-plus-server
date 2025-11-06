@@ -13,9 +13,8 @@ class Buffer {
   Buffer(Buffer &&) = delete;
   Buffer &operator=(Buffer &&) = delete;
   void Append(const char *data, ssize_t len);
-  ssize_t GetSize();
-  const char *ReadAll();
+  [[nodiscard]] ssize_t GetSize() const;
+  [[nodiscard]] const char *GetData() const;
+  void Input(const char *data);
   void Clear();
-  void GetKeyboardLine();
-  void GetData(const char *data);
 };
