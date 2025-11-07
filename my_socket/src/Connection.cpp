@@ -13,7 +13,7 @@ using std::function;
 using std::shared_ptr;
 
 const int SERV_BUFFER = 1024;
-Connection::Connection(shared_ptr<EventLoop> loop, shared_ptr<TCPSocket> socket)
+Connection::Connection(shared_ptr<EventLoop> loop, shared_ptr<Socket> socket)
     : loop_(std::move(loop)),
       conn_socket_(std::move(socket)),
       input_buffer_(std::make_unique<Buffer>()),
@@ -25,13 +25,14 @@ Connection::Connection(shared_ptr<EventLoop> loop, shared_ptr<TCPSocket> socket)
     conn_channel_->SetReadCallback(cb1);
     function<void()> cb2 = std::bind(&Connection::RemoveConnection, this);
     conn_channel_->SetCloseCallback(cb2);
-    // conn_channel->SetThreadPool(true);
+    SetState(State::Connected);
   } else {
     conn_channel_ = nullptr;
+    SetState(State::Invaild);
   }
 }
 Connection::~Connection() = default;
-void Connection::SetRemoveConnection(const function<void(shared_ptr<TCPSocket> &)> &cb) { remove_ = cb; }
+void Connection::SetRemoveConnection(const function<void(shared_ptr<Socket> &)> &cb) { remove_ = cb; }
 bool Connection::IsInEpoll() const { return conn_channel_->IfInEpoll(); }
 int Connection::GetFd() const { return conn_channel_->GetFd(); }
 void Connection::EnableReading() { conn_channel_->EnableReading(); }
@@ -107,22 +108,21 @@ void Connection::ReadNonBlocking() {
     if (bytes_read > 0) {
       input_buffer_->Input(buf);
       continue;
-    } 
+    }
     if (bytes_read == -1 && errno == EINTR) {  // 对方正常中断、继续读取
       cout << "continue reading" << endl;
       continue;
-    } 
-    if (bytes_read == -1 &&((errno == EAGAIN) || (errno == EWOULDBLOCK))) {  // 非阻塞IO，这个条件表示数据全部读取完毕
+    }
+    if (bytes_read == -1 && ((errno == EAGAIN) || (errno == EWOULDBLOCK))) {  // 非阻塞IO，这个条件表示数据全部读取完毕
       cout << "finish reading once, errno: " << errno << endl;
       break;
-    } 
+    }
     if (bytes_read == 0) {  // EOF，对方断开连接
       cout << "EOF, fd " << conn_socket_->GetFd() << " disconnected" << endl;
-      RemoveConnection();
+      SetState(State::Closed);
       break;
-    } 
+    }
     perror("read error");
-    RemoveConnection();
     break;
   }
 }
@@ -135,18 +135,17 @@ void Connection::ReadBlocking() {
     if (bytes_read > 0) {
       input_buffer_->Input(buf);
       break;
-    } 
+    }
     if (bytes_read == -1 && errno == EINTR) {  // 对方正常中断、继续读取
       cout << "continue reading" << endl;
       continue;
-    } 
+    }
     if (bytes_read == 0) {  // EOF，对方断开连接
       cout << "EOF, fd " << conn_socket_->GetFd() << " disconnected" << endl;
-      RemoveConnection();
+      SetState(State::Closed);
       break;
-    } 
+    }
     perror("read error");
-    RemoveConnection();
     break;
   }
 }
@@ -159,20 +158,25 @@ void Connection::WriteNonBlocking() {
 void Connection::ReadKeyBoard() {
   std::string buf;
   std::getline(std::cin, buf);
-  output_buffer_->Input(buf.c_str());
+  input_buffer_->Input(buf.c_str());
 }
 
-const char *Connection::ReadBuffer() const { return input_buffer_->GetData(); }
+const char *Connection::ReadInputBuffer() const { return input_buffer_->GetData(); }
 
-void Connection::SetOutput(const char *data) { 
+void Connection::SetOutput(const char *data) {
   output_buffer_->Clear();
-  output_buffer_->Input(data); 
+  output_buffer_->Input(data);
 }
 
-void Connection::RemoveConnection() { remove_(conn_socket_); } // 关闭进行中的读写操作，并移除连接
+void Connection::RemoveConnection() {
+  conn_channel_->RemoveInEpoll();
+  remove_(conn_socket_);
+}  // 关闭进行中的读写操作，并移除连接
 
-void Connection::Close() { // 关闭端口连接
+void Connection::Close() {  // 关闭端口连接
   close(conn_socket_->GetFd());
 }
 
-bool Connection::IsConnected() const { return connected_.load(); }
+void Connection::SetState(Connection::State state) { Connection::state_ = state; }
+
+Connection::State Connection::GetState() const { return Connection::state_; }

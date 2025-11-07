@@ -3,6 +3,7 @@
 
 test/CMakeFiles/server.dir/server.cpp.o: ../src/include/Connection.h
 test/CMakeFiles/server.dir/server.cpp.o: ../src/include/EventLoop.h
+test/CMakeFiles/server.dir/server.cpp.o: ../src/include/Macro.h
 test/CMakeFiles/server.dir/server.cpp.o: ../src/include/Server.h
 test/CMakeFiles/server.dir/server.cpp.o: ../test/server.cpp
 

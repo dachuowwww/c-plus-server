@@ -11,36 +11,34 @@
 using std::cout;
 using std::endl;
 using std::shared_ptr;
-TCPSocket::TCPSocket(shared_ptr<InetAddress> InetAddr) : addr_(std::move(InetAddr)) {
+Socket::Socket(shared_ptr<InetAddress> InetAddr) : addr_(std::move(InetAddr)) {
   addr_size_ = sizeof(*(addr_->AddrEntity()));
   sock_fd_ = socket(AF_INET, SOCK_STREAM, 0);
   Errif(sock_fd_ == -1, "socket create error");
 }
 
-int TCPSocket::GetFd() const { return sock_fd_; }
+int Socket::GetFd() const { return sock_fd_; }
 
-char *TCPSocket::GetIP() const { return addr_->GetIP(); }
+char *Socket::GetIP() const { return addr_->GetIP(); }
 
-uint16_t TCPSocket::GetPort() const { return addr_->GetPort(); }
-void TCPSocket::Listen() const { Errif(::listen(sock_fd_, SOMAXCONN) == -1, "socket listen error"); }
+uint16_t Socket::GetPort() const { return addr_->GetPort(); }
+void Socket::Listen() const { Errif(::listen(sock_fd_, SOMAXCONN) == -1, "socket listen error"); }
 
-void TCPSocket::Bind() {
-  Errif(::bind(sock_fd_, (sockaddr *)addr_->AddrEntity(), addr_size_) == -1, "socket bind error");
-}
+void Socket::Bind() { Errif(::bind(sock_fd_, (sockaddr *)addr_->AddrEntity(), addr_size_) == -1, "socket bind error"); }
 
-void TCPSocket::SetNonBlocking() const { fcntl(sock_fd_, F_SETFL, fcntl(sock_fd_, F_GETFL) | O_NONBLOCK); }
+void Socket::SetNonBlocking() const { fcntl(sock_fd_, F_SETFL, fcntl(sock_fd_, F_GETFL) | O_NONBLOCK); }
 
-void TCPSocket::Accept(const int serv_fd) {
+void Socket::Accept(const int serv_fd) {
   sock_fd_ = ::accept(serv_fd, (sockaddr *)addr_->AddrEntity(), &addr_size_);
   Errif(sock_fd_ == -1, "socket accept error");
   cout << "new client fd " << sock_fd_ << "! IP: " << addr_->GetIP() << " Port:" << addr_->GetPort() << endl;
 }
 
-void TCPSocket::Connect() const {
+void Socket::Connect() const {
   Errif(::connect(sock_fd_, (sockaddr *)addr_->AddrEntity(), addr_size_) == -1, "socket connect error");
 }
 
-bool TCPSocket::IsBlocking() const {
+bool Socket::IsBlocking() const {
   int flags = fcntl(sock_fd_, F_GETFL, 0);
   return !(flags & O_NONBLOCK);
 }

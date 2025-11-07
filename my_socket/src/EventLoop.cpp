@@ -10,7 +10,6 @@ EventLoop::~EventLoop() = default;
 void EventLoop::Update(Channel *channel) {
   if (!(channel->IfInEpoll())) {
     ep_->AddChannel(channel);
-
   } else {
     ep_->UpdateChannel(channel);
   }

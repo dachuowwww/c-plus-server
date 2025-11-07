@@ -2,7 +2,8 @@
 
 #include <sys/epoll.h>
 #include <vector>
-const int MAXEVENTS = 1024;
+#include "Macro.h"
+
 class Channel;
 
 class Epoll {
@@ -14,12 +15,10 @@ class Epoll {
  public:
   Epoll();
   ~Epoll() = default;
-  Epoll(const Epoll &) = delete;
-  Epoll &operator=(const Epoll &) = delete;
-  Epoll(Epoll &&) = delete;
-  Epoll &operator=(Epoll &&) = delete;
   std::vector<Channel *> Poll(int timeout = -1);
-  void AddChannel(Channel *channel);  // 后期需要修改 还传递给void 所以不能改成const
-  void UpdateChannel(Channel *channel);
+  void AddChannel(Channel *channel);
+  void UpdateChannel(Channel *channel);  // 后期需要修改 还传递给void 所以不能改成const
   void DeleteChannel(Channel *channel);
+
+  DISALLOW_COPY_AND_ASSIGN(Epoll);
 };

@@ -6,6 +6,8 @@
 
 #IncludeRegexTransform: 
 
+../src/include/Macro.h
+
 ../src/include/ThreadPool.h
 condition_variable
 -
@@ -25,6 +27,8 @@ utility
 -
 vector
 -
+Macro.h
+../src/include/Macro.h
 
 /home/dachuo/my_socket/test/test_thread_poll.cpp
 iostream

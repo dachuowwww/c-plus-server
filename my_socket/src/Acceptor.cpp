@@ -13,7 +13,7 @@ using std::shared_ptr;
 
 Acceptor::Acceptor(EventLoop *loop) : loop_(loop) {
   listen_addr_ = make_shared<InetAddress>("127.0.0.1", 8888);
-  accept_socket_ = make_shared<TCPSocket>(listen_addr_);
+  accept_socket_ = make_shared<Socket>(listen_addr_);
   accept_socket_->Bind();
   accept_socket_->Listen();
 
@@ -24,14 +24,14 @@ Acceptor::Acceptor(EventLoop *loop) : loop_(loop) {
 
 Acceptor::~Acceptor() { close(accept_socket_->GetFd()); }
 
-void Acceptor::SetNewConnectionCallback(const std::function<void(shared_ptr<TCPSocket> &)> &cb) {
+void Acceptor::SetNewConnectionCallback(const std::function<void(shared_ptr<Socket> &)> &cb) {
   new_connection_callback_ = cb;
 }
 
 void Acceptor::Accept() {
   // create an InetAddress storage for the accepted socket's peer info
   std::shared_ptr<InetAddress> clnt_addr = std::make_shared<InetAddress>();
-  auto clnt_socket = make_shared<TCPSocket>(clnt_addr);
+  auto clnt_socket = make_shared<Socket>(clnt_addr);
   clnt_socket->Accept(accept_socket_->GetFd());
   clnt_socket->SetNonBlocking();
   new_connection_callback_(clnt_socket);

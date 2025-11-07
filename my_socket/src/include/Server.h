@@ -2,13 +2,14 @@
 class EventLoop;
 class Channel;
 class Acceptor;
-class TCPSocket;
+class Socket;
 class Connection;
 class ThreadPool;
+#include <functional>
 #include <map>
 #include <memory>
 #include <vector>
-#include <functional>
+#include "Macro.h"
 class Server {
  private:
   std::shared_ptr<EventLoop> main_reactor_;  // 主Reactor
@@ -21,14 +22,11 @@ class Server {
  public:
   explicit Server(EventLoop *loop);
   ~Server();
-  Server(const Server &) = delete;
-  Server &operator=(const Server &) = delete;
-  Server(Server &&) = delete;
-  Server &operator=(Server &&) = delete;
-  void NewConnection(const std::shared_ptr<TCPSocket> &conn_sock);
-  void RemoveConnection(const std::shared_ptr<TCPSocket> &conn_sock);
+  void NewConnection(const std::shared_ptr<Socket> &conn_sock);
+  void RemoveConnection(const std::shared_ptr<Socket> &conn_sock);
 
   void OnConnect(const std::function<void(Connection *)> &cb);
   void Handle(Connection *conn);
   // void OpenThreadPool();
+  DISALLOW_COPY_AND_ASSIGN(Server);
 };

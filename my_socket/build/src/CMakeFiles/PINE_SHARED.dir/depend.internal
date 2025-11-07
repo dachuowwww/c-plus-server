@@ -6,14 +6,17 @@ src/CMakeFiles/PINE_SHARED.dir/Acceptor.cpp.o
  ../src/include/Channel.h
  ../src/include/EventLoop.h
  ../src/include/InetAddress.h
+ ../src/include/Macro.h
  ../src/include/Socket.h
  /home/dachuo/my_socket/src/Acceptor.cpp
 src/CMakeFiles/PINE_SHARED.dir/Buffer.cpp.o
  ../src/include/Buffer.h
+ ../src/include/Macro.h
  /home/dachuo/my_socket/src/Buffer.cpp
 src/CMakeFiles/PINE_SHARED.dir/Channel.cpp.o
  ../src/include/Channel.h
  ../src/include/EventLoop.h
+ ../src/include/Macro.h
  ../src/include/Server.h
  /home/dachuo/my_socket/src/Channel.cpp
 src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o
@@ -22,12 +25,14 @@ src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o
  ../src/include/Connection.h
  ../src/include/Error.h
  ../src/include/EventLoop.h
+ ../src/include/Macro.h
  ../src/include/Socket.h
  /home/dachuo/my_socket/src/Connection.cpp
 src/CMakeFiles/PINE_SHARED.dir/Epoll.cpp.o
  ../src/include/Channel.h
  ../src/include/Epoll.h
  ../src/include/Error.h
+ ../src/include/Macro.h
  /home/dachuo/my_socket/src/Epoll.cpp
 src/CMakeFiles/PINE_SHARED.dir/Error.cpp.o
  /home/dachuo/my_socket/src/Error.cpp
@@ -36,10 +41,12 @@ src/CMakeFiles/PINE_SHARED.dir/EventLoop.cpp.o
  ../src/include/Channel.h
  ../src/include/Epoll.h
  ../src/include/EventLoop.h
+ ../src/include/Macro.h
  ../src/include/ThreadPool.h
  /home/dachuo/my_socket/src/EventLoop.cpp
 src/CMakeFiles/PINE_SHARED.dir/InetAddress.cpp.o
  ../src/include/InetAddress.h
+ ../src/include/Macro.h
  /home/dachuo/my_socket/src/InetAddress.cpp
 src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o
  ../src/include/Acceptor.h
@@ -48,6 +55,7 @@ src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o
  ../src/include/Error.h
  ../src/include/EventLoop.h
  ../src/include/InetAddress.h
+ ../src/include/Macro.h
  ../src/include/Server.h
  ../src/include/Socket.h
  ../src/include/ThreadPool.h
@@ -55,10 +63,12 @@ src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o
 src/CMakeFiles/PINE_SHARED.dir/Socket.cpp.o
  ../src/include/Error.h
  ../src/include/InetAddress.h
+ ../src/include/Macro.h
  ../src/include/Socket.h
  ../src/include/ThreadPool.h
  /home/dachuo/my_socket/src/Socket.cpp
 src/CMakeFiles/PINE_SHARED.dir/ThreadPool.cpp.o
  ../src/include/Error.h
+ ../src/include/Macro.h
  ../src/include/ThreadPool.h
  /home/dachuo/my_socket/src/ThreadPool.cpp

@@ -1,20 +1,17 @@
 #pragma once
 #include <arpa/inet.h>
 #include <memory>
+#include "Macro.h"
 class InetAddress;
-class TCPSocket {
+class Socket {
  private:
   int sock_fd_ = -1;
   std::shared_ptr<InetAddress> addr_;
   socklen_t addr_size_ = 0;
 
  public:
-  explicit TCPSocket(std::shared_ptr<InetAddress> InetAddr);
-  ~TCPSocket() = default;
-  TCPSocket(const TCPSocket &) = delete;
-  TCPSocket &operator=(const TCPSocket &) = delete;
-  TCPSocket(TCPSocket &&) = delete;
-  TCPSocket &operator=(TCPSocket &&) = delete;
+  explicit Socket(std::shared_ptr<InetAddress> InetAddr);
+  ~Socket() = default;
   [[nodiscard]] int GetFd() const;
   [[nodiscard]] char *GetIP() const;
   [[nodiscard]] uint16_t GetPort() const;
@@ -24,4 +21,6 @@ class TCPSocket {
   void SetNonBlocking() const;
   void Accept(int serv_fd);
   void Connect() const;
+
+  DISALLOW_COPY_AND_ASSIGN(Socket);
 };

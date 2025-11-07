@@ -1,5 +1,4 @@
 #include "Channel.h"
-#include <sys/epoll.h>
 #include <unistd.h>
 #include <iostream>
 #include "EventLoop.h"
@@ -25,7 +24,7 @@ bool Channel::IfInEpoll() const { return in_epoll_; }
 // void Channel::SetThreadPool(bool use){
 //     useThreadPool = use;
 // }
-
+void Channel::SetInEpoll() { in_epoll_ = true; }
 void Channel::RemoveInEpoll() {
   if (in_epoll_) {
     loop_->Delete(this);
@@ -72,9 +71,6 @@ void Channel::DisableWriting() {
 
 void Channel::SetRevents(uint32_t revents) { revents_ = revents; }
 void Channel::HandleEvent() {
-  // if(revents & EPOLLRDHUP && close){
-  //     close();
-  // }
   if ((revents_ & EPOLLIN) && read_call_back_) {  // 客户端退出连接也会读取
     read_call_back_();
   }

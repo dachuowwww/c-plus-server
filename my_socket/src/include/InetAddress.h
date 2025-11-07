@@ -1,5 +1,6 @@
 #pragma once
 #include <arpa/inet.h>
+#include "Macro.h"
 class InetAddress {
  private:
   sockaddr_in addr_ = {};
@@ -9,12 +10,10 @@ class InetAddress {
   InetAddress(const char *ip, uint16_t port);
   InetAddress();
   ~InetAddress() = default;
-  InetAddress(const InetAddress &) = delete;
-  InetAddress &operator=(const InetAddress &) = delete;
-  InetAddress(InetAddress &&) = delete;
-  InetAddress &operator=(InetAddress &&) = delete;
   sockaddr_in *AddrEntity();
 
   [[nodiscard]] char *GetIP() const;
   [[nodiscard]] uint16_t GetPort() const;
+
+  DISALLOW_COPY_AND_ASSIGN(InetAddress);
 };

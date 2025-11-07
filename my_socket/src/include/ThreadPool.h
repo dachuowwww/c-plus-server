@@ -8,6 +8,7 @@
 #include <thread>
 #include <utility>
 #include <vector>
+#include "Macro.h"
 
 class ThreadPool {
  private:
@@ -20,10 +21,6 @@ class ThreadPool {
  public:
   explicit ThreadPool(unsigned int size = std::thread::hardware_concurrency());
   ~ThreadPool();
-  ThreadPool(const ThreadPool &) = delete;
-  ThreadPool &operator=(const ThreadPool &) = delete;
-  ThreadPool(ThreadPool &&) = delete;
-  ThreadPool &operator=(ThreadPool &&) = delete;
   void StopThreads();
 
   template <typename F, typename... Args>
@@ -42,4 +39,6 @@ class ThreadPool {
     cv_.notify_one();
     return res;
   }
+
+  DISALLOW_COPY_AND_ASSIGN(ThreadPool);
 };

@@ -7,12 +7,12 @@ int main() {
   Server server(&loop);
   server.OnConnect([](Connection *conn) {  // 注册回调函数,需要修改内部元素所以不能设为const
     conn->Read();
-    std::cout << "new message from client " << conn->GetFd() << " : " << conn->ReadBuffer() << std::endl;
-    if (!(conn->IsConnected())) {
+    if ((conn->GetState() == Connection::State::Closed)) {
       conn->RemoveConnection();
       return;
     }
-    conn->SetOutput(conn->ReadBuffer());
+    std::cout << "new message from client " << conn->GetFd() << " : " << conn->ReadInputBuffer() << std::endl;
+    conn->SetOutput(conn->ReadInputBuffer());
     conn->Write();
   });
   // loop.OpenThreadPool();

@@ -27,7 +27,7 @@ void SetSocketTimeout(int sockfd, int seconds) {
 
 void OneClient(int msgs, int wait) {
   std::shared_ptr<InetAddress> addr = make_shared<InetAddress>("127.0.0.1", 8888);
-  auto sock = std::make_shared<TCPSocket>(addr);
+  auto sock = std::make_shared<Socket>(addr);
   sock->Connect();
   // int flags = fcntl(sock->GetFd(), F_GETFL, 0);
   // fcntl(sock->GetFd(), F_SETFL, flags | O_NONBLOCK);
@@ -43,12 +43,12 @@ void OneClient(int msgs, int wait) {
   while (count < msgs) {
     cln_conn.SetOutput("I'm client!");
     cln_conn.Write();
-    if (!(cln_conn.IsConnected())) {
-      cln_conn.Close();
-      return;
-    }
     cln_conn.Read();
-    cout << "no." << count << " message from server : " << cln_conn.ReadBuffer() << endl;
+    if ((cln_conn.GetState() == Connection::State::Closed)) {
+      cln_conn.RemoveConnection();
+      break;
+    }
+    cout << "no." << count << " message from server : " << cln_conn.ReadInputBuffer() << endl;
     count++;
   }
 }

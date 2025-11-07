@@ -5,14 +5,17 @@ src/CMakeFiles/PINE_SHARED.dir/Acceptor.cpp.o: ../src/include/Acceptor.h
 src/CMakeFiles/PINE_SHARED.dir/Acceptor.cpp.o: ../src/include/Channel.h
 src/CMakeFiles/PINE_SHARED.dir/Acceptor.cpp.o: ../src/include/EventLoop.h
 src/CMakeFiles/PINE_SHARED.dir/Acceptor.cpp.o: ../src/include/InetAddress.h
+src/CMakeFiles/PINE_SHARED.dir/Acceptor.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/Acceptor.cpp.o: ../src/include/Socket.h
 src/CMakeFiles/PINE_SHARED.dir/Acceptor.cpp.o: ../src/Acceptor.cpp
 
 src/CMakeFiles/PINE_SHARED.dir/Buffer.cpp.o: ../src/include/Buffer.h
+src/CMakeFiles/PINE_SHARED.dir/Buffer.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/Buffer.cpp.o: ../src/Buffer.cpp
 
 src/CMakeFiles/PINE_SHARED.dir/Channel.cpp.o: ../src/include/Channel.h
 src/CMakeFiles/PINE_SHARED.dir/Channel.cpp.o: ../src/include/EventLoop.h
+src/CMakeFiles/PINE_SHARED.dir/Channel.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/Channel.cpp.o: ../src/include/Server.h
 src/CMakeFiles/PINE_SHARED.dir/Channel.cpp.o: ../src/Channel.cpp
 
@@ -21,12 +24,14 @@ src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/include/Channel.h
 src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/include/Connection.h
 src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/include/Error.h
 src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/include/EventLoop.h
+src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/include/Socket.h
 src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/Connection.cpp
 
 src/CMakeFiles/PINE_SHARED.dir/Epoll.cpp.o: ../src/include/Channel.h
 src/CMakeFiles/PINE_SHARED.dir/Epoll.cpp.o: ../src/include/Epoll.h
 src/CMakeFiles/PINE_SHARED.dir/Epoll.cpp.o: ../src/include/Error.h
+src/CMakeFiles/PINE_SHARED.dir/Epoll.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/Epoll.cpp.o: ../src/Epoll.cpp
 
 src/CMakeFiles/PINE_SHARED.dir/Error.cpp.o: ../src/Error.cpp
@@ -35,10 +40,12 @@ src/CMakeFiles/PINE_SHARED.dir/Error.cpp.o: ../src/include/Error.h
 src/CMakeFiles/PINE_SHARED.dir/EventLoop.cpp.o: ../src/include/Channel.h
 src/CMakeFiles/PINE_SHARED.dir/EventLoop.cpp.o: ../src/include/Epoll.h
 src/CMakeFiles/PINE_SHARED.dir/EventLoop.cpp.o: ../src/include/EventLoop.h
+src/CMakeFiles/PINE_SHARED.dir/EventLoop.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/EventLoop.cpp.o: ../src/include/ThreadPool.h
 src/CMakeFiles/PINE_SHARED.dir/EventLoop.cpp.o: ../src/EventLoop.cpp
 
 src/CMakeFiles/PINE_SHARED.dir/InetAddress.cpp.o: ../src/include/InetAddress.h
+src/CMakeFiles/PINE_SHARED.dir/InetAddress.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/InetAddress.cpp.o: ../src/InetAddress.cpp
 
 src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/include/Acceptor.h
@@ -47,6 +54,7 @@ src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/include/Connection.h
 src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/include/Error.h
 src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/include/EventLoop.h
 src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/include/InetAddress.h
+src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/include/Server.h
 src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/include/Socket.h
 src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/include/ThreadPool.h
@@ -54,11 +62,13 @@ src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/Server.cpp
 
 src/CMakeFiles/PINE_SHARED.dir/Socket.cpp.o: ../src/include/Error.h
 src/CMakeFiles/PINE_SHARED.dir/Socket.cpp.o: ../src/include/InetAddress.h
+src/CMakeFiles/PINE_SHARED.dir/Socket.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/Socket.cpp.o: ../src/include/Socket.h
 src/CMakeFiles/PINE_SHARED.dir/Socket.cpp.o: ../src/include/ThreadPool.h
 src/CMakeFiles/PINE_SHARED.dir/Socket.cpp.o: ../src/Socket.cpp
 
 src/CMakeFiles/PINE_SHARED.dir/ThreadPool.cpp.o: ../src/include/Error.h
+src/CMakeFiles/PINE_SHARED.dir/ThreadPool.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/ThreadPool.cpp.o: ../src/include/ThreadPool.h
 src/CMakeFiles/PINE_SHARED.dir/ThreadPool.cpp.o: ../src/ThreadPool.cpp
 

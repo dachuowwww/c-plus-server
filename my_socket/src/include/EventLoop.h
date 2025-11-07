@@ -1,6 +1,7 @@
 #pragma once
 #include <functional>
 #include <memory>
+#include "Macro.h"
 class Channel;
 class Epoll;
 class ThreadPool;
@@ -12,11 +13,8 @@ class EventLoop {
  public:
   EventLoop();
   ~EventLoop();
-  EventLoop(const EventLoop &) = delete;
-  EventLoop &operator=(const EventLoop &) = delete;
-  EventLoop(EventLoop &&) = delete;
-  EventLoop &operator=(EventLoop &&) = delete;
   void Update(Channel *channel);
   void Loop();
   void Delete(Channel *channel);
+  DISALLOW_COPY_AND_ASSIGN(EventLoop);
 };

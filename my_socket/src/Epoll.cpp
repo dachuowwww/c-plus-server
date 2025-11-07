@@ -3,6 +3,8 @@
 #include <iostream>
 #include "Channel.h"
 #include "Error.h"
+
+const int MAXEVENTS = 1024;
 Epoll::Epoll() {
   epoll_fd_ = epoll_create1(0);
   Errif(epoll_fd_ == -1, "epoll create error");
@@ -25,6 +27,7 @@ void Epoll::AddChannel(Channel *channel) {
   ev_.events = channel->GetEvents();
   ev_.data.ptr = channel;
   Errif(epoll_ctl(epoll_fd_, EPOLL_CTL_ADD, channel->GetFd(), &ev_) == -1, "epoll add error");
+  channel->SetInEpoll();
 }
 void Epoll::UpdateChannel(Channel *channel) {
   memset(&ev_, 0, sizeof(struct epoll_event));

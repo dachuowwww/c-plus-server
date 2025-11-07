@@ -7,28 +7,34 @@
 #IncludeRegexTransform: 
 
 ../src/include/Connection.h
-atomic
--
 functional
 -
 memory
 -
+Macro.h
+../src/include/Macro.h
 
 ../src/include/EventLoop.h
 functional
 -
 memory
 -
+Macro.h
+../src/include/Macro.h
+
+../src/include/Macro.h
 
 ../src/include/Server.h
+functional
+-
 map
 -
 memory
 -
 vector
 -
-functional
--
+Macro.h
+../src/include/Macro.h
 
 /home/dachuo/my_socket/test/server.cpp
 Server.h

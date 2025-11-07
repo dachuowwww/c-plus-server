@@ -18,7 +18,7 @@ using std::shared_ptr;
 using std::thread;
 Server::Server(EventLoop *loop) : main_reactor_(loop) {
   acceptor_ = std::make_unique<Acceptor>(loop);
-  function<void(shared_ptr<TCPSocket> &)> cb = std::bind(&Server::NewConnection, this, std::placeholders::_1);
+  function<void(shared_ptr<Socket> &)> cb = std::bind(&Server::NewConnection, this, std::placeholders::_1);
   acceptor_->SetNewConnectionCallback(cb);
 
   unsigned int size = thread::hardware_concurrency();
@@ -43,19 +43,19 @@ void Server::OnConnect(const function<void(Connection *)> &cb) { new_connection_
 
 void Server::Handle(Connection *conn) { new_connection_callback_(conn); }
 
-void Server::NewConnection(const shared_ptr<TCPSocket> &conn_socket) {
+void Server::NewConnection(const shared_ptr<Socket> &conn_socket) {
   int fd = conn_socket->GetFd();
   int idx = static_cast<int>(fd % subreactors_.size());
   auto clnt_conn = std::make_unique<Connection>(subreactors_[idx], conn_socket);
   function<void(Connection *)> cb1 = std::bind(&Server::Handle, this, std::placeholders::_1);
   clnt_conn->SetHandleReadFunc(cb1);
-  function<void(shared_ptr<TCPSocket> &)> cb2 = std::bind(&Server::RemoveConnection, this, std::placeholders::_1);
+  function<void(shared_ptr<Socket> &)> cb2 = std::bind(&Server::RemoveConnection, this, std::placeholders::_1);
   clnt_conn->SetRemoveConnection(cb2);
   clnt_conn->EnableReading();
   connections_[conn_socket->GetFd()] = std::move(clnt_conn);
 }
 
-void Server::RemoveConnection(const shared_ptr<TCPSocket> &conn_socket) {
+void Server::RemoveConnection(const shared_ptr<Socket> &conn_socket) {
   ::close(conn_socket->GetFd());
   cout << "client fd " << conn_socket->GetFd() << " removed from connection map" << std::endl;
   connections_.erase(conn_socket->GetFd());

@@ -5,6 +5,7 @@ test/CMakeFiles/client.dir/client.cpp.o: ../src/include/Buffer.h
 test/CMakeFiles/client.dir/client.cpp.o: ../src/include/Connection.h
 test/CMakeFiles/client.dir/client.cpp.o: ../src/include/Error.h
 test/CMakeFiles/client.dir/client.cpp.o: ../src/include/InetAddress.h
+test/CMakeFiles/client.dir/client.cpp.o: ../src/include/Macro.h
 test/CMakeFiles/client.dir/client.cpp.o: ../src/include/Socket.h
 test/CMakeFiles/client.dir/client.cpp.o: ../test/client.cpp
 
