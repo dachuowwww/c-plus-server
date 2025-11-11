@@ -31,7 +31,7 @@ ThreadPool::ThreadPool(unsigned int size) {
         task();  // 执行任务
       }
     });
-    Errif(!threads_.back().joinable(), "Thread creation failed");  // 线程创建失败
+    // Errif(!threads_.back().joinable(), "Thread creation failed");  // 线程创建失败
   }
 }
 

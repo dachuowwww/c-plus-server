@@ -11,8 +11,9 @@ class Buffer {
   void Append(const char *data, ssize_t len);
   [[nodiscard]] ssize_t GetSize() const;
   [[nodiscard]] const char *GetData() const;
-  void Input(const char *data);
   void Clear();
+  void SetData(const char *data);
+  void SetKeyBoardInput();
 
   DISALLOW_COPY_AND_ASSIGN(Buffer);
 };

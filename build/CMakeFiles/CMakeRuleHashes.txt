@@ -1,0 +1,7 @@
+# Hashes of file build rules.
+96032913abd72606c68389300405cfa6 CMakeFiles/check-format
+cde22ac1da04b032a75bce65dfaa12c3 CMakeFiles/clang-tidy
+25939e7f8b6fcb5ed3a985246a462f03 CMakeFiles/cpplint
+19049383498cbe707531fbaea9249998 CMakeFiles/format
+e71ee54b5138204bc0aca0b5b28b7c32 test/CMakeFiles/build-tests
+02fd6c4e34711e9ab93600f5ac27b4af test/CMakeFiles/check-tests

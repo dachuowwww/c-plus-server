@@ -1,0 +1,182 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						2
+					],
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						2,
+						4,
+						6,
+						7
+					]
+				},
+				{
+					"build" : "src",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "src",
+					"targetIndexes" : 
+					[
+						0
+					]
+				},
+				{
+					"build" : "test",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "test",
+					"targetIndexes" : 
+					[
+						1,
+						3,
+						5,
+						8,
+						9,
+						10
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1,
+						2
+					],
+					"name" : "PINE",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 1,
+					"id" : "PINE_SHARED::@145eef247bfb46b6828c",
+					"jsonFile" : "target-PINE_SHARED-Debug-f0b707b618b1ddebd9a4.json",
+					"name" : "PINE_SHARED",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "build-tests::@36f028580bb02cc8272a",
+					"jsonFile" : "target-build-tests-Debug-240b12b9ceb0d1fa0278.json",
+					"name" : "build-tests",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "check-format::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-check-format-Debug-17be7c28278b7e252e48.json",
+					"name" : "check-format",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "check-tests::@36f028580bb02cc8272a",
+					"jsonFile" : "target-check-tests-Debug-55672ea07a5b106b22e7.json",
+					"name" : "check-tests",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "clang-tidy::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-clang-tidy-Debug-b5a7777799ae8c518a77.json",
+					"name" : "clang-tidy",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "client::@36f028580bb02cc8272a",
+					"jsonFile" : "target-client-Debug-f7c118727d6be07cfcc8.json",
+					"name" : "client",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "cpplint::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-cpplint-Debug-39daa2f779d5969e99d0.json",
+					"name" : "cpplint",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "format::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-format-Debug-570b89d27f5c16ce230a.json",
+					"name" : "format",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "multiple_client::@36f028580bb02cc8272a",
+					"jsonFile" : "target-multiple_client-Debug-34e072e87376208a237d.json",
+					"name" : "multiple_client",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "server::@36f028580bb02cc8272a",
+					"jsonFile" : "target-server-Debug-88d86cff519a2641c64b.json",
+					"name" : "server",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "test_thread_poll::@36f028580bb02cc8272a",
+					"jsonFile" : "target-test_thread_poll-Debug-f56a583807142e6f4ca0.json",
+					"name" : "test_thread_poll",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/dachuo/build",
+		"source" : "/home/dachuo/my_socket"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 0
+	}
+}

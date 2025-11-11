@@ -7,13 +7,7 @@
 
 EventLoop::EventLoop(/* args */) { ep_ = std::make_unique<Epoll>(); }
 EventLoop::~EventLoop() = default;
-void EventLoop::Update(Channel *channel) {
-  if (!(channel->IfInEpoll())) {
-    ep_->AddChannel(channel);
-  } else {
-    ep_->UpdateChannel(channel);
-  }
-}
+void EventLoop::Update(Channel *channel) { ep_->UpdateChannel(channel); }
 void EventLoop::Loop() {
   while (true) {
     std::vector<Channel *> chs;

@@ -10,13 +10,11 @@ class Epoll {
  private:
   int epoll_fd_ = 0;
   struct epoll_event *events_ = nullptr;
-  struct epoll_event ev_ = {};
 
  public:
   Epoll();
   ~Epoll() = default;
   std::vector<Channel *> Poll(int timeout = -1);
-  void AddChannel(Channel *channel);
   void UpdateChannel(Channel *channel);  // 后期需要修改 还传递给void 所以不能改成const
   void DeleteChannel(Channel *channel);
 

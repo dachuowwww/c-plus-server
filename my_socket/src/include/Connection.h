@@ -19,20 +19,19 @@ class Connection {
 
   Connection(std::shared_ptr<EventLoop> loop, std::shared_ptr<Socket> conn_socket);
   ~Connection();
-  void SetRemoveConnection(const std::function<void(std::shared_ptr<Socket> &)> &cb);
+  void SetRemoveConnection(std::function<void(std::shared_ptr<Socket> &)> cb);
   void RemoveConnection();
-  void Close();
   [[nodiscard]] bool IsInEpoll() const;
   [[nodiscard]] int GetFd() const;
   void EnableReading();
-  void SetHandleReadFunc(const std::function<void(Connection *)> &cb);
-  void HandleRead();
+  void SetHandleReadFunc(std::function<void(Connection *)> cb);
+  void SetET();
   // void Echo();
 
   void Read();
   void Write();
 
-  void ReadKeyBoard();
+  void KeyBoardInput();
   void SetOutput(const char *data);
 
   void SetState(State state);

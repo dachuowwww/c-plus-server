@@ -10,10 +10,9 @@ using std::make_shared;
 using std::shared_ptr;
 
 Channel::Channel(shared_ptr<EventLoop> loop, int fd) : loop_(std::move(loop)), fd_(fd) {}
-Channel::~Channel() = default;
-void Channel::SetReadCallback(const function<void()> &cb) { read_call_back_ = cb; }
-void Channel::SetWriteCallback(const function<void()> &cb) { write_call_back_ = cb; }
-void Channel::SetCloseCallback(const function<void()> &cb) { close_call_back_ = cb; }
+
+void Channel::SetReadCallback(function<void()> &&cb) { read_call_back_ = std::move(cb); }
+void Channel::SetWriteCallback(function<void()> &&cb) { write_call_back_ = std::move(cb); }
 
 int Channel::GetFd() const { return fd_; }
 uint32_t Channel::GetEvents() const { return events_; }
@@ -37,36 +36,35 @@ void Channel::RemoveInEpoll() {
 }
 
 void Channel::EnableReading() {
-  events_ |= (EPOLLIN | EPOLLET);
+  events_ |= EPOLLIN;
 
   loop_->Update(this);
 }
 void Channel::DisableReading() {
   events_ &= ~EPOLLIN;
-  if (events_ == 0) {
+  if (events_ == EPOLLRDHUP) {
     loop_->Delete(this);
   } else {
     loop_->Update(this);
   }
 }
 
-void Channel::EnableServReading() {
-  events_ |= EPOLLIN;
-
-  loop_->Update(this);
-}
-
 void Channel::EnableWriting() {
-  events_ |= (EPOLLOUT | EPOLLET);
+  events_ |= EPOLLOUT;
   loop_->Update(this);
 }
 void Channel::DisableWriting() {
   events_ &= ~EPOLLOUT;
-  if (events_ == 0) {
+  if (events_ == EPOLLRDHUP) {
     loop_->Delete(this);
   } else {
     loop_->Update(this);
   }
+}
+
+void Channel::UseET() {
+  events_ |= EPOLLET;
+  loop_->Update(this);
 }
 
 void Channel::SetRevents(uint32_t revents) { revents_ = revents; }

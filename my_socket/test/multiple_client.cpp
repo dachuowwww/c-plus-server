@@ -35,7 +35,7 @@ void OneClient(int msgs, int wait) {
   SetSocketTimeout(sock->GetFd(), 10);  // 10秒超时时间
 
   int sockfd = sock->GetFd();
-  cout << "thread " << std::this_thread::get_id() << " socket fd = " << sockfd << endl;
+  //cout << "thread " << std::this_thread::get_id() << " socket fd = " << sockfd << endl;
   Connection cln_conn(nullptr, sock);
 
   sleep(wait);
@@ -43,9 +43,11 @@ void OneClient(int msgs, int wait) {
   while (count < msgs) {
     cln_conn.SetOutput("I'm client!");
     cln_conn.Write();
+    if ((cln_conn.GetState() == Connection::State::Closed)) {
+      break;
+    }
     cln_conn.Read();
     if ((cln_conn.GetState() == Connection::State::Closed)) {
-      cln_conn.RemoveConnection();
       break;
     }
     cout << "no." << count << " message from server : " << cln_conn.ReadInputBuffer() << endl;

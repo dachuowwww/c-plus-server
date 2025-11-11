@@ -1,0 +1,17 @@
+/home/dachuo/build/CMakeFiles/rebuild_cache.dir
+/home/dachuo/build/CMakeFiles/edit_cache.dir
+/home/dachuo/build/CMakeFiles/clang-tidy.dir
+/home/dachuo/build/CMakeFiles/cpplint.dir
+/home/dachuo/build/CMakeFiles/check-format.dir
+/home/dachuo/build/CMakeFiles/format.dir
+/home/dachuo/build/src/CMakeFiles/rebuild_cache.dir
+/home/dachuo/build/src/CMakeFiles/edit_cache.dir
+/home/dachuo/build/src/CMakeFiles/PINE_SHARED.dir
+/home/dachuo/build/test/CMakeFiles/rebuild_cache.dir
+/home/dachuo/build/test/CMakeFiles/edit_cache.dir
+/home/dachuo/build/test/CMakeFiles/multiple_client.dir
+/home/dachuo/build/test/CMakeFiles/client.dir
+/home/dachuo/build/test/CMakeFiles/test_thread_poll.dir
+/home/dachuo/build/test/CMakeFiles/check-tests.dir
+/home/dachuo/build/test/CMakeFiles/server.dir
+/home/dachuo/build/test/CMakeFiles/build-tests.dir
