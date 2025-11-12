@@ -13,7 +13,7 @@ using std::endl;
 using std::shared_ptr;
 Socket::Socket(shared_ptr<InetAddress> InetAddr) : addr_(std::move(InetAddr)) {
   addr_size_ = sizeof(*(addr_->AddrEntity()));
-  sock_fd_ = socket(AF_INET, SOCK_STREAM, 0);
+  sock_fd_ = socket(AF_INET, SOCK_STREAM, 0);  // 客户端固定，服务端未连接时暂定，后续接受到可修改
   Errif(sock_fd_ == -1, "socket create error");
 }
 
@@ -69,9 +69,11 @@ void Socket::Connect() {
     if (conn_err == -1 && errno == EINPROGRESS) {
       while (true) {
         fd_set write_set;  // 是 select() 系统调用使用的文件描述符集合类型
+        // NOLINT
         // NOLINTNEXTLINE(hicpp-no-assembler, readability-isolate-declaration)
         FD_ZERO(&write_set);
         // 清空集合
+        // NOLINT
         // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-constant-array-index)
         FD_SET(sock_fd_, &write_set);
         // 将 sock_fd_ 加入集合

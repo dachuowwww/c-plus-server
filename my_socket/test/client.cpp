@@ -23,8 +23,7 @@ int main() {
   Connection cln_conn(nullptr, sock);
   while (true) {
     cln_conn.KeyBoardInput();
-    cln_conn.SetOutput(cln_conn.ReadInputBuffer());
-    cln_conn.Write();
+    cln_conn.Send(cln_conn.ReadInputBuffer());
     if ((cln_conn.GetState() == Connection::State::Closed)) {
       break;
     }

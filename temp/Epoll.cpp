@@ -1,6 +1,5 @@
 #include "Epoll.h"
 #include <cstring>
-#include <iostream>
 #include "Channel.h"
 #include "Error.h"
 

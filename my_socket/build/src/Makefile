@@ -233,33 +233,6 @@ Connection.cpp.s:
 	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.s
 .PHONY : Connection.cpp.s
 
-Epoll.o: Epoll.cpp.o
-
-.PHONY : Epoll.o
-
-# target to build an object file
-Epoll.cpp.o:
-	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/Epoll.cpp.o
-.PHONY : Epoll.cpp.o
-
-Epoll.i: Epoll.cpp.i
-
-.PHONY : Epoll.i
-
-# target to preprocess a source file
-Epoll.cpp.i:
-	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/Epoll.cpp.i
-.PHONY : Epoll.cpp.i
-
-Epoll.s: Epoll.cpp.s
-
-.PHONY : Epoll.s
-
-# target to generate assembly for a file
-Epoll.cpp.s:
-	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/Epoll.cpp.s
-.PHONY : Epoll.cpp.s
-
 Error.o: Error.cpp.o
 
 .PHONY : Error.o
@@ -340,6 +313,33 @@ InetAddress.s: InetAddress.cpp.s
 InetAddress.cpp.s:
 	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/InetAddress.cpp.s
 .PHONY : InetAddress.cpp.s
+
+Poller.o: Poller.cpp.o
+
+.PHONY : Poller.o
+
+# target to build an object file
+Poller.cpp.o:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.o
+.PHONY : Poller.cpp.o
+
+Poller.i: Poller.cpp.i
+
+.PHONY : Poller.i
+
+# target to preprocess a source file
+Poller.cpp.i:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.i
+.PHONY : Poller.cpp.i
+
+Poller.s: Poller.cpp.s
+
+.PHONY : Poller.s
+
+# target to generate assembly for a file
+Poller.cpp.s:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.s
+.PHONY : Poller.cpp.s
 
 Server.o: Server.cpp.o
 
@@ -443,9 +443,6 @@ help:
 	@echo "... Connection.o"
 	@echo "... Connection.i"
 	@echo "... Connection.s"
-	@echo "... Epoll.o"
-	@echo "... Epoll.i"
-	@echo "... Epoll.s"
 	@echo "... Error.o"
 	@echo "... Error.i"
 	@echo "... Error.s"
@@ -455,6 +452,9 @@ help:
 	@echo "... InetAddress.o"
 	@echo "... InetAddress.i"
 	@echo "... InetAddress.s"
+	@echo "... Poller.o"
+	@echo "... Poller.i"
+	@echo "... Poller.s"
 	@echo "... Server.o"
 	@echo "... Server.i"
 	@echo "... Server.s"

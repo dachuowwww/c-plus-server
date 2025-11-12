@@ -9,6 +9,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/PINE_SHARED.dir/Error.cpp.o"
   "CMakeFiles/PINE_SHARED.dir/EventLoop.cpp.o"
   "CMakeFiles/PINE_SHARED.dir/InetAddress.cpp.o"
+  "CMakeFiles/PINE_SHARED.dir/Poller.cpp.o"
   "CMakeFiles/PINE_SHARED.dir/Server.cpp.o"
   "CMakeFiles/PINE_SHARED.dir/Socket.cpp.o"
   "CMakeFiles/PINE_SHARED.dir/ThreadPool.cpp.o"

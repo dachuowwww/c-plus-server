@@ -3,12 +3,12 @@
 #include <memory>
 #include "Macro.h"
 class Channel;
-class Epoll;
+class Poller;
 class ThreadPool;
 class EventLoop {
  private:
   /* data */
-  std::unique_ptr<Epoll> ep_;
+  std::unique_ptr<Poller> poller_;
 
  public:
   EventLoop();

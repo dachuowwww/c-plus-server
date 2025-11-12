@@ -1,1 +1,1 @@
-/usr/bin/c++   -fPIC -Wall -Wextra -std=c++20 -pthread -Wno-unused-parameter -Wno-attributes   -fPIC CMakeFiles/test_thread_poll.dir/test_thread_poll.cpp.o  -o ../bin/test_thread_poll  -Wl,-rpath,/home/dachuo/my_socket/build/lib ../lib/libPINE_SHARED.so 
+/usr/bin/c++   -fPIC -Wall -Wextra -std=c++20 -pthread -Wno-unused-parameter -Wno-attributes -DOS_LINUX   -fPIC CMakeFiles/test_thread_poll.dir/test_thread_poll.cpp.o  -o ../bin/test_thread_poll  -Wl,-rpath,/home/dachuo/my_socket/build/lib ../lib/libPINE_SHARED.so 

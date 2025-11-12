@@ -24,10 +24,11 @@ class Connection {
   [[nodiscard]] bool IsInEpoll() const;
   [[nodiscard]] int GetFd() const;
   void EnableReading();
+  void Bussiness();
   void SetHandleReadFunc(std::function<void(Connection *)> cb);
   void SetET();
   // void Echo();
-
+  void Send(const char *data);
   void Read();
   void Write();
 

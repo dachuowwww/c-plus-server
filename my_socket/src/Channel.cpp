@@ -8,6 +8,9 @@ using std::endl;
 using std::function;
 using std::make_shared;
 using std::shared_ptr;
+const int Channel::READ_EVENT = 1;
+const int Channel::WRITE_EVENT = 2;
+const int Channel::ET_EVENT = 4;
 
 Channel::Channel(shared_ptr<EventLoop> loop, int fd) : loop_(std::move(loop)), fd_(fd) {}
 
@@ -15,20 +18,21 @@ void Channel::SetReadCallback(function<void()> &&cb) { read_call_back_ = std::mo
 void Channel::SetWriteCallback(function<void()> &&cb) { write_call_back_ = std::move(cb); }
 
 int Channel::GetFd() const { return fd_; }
-uint32_t Channel::GetEvents() const { return events_; }
-uint32_t Channel::GetRevents() const { return revents_; }
+uint32_t Channel::GetListenEvents() const { return listen_events_; }
+uint32_t Channel::GetReadyEvents() const { return ready_events_; }
 
 bool Channel::IfInEpoll() const { return in_epoll_; }
 
-// void Channel::SetThreadPool(bool use){
+// void Channel::SetThreadPool(bool use) {
 //     useThreadPool = use;
 // }
+
 void Channel::SetInEpoll() { in_epoll_ = true; }
 void Channel::RemoveInEpoll() {
   if (in_epoll_) {
     loop_->Delete(this);
-    events_ = EPOLLRDHUP;
-    revents_ = 0;
+    listen_events_ = 0;
+    ready_events_ = 0;
     in_epoll_ = false;
   } else {
     cout << "Channel::RemoveInEpoll error" << endl;
@@ -36,13 +40,13 @@ void Channel::RemoveInEpoll() {
 }
 
 void Channel::EnableReading() {
-  events_ |= EPOLLIN;
+  listen_events_ |= READ_EVENT;
 
   loop_->Update(this);
 }
 void Channel::DisableReading() {
-  events_ &= ~EPOLLIN;
-  if (events_ == EPOLLRDHUP) {
+  listen_events_ &= ~READ_EVENT;
+  if (listen_events_ == 0) {
     loop_->Delete(this);
   } else {
     loop_->Update(this);
@@ -50,12 +54,12 @@ void Channel::DisableReading() {
 }
 
 void Channel::EnableWriting() {
-  events_ |= EPOLLOUT;
+  listen_events_ |= WRITE_EVENT;
   loop_->Update(this);
 }
 void Channel::DisableWriting() {
-  events_ &= ~EPOLLOUT;
-  if (events_ == EPOLLRDHUP) {
+  listen_events_ &= ~WRITE_EVENT;
+  if (listen_events_ == 0) {
     loop_->Delete(this);
   } else {
     loop_->Update(this);
@@ -63,16 +67,26 @@ void Channel::DisableWriting() {
 }
 
 void Channel::UseET() {
-  events_ |= EPOLLET;
+  listen_events_ |= ET_EVENT;
   loop_->Update(this);
 }
 
-void Channel::SetRevents(uint32_t revents) { revents_ = revents; }
+void Channel::SetReadyEvents(int n) {
+  if (n == 0) {
+    ready_events_ = 0;
+  }
+  if (n & READ_EVENT) {
+    ready_events_ |= READ_EVENT;
+  }
+  if (n & WRITE_EVENT) {
+    ready_events_ |= WRITE_EVENT;
+  }
+}
 void Channel::HandleEvent() {
-  if ((revents_ & EPOLLIN) && read_call_back_) {  // 客户端退出连接也会读取
+  if ((ready_events_ & READ_EVENT) && read_call_back_) {  // 客户端退出连接也会读取
     read_call_back_();
   }
-  if ((revents_ & EPOLLOUT) && write_call_back_) {
+  if ((ready_events_ & WRITE_EVENT) && write_call_back_) {
     write_call_back_();
   }
 }

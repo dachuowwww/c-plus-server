@@ -341,6 +341,33 @@ InetAddress.cpp.s:
 	cd /home/dachuo/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/InetAddress.cpp.s
 .PHONY : InetAddress.cpp.s
 
+Poller.o: Poller.cpp.o
+
+.PHONY : Poller.o
+
+# target to build an object file
+Poller.cpp.o:
+	cd /home/dachuo/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.o
+.PHONY : Poller.cpp.o
+
+Poller.i: Poller.cpp.i
+
+.PHONY : Poller.i
+
+# target to preprocess a source file
+Poller.cpp.i:
+	cd /home/dachuo/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.i
+.PHONY : Poller.cpp.i
+
+Poller.s: Poller.cpp.s
+
+.PHONY : Poller.s
+
+# target to generate assembly for a file
+Poller.cpp.s:
+	cd /home/dachuo/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.s
+.PHONY : Poller.cpp.s
+
 Server.o: Server.cpp.o
 
 .PHONY : Server.o
@@ -455,6 +482,9 @@ help:
 	@echo "... InetAddress.o"
 	@echo "... InetAddress.i"
 	@echo "... InetAddress.s"
+	@echo "... Poller.o"
+	@echo "... Poller.i"
+	@echo "... Poller.s"
 	@echo "... Server.o"
 	@echo "... Server.i"
 	@echo "... Server.s"

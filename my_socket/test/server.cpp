@@ -7,14 +7,13 @@ int main() {
   auto loop = std::make_shared<EventLoop>();
   Server server(loop);
   server.OnConnect([](Connection *conn) {  // 注册回调函数,需要修改内部元素所以不能设为const
-    conn->Read();
+    // conn->Read();
     if ((conn->GetState() == Connection::State::Closed)) {
       conn->RemoveConnection();
       return;
     }
     std::cout << "new message from client " << conn->GetFd() << " : " << conn->ReadInputBuffer() << std::endl;
-    conn->SetOutput(conn->ReadInputBuffer());
-    conn->Write();
+    conn->Send(conn->ReadInputBuffer());
     if ((conn->GetState() == Connection::State::Closed)) {
       conn->RemoveConnection();
     }

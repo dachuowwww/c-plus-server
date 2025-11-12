@@ -28,25 +28,25 @@ src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/include/Socket.h
 src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/Connection.cpp
 
-src/CMakeFiles/PINE_SHARED.dir/Epoll.cpp.o: ../src/include/Channel.h
-src/CMakeFiles/PINE_SHARED.dir/Epoll.cpp.o: ../src/include/Epoll.h
-src/CMakeFiles/PINE_SHARED.dir/Epoll.cpp.o: ../src/include/Error.h
-src/CMakeFiles/PINE_SHARED.dir/Epoll.cpp.o: ../src/include/Macro.h
-src/CMakeFiles/PINE_SHARED.dir/Epoll.cpp.o: ../src/Epoll.cpp
-
 src/CMakeFiles/PINE_SHARED.dir/Error.cpp.o: ../src/Error.cpp
 src/CMakeFiles/PINE_SHARED.dir/Error.cpp.o: ../src/include/Error.h
 
 src/CMakeFiles/PINE_SHARED.dir/EventLoop.cpp.o: ../src/include/Channel.h
-src/CMakeFiles/PINE_SHARED.dir/EventLoop.cpp.o: ../src/include/Epoll.h
 src/CMakeFiles/PINE_SHARED.dir/EventLoop.cpp.o: ../src/include/EventLoop.h
 src/CMakeFiles/PINE_SHARED.dir/EventLoop.cpp.o: ../src/include/Macro.h
+src/CMakeFiles/PINE_SHARED.dir/EventLoop.cpp.o: ../src/include/Poller.h
 src/CMakeFiles/PINE_SHARED.dir/EventLoop.cpp.o: ../src/include/ThreadPool.h
 src/CMakeFiles/PINE_SHARED.dir/EventLoop.cpp.o: ../src/EventLoop.cpp
 
 src/CMakeFiles/PINE_SHARED.dir/InetAddress.cpp.o: ../src/include/InetAddress.h
 src/CMakeFiles/PINE_SHARED.dir/InetAddress.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/InetAddress.cpp.o: ../src/InetAddress.cpp
+
+src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.o: ../src/include/Channel.h
+src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.o: ../src/include/Error.h
+src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.o: ../src/include/Macro.h
+src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.o: ../src/include/Poller.h
+src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.o: ../src/Poller.cpp
 
 src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/include/Acceptor.h
 src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/include/Channel.h

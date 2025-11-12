@@ -45,7 +45,7 @@ void Server::NewConnection(const shared_ptr<Socket> &conn_socket) {
   int fd = conn_socket->GetFd();
   int idx = static_cast<int>(fd % subreactors_.size());
   auto clnt_conn = std::make_unique<Connection>(subreactors_[idx], conn_socket);
-  // function<void(Connection *)> cb1 = std::bind(&Server::Handle, this, std::placeholders::_1);
+  // function<void(Connection *)> cb1 = std::bind(&Handle, this, std::placeholders::_1);
   // 没有必要，因为Server::Handle已经绑定了this指针
   clnt_conn->SetHandleReadFunc(new_connection_callback_);
   function<void(shared_ptr<Socket> &)> cb2 = std::bind(&Server::RemoveConnection, this, std::placeholders::_1);

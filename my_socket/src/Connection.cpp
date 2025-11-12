@@ -64,12 +64,21 @@ void Connection::EnableReading() { conn_channel_->EnableReading(); }
 //     }
 //   }
 // }
+void Connection::Bussiness() {
+  Read();
+  handle_read_func_(this);
+}
 
 void Connection::SetHandleReadFunc(function<void(Connection *)> cb) {
   handle_read_func_ = std::move(cb);
-  conn_channel_->SetReadCallback([this]() { handle_read_func_(this); });
+  // conn_channel_->SetReadCallback([this]() { handle_read_func_(this); });
+  conn_channel_->SetReadCallback(std::bind(&Connection::Bussiness, this));  // 调用可省略，取地址不行。
 }
 
+void Connection::Send(const char *data) {
+  output_buffer_->SetData(data);
+  Write();
+}
 void Connection::Read() {
   Errif(state_ != State::Connected, "connection not connected");  // 静态断言，如果断言失败，程序终止
   input_buffer_->Clear();                                         // 不能去，因为非租塞使用append处理数据
@@ -91,7 +100,7 @@ void Connection::Write() {
 }
 
 void Connection::ReadNonBlocking() {
-  //std::cout << "non-blocking read" << std::endl;
+  // std::cout << "non-blocking read" << std::endl;
   char buf[SERV_BUFFER];
   while (true) {
     memset(buf, 0, sizeof(buf));
@@ -122,7 +131,7 @@ void Connection::ReadNonBlocking() {
 }
 
 void Connection::ReadBlocking() {
-  //std::cout << "blocking read" << std::endl;
+  // std::cout << "blocking read" << std::endl;
   char buf[SERV_BUFFER];
   while (true) {
     memset(buf, 0, sizeof(buf));
@@ -147,7 +156,7 @@ void Connection::ReadBlocking() {
 }
 
 void Connection::WriteNonBlocking() {
-  //std::cout << "non-blocking write" << std::endl;
+  // std::cout << "non-blocking write" << std::endl;
   std::string buf = output_buffer_->GetData();
   size_t bytes_written = 0;
   size_t bytes_to_write = output_buffer_->GetSize();
@@ -175,11 +184,11 @@ void Connection::WriteNonBlocking() {
   }
 }
 void Connection::WriteBlocking() {
-  //std::cout << "blocking write" << std::endl;
+  // std::cout << "blocking write" << std::endl;
   while (true) {
     ssize_t n = write(conn_socket_->GetFd(), output_buffer_->GetData(), output_buffer_->GetSize());
     if (n > 0) {
-      std::cout << "write " << n << " bytes , content: " << output_buffer_->GetData() << std::endl;
+      //std::cout << "write " << n << " bytes , content: " << output_buffer_->GetData() << std::endl;
       break;
     }
     if (n == -1 && errno == EINTR) {  // 对方正常中断、继续写入
@@ -203,6 +212,6 @@ void Connection::RemoveConnection() {
   remove_(conn_socket_);
 }  // 关闭进行中的读写操作，并移除连接
 
-void Connection::SetState(Connection::State state) { Connection::state_ = state; }
+void Connection::SetState(State state) { state_ = state; }
 
-Connection::State Connection::GetState() const { return Connection::state_; }
+Connection::State Connection::GetState() const { return state_; }
