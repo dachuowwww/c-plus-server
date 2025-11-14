@@ -2,9 +2,6 @@
 #include <string>
 #include "Macro.h"
 class Buffer {
- private:
-  std::string buffer_;
-
  public:
   Buffer() = default;
   ~Buffer() = default;
@@ -14,6 +11,9 @@ class Buffer {
   void Clear();
   void SetData(const char *data);
   void SetKeyBoardInput();
+
+ private:
+  std::string buffer_;
 
   DISALLOW_COPY_AND_ASSIGN(Buffer);
 };

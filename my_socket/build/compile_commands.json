@@ -31,11 +31,6 @@
 },
 {
   "directory": "/home/dachuo/my_socket/build/src",
-  "command": "/usr/bin/c++  -DPINE_SHARED_EXPORTS -I/home/dachuo/my_socket/src/include   -fPIC -Wall -Wextra -std=c++20 -pthread -Wno-unused-parameter -Wno-attributes -DOS_LINUX -fPIC   -std=gnu++2a -o CMakeFiles/PINE_SHARED.dir/InetAddress.cpp.o -c /home/dachuo/my_socket/src/InetAddress.cpp",
-  "file": "/home/dachuo/my_socket/src/InetAddress.cpp"
-},
-{
-  "directory": "/home/dachuo/my_socket/build/src",
   "command": "/usr/bin/c++  -DPINE_SHARED_EXPORTS -I/home/dachuo/my_socket/src/include   -fPIC -Wall -Wextra -std=c++20 -pthread -Wno-unused-parameter -Wno-attributes -DOS_LINUX -fPIC   -std=gnu++2a -o CMakeFiles/PINE_SHARED.dir/Poller.cpp.o -c /home/dachuo/my_socket/src/Poller.cpp",
   "file": "/home/dachuo/my_socket/src/Poller.cpp"
 },
@@ -63,11 +58,6 @@
   "directory": "/home/dachuo/my_socket/build/test",
   "command": "/usr/bin/c++   -I/home/dachuo/my_socket/src/include   -fPIC -Wall -Wextra -std=c++20 -pthread -Wno-unused-parameter -Wno-attributes -DOS_LINUX   -std=gnu++2a -o CMakeFiles/client.dir/client.cpp.o -c /home/dachuo/my_socket/test/client.cpp",
   "file": "/home/dachuo/my_socket/test/client.cpp"
-},
-{
-  "directory": "/home/dachuo/my_socket/build/test",
-  "command": "/usr/bin/c++   -I/home/dachuo/my_socket/src/include   -fPIC -Wall -Wextra -std=c++20 -pthread -Wno-unused-parameter -Wno-attributes -DOS_LINUX   -std=gnu++2a -o CMakeFiles/test_thread_poll.dir/test_thread_poll.cpp.o -c /home/dachuo/my_socket/test/test_thread_poll.cpp",
-  "file": "/home/dachuo/my_socket/test/test_thread_poll.cpp"
 },
 {
   "directory": "/home/dachuo/my_socket/build/test",

@@ -3,9 +3,8 @@
 #include <vector>
 #include "Channel.h"
 #include "Poller.h"
-#include "ThreadPool.h"
 
-EventLoop::EventLoop(/* args */) { poller_ = std::make_unique<Poller>(); }
+EventLoop::EventLoop() { poller_ = std::make_unique<Poller>(); }
 EventLoop::~EventLoop() = default;
 void EventLoop::Update(Channel *channel) { poller_->UpdateChannel(channel); }
 

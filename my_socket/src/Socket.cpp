@@ -3,19 +3,19 @@
 #include <fcntl.h>
 #include <sys/socket.h>
 #include <unistd.h>
+#include <cstring>
 #include <iostream>
 #include "Error.h"
-#include "InetAddress.h"
-#include "ThreadPool.h"
 
 using std::cout;
 using std::endl;
-using std::shared_ptr;
-Socket::Socket(shared_ptr<InetAddress> InetAddr) : addr_(std::move(InetAddr)) {
-  addr_size_ = sizeof(*(addr_->AddrEntity()));
+
+Socket::Socket() {
   sock_fd_ = socket(AF_INET, SOCK_STREAM, 0);  // 客户端固定，服务端未连接时暂定，后续接受到可修改
   Errif(sock_fd_ == -1, "socket create error");
 }
+
+Socket::Socket(int sock_fd) : sock_fd_(sock_fd) { Errif(sock_fd_ == -1, "socket create error"); }
 
 // Socket::Socket(int sock_fd, shared_ptr<InetAddress> InetAddr) : sock_fd_(sock_fd), addr_(std::move(InetAddr)) {
 //   addr_size_ = sizeof(*(addr_->AddrEntity()));  // 未Bind
@@ -28,44 +28,57 @@ Socket::~Socket() {
     sock_fd_ = -1;
   }
 }
+
 int Socket::GetFd() const { return sock_fd_; }
 
-char *Socket::GetIP() const { return addr_->GetIP(); }
+void Socket::Listen() { Errif(::listen(sock_fd_, SOMAXCONN) == -1, "socket listen error"); }
 
-uint16_t Socket::GetPort() const { return addr_->GetPort(); }
-void Socket::Listen() const { Errif(::listen(sock_fd_, SOMAXCONN) == -1, "socket listen error"); }
+void Socket::Bind(const char *ip, uint16_t port) {
+  struct sockaddr_in addr = {};
+  memset(&addr, 0, sizeof(addr));
+  addr.sin_family = AF_INET;
+  inet_pton(addr.sin_family, ip, &addr.sin_addr);
+  addr.sin_port = htons(port);
+  Errif(::bind(sock_fd_, (sockaddr *)&addr, sizeof(addr)) == -1, "socket bind error");
+}
 
-void Socket::Bind() { Errif(::bind(sock_fd_, (sockaddr *)addr_->AddrEntity(), addr_size_) == -1, "socket bind error"); }
+void Socket::SetNonBlocking() { fcntl(sock_fd_, F_SETFL, fcntl(sock_fd_, F_GETFL) | O_NONBLOCK); }
 
-void Socket::SetNonBlocking() const { fcntl(sock_fd_, F_SETFL, fcntl(sock_fd_, F_GETFL) | O_NONBLOCK); }
-
-void Socket::Accept(const shared_ptr<Socket> &serv_socket) {
-  ssize_t clnt_fd = -1;
-  if (serv_socket->IsNonBlocking()) {  // 防止瞬时队列为空造成阻塞 非阻塞模式主要适合监听线程要同时处理多件事，或使用 ET
-    std::cout << "nonblocking socket accept" << std::endl;
+int Socket::Accept() {
+  int cln_fd = -1;  // 保存接受到的客户端的文件描述符
+  struct sockaddr_in cln_addr = {};
+  socklen_t addr_size = sizeof(cln_addr);
+  if (IsNonBlocking()) {  // 防止瞬时队列为空造成阻塞 非阻塞模式主要适合监听线程要同时处理多件事，或使用 ET
+    // std::cout << "nonblocking socket accept" << std::endl;
     while (true) {
-      clnt_fd = ::accept(serv_socket->GetFd(), (sockaddr *)addr_->AddrEntity(), &addr_size_);
-      if (clnt_fd >= 0) {
+      cln_fd = ::accept(sock_fd_, (sockaddr *)&cln_addr, &addr_size);
+      if (cln_fd >= 0) {
         break;
       }
-      if (clnt_fd == -1 && (errno == EAGAIN || errno == EWOULDBLOCK)) {
+      if (cln_fd == -1 && (errno == EAGAIN || errno == EWOULDBLOCK)) {
         continue;
       }
       Errif(true, "nonblocking socket accept error");
     }
   } else {
-    std::cout << "blocking socket accept" << std::endl;
-    clnt_fd = ::accept(serv_socket->GetFd(), (sockaddr *)addr_->AddrEntity(), &addr_size_);
-    Errif(clnt_fd == -1, "blocking socket accept error");
+    // std::cout << "blocking socket accept" << std::endl;
+    cln_fd = ::accept(sock_fd_, (sockaddr *)&cln_addr, &addr_size);
+    Errif(cln_fd == -1, "blocking socket accept error");
   }
-  sock_fd_ = clnt_fd;  // 保存接受到的客户端的文件描述符
-  cout << "new client fd " << clnt_fd << "! IP: " << addr_->GetIP() << " Port:" << addr_->GetPort() << endl;
+  cout << "new client fd " << cln_fd << "! IP: " << inet_ntoa(cln_addr.sin_addr) << " Port:" << ntohs(cln_addr.sin_port)
+       << endl;
   // 处理客户端连接请求
+  return cln_fd;
 }
-void Socket::Connect() {
-  if (Socket::IsNonBlocking()) {  // 自身非阻塞连接也会马上返回，不会阻塞
-    std::cout << "nonblocking socket connect" << std::endl;
-    ssize_t conn_err = connect(sock_fd_, (sockaddr *)addr_->AddrEntity(), addr_size_);
+void Socket::Connect(const char *ip, uint16_t port) {
+  struct sockaddr_in addr = {};
+  memset(&addr, 0, sizeof(addr));
+  addr.sin_family = AF_INET;
+  inet_pton(addr.sin_family, ip, &addr.sin_addr);
+  addr.sin_port = htons(port);
+  if (IsNonBlocking()) {  // 自身非阻塞连接也会马上返回，不会阻塞
+    // std::cout << "nonblocking socket connect" << std::endl;
+    ssize_t conn_err = connect(sock_fd_, (sockaddr *)&addr, sizeof(addr));
     if (conn_err == -1 && errno == EINPROGRESS) {
       while (true) {
         fd_set write_set;  // 是 select() 系统调用使用的文件描述符集合类型
@@ -85,7 +98,7 @@ void Socket::Connect() {
         if (select_err == -1 && errno == EINTR) {
           continue;
         }
-        close(sock_fd_);
+        ::close(sock_fd_);
         Errif(true, "socket connect timeout");
       }
       int error = 0;
@@ -95,12 +108,12 @@ void Socket::Connect() {
       if (error == 0) {
         return;
       }
-      close(sock_fd_);
+      ::close(sock_fd_);
       Errif(true, "socket getsockopt error");
     }
   } else {
-    std::cout << "blocking socket connect" << std::endl;
-    Errif(connect(sock_fd_, (sockaddr *)addr_->AddrEntity(), addr_size_) == -1, "socket connect error");
+    // std::cout << "blocking socket connect" << std::endl;
+    Errif(connect(sock_fd_, (sockaddr *)&addr, sizeof(addr)) == -1, "socket connect error");
   }
 }
 

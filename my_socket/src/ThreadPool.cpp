@@ -12,7 +12,7 @@ ThreadPool::ThreadPool(unsigned int size) {
   if (size <= 0) {
     size = 1;
   }
-  std::cout << "ThreadPool has started with " << size << " threads" << std::endl;
+  cout << "ThreadPool has started with " << size << " threads" << endl;
   threads_.reserve(size);  // 预留内存空间
   Errif(threads_.capacity() < size, "Threads vector reserve failed");
   for (unsigned int i = 0; i < size; ++i) {
@@ -20,7 +20,7 @@ ThreadPool::ThreadPool(unsigned int size) {
       while (true) {
         std::function<void()> task;
         {
-          unique_lock<std::mutex> lock(mtx_);
+          unique_lock<mutex> lock(mtx_);
           cv_.wait(lock, [this] { return stop_ || !tasks_.empty(); });
           if (stop_ && tasks_.empty()) {
             return;
@@ -36,14 +36,10 @@ ThreadPool::ThreadPool(unsigned int size) {
 }
 
 ThreadPool::~ThreadPool() {
-  ThreadPool::StopThreads();
-  cout << "ThreadPool has stopped" << endl;
-}
-
-void ThreadPool::StopThreads() {
   {
     unique_lock<mutex> lock(mtx_);
     stop_ = true;
   }
   cv_.notify_all();
+  cout << "ThreadPool has stopped" << endl;
 }

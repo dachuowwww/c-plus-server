@@ -6,12 +6,6 @@
 
 #IncludeRegexTransform: 
 
-../src/include/Buffer.h
-string
--
-Macro.h
-../src/include/Macro.h
-
 ../src/include/Connection.h
 functional
 -
@@ -20,20 +14,10 @@ memory
 Macro.h
 ../src/include/Macro.h
 
-../src/include/Error.h
-
-../src/include/InetAddress.h
-arpa/inet.h
--
-Macro.h
-../src/include/Macro.h
-
 ../src/include/Macro.h
 
 ../src/include/Socket.h
 arpa/inet.h
--
-memory
 -
 Macro.h
 ../src/include/Macro.h
@@ -49,14 +33,8 @@ cstring
 -
 iostream
 -
-Buffer.h
-/home/dachuo/my_socket/test/Buffer.h
 Connection.h
 /home/dachuo/my_socket/test/Connection.h
-Error.h
-/home/dachuo/my_socket/test/Error.h
-InetAddress.h
-/home/dachuo/my_socket/test/InetAddress.h
 Socket.h
 /home/dachuo/my_socket/test/Socket.h
 

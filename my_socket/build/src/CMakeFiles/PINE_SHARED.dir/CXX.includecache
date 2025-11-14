@@ -35,29 +35,15 @@ Macro.h
 ../src/include/Error.h
 
 ../src/include/EventLoop.h
-functional
--
 memory
 -
 Macro.h
 ../src/include/Macro.h
 
-../src/include/Macro.h
-
-../src/include/Poller.h
-sys/epoll.h
--
-sys/event.h
--
-vector
--
-Macro.h
 ../src/include/Macro.h
 
 ../src/include/Socket.h
 arpa/inet.h
--
-memory
 -
 Macro.h
 ../src/include/Macro.h
@@ -81,14 +67,4 @@ EventLoop.h
 /home/dachuo/my_socket/src/EventLoop.h
 Socket.h
 /home/dachuo/my_socket/src/Socket.h
-
-/home/dachuo/my_socket/src/Poller.cpp
-Poller.h
-/home/dachuo/my_socket/src/Poller.h
-cstring
--
-Channel.h
-/home/dachuo/my_socket/src/Channel.h
-Error.h
-/home/dachuo/my_socket/src/Error.h
 

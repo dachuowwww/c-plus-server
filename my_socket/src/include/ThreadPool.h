@@ -11,17 +11,9 @@
 #include "Macro.h"
 
 class ThreadPool {
- private:
-  bool stop_ = false;
-  std::queue<std::function<void()>> tasks_;
-  std::mutex mtx_;
-  std::condition_variable cv_;
-  std::vector<std::jthread> threads_;
-
  public:
   explicit ThreadPool(unsigned int size = std::thread::hardware_concurrency());
   ~ThreadPool();
-  void StopThreads();
 
   template <typename F, typename... Args>
   auto Add(F &&f, Args &&... args) -> std::future<typename std::invoke_result<F, Args...>::type> {
@@ -39,6 +31,13 @@ class ThreadPool {
     cv_.notify_one();
     return res;
   }
+
+ private:
+  std::queue<std::function<void()>> tasks_;
+  std::mutex mtx_;
+  std::condition_variable cv_;
+  bool stop_ = false;
+  std::vector<std::jthread> threads_;
 
   DISALLOW_COPY_AND_ASSIGN(ThreadPool);
 };

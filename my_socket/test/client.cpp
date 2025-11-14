@@ -3,10 +3,7 @@
 #include <unistd.h>
 #include <cstring>
 #include <iostream>
-#include "Buffer.h"
 #include "Connection.h"
-#include "Error.h"
-#include "InetAddress.h"
 #include "Socket.h"
 
 using std::cout;
@@ -16,11 +13,10 @@ using std::string;
 struct sockaddr_in serv_addr;
 
 int main() {
-  std::shared_ptr<InetAddress> addr = std::make_shared<InetAddress>("127.0.0.1", 8888);
-  auto sock = std::make_shared<Socket>(addr);
+  auto sock = std::make_unique<Socket>();
   // sock->SetNonBlocking();
-  sock->Connect();
-  Connection cln_conn(nullptr, sock);
+  sock->Connect("127.0.0.1", 8888);
+  Connection cln_conn(nullptr, sock->GetFd());
   while (true) {
     cln_conn.KeyBoardInput();
     cln_conn.Send(cln_conn.ReadInputBuffer());

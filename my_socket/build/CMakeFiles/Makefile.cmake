@@ -56,7 +56,6 @@ set(CMAKE_DEPEND_INFO_FILES
   "src/CMakeFiles/PINE_SHARED.dir/DependInfo.cmake"
   "test/CMakeFiles/multiple_client.dir/DependInfo.cmake"
   "test/CMakeFiles/client.dir/DependInfo.cmake"
-  "test/CMakeFiles/test_thread_poll.dir/DependInfo.cmake"
   "test/CMakeFiles/check-tests.dir/DependInfo.cmake"
   "test/CMakeFiles/server.dir/DependInfo.cmake"
   "test/CMakeFiles/build-tests.dir/DependInfo.cmake"

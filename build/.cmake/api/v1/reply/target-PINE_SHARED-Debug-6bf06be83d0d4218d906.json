@@ -74,8 +74,7 @@
 				7,
 				8,
 				9,
-				10,
-				11
+				10
 			]
 		}
 	],
@@ -114,8 +113,7 @@
 				7,
 				8,
 				9,
-				10,
-				11
+				10
 			]
 		}
 	],
@@ -143,12 +141,6 @@
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "src/Connection.cpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "src/Epoll.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{

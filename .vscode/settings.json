@@ -121,7 +121,8 @@
     "ranges": "cpp",
     "future": "cpp",
     "queue": "cpp",
-    "cinttypes": "cpp"
+    "cinttypes": "cpp",
+    "csignal": "cpp"
   },
   "C_Cpp.errorSquiggles": "enabled",
   "cmake.sourceDirectory": "/home/dachuo/my_socket"

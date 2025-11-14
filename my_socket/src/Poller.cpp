@@ -1,5 +1,6 @@
 #include "Poller.h"
 #include <cstring>
+#include <iostream>
 #include "Channel.h"
 #include "Error.h"
 
@@ -14,7 +15,7 @@ Poller::Poller() {
 }
 
 Poller::~Poller() {
-  close(poller_fd_);
+  ::close(poller_fd_);
   delete[] events_;
 }
 
@@ -28,8 +29,12 @@ std::vector<Channel *> Poller::Poll(int timeout) {
     // "].data.ptr = " << events_[i].data.ptr << std::endl;
     Channel *ch = static_cast<Channel *>(events_[i].data.ptr);
     ch->SetReadyEvents(0);
-    if (events_[i].events & EPOLLIN) {ch->SetReadyEvents(Channel::READ_EVENT);}
-    if (events_[i].events & EPOLLOUT) {ch->SetReadyEvents(Channel::WRITE_EVENT);}
+    if (events_[i].events & EPOLLIN) {
+      ch->SetReadyEvents(Channel::READ_EVENT);
+    }
+    if (events_[i].events & EPOLLOUT) {
+      ch->SetReadyEvents(Channel::WRITE_EVENT);
+    }
     active_channels.push_back(ch);
   }
   return active_channels;
@@ -53,10 +58,12 @@ void Poller::UpdateChannel(Channel *channel) {
   } else {
     Errif(epoll_ctl(poller_fd_, EPOLL_CTL_MOD, channel->GetFd(), &ev) == -1, "epoll modify error");
   }
-  // std::cout << "Registered "<< channel->GetFd() << " in epoll:" << poller_fd_ << std::endl;
+  // std::cout << "Registered " << channel->GetFd() << " in epoll:" << poller_fd_<< " , event: " <<
+  // channel->GetListenEvents() << std::endl;
 }
 
 void Poller::DeleteChannel(Channel *channel) {
+  // std::cout << "Try to deregistered " << channel->GetFd() << " from epoll:" << poller_fd_ << std::endl;
   Errif(epoll_ctl(poller_fd_, EPOLL_CTL_DEL, channel->GetFd(), nullptr) == -1, "epoll delete error");
 }
 #endif
@@ -72,7 +79,7 @@ Poller::Poller() {
 }
 
 Poller::~Poller() {
-  close(poller_fd_);
+  ::close(poller_fd_);
   delete[] events_;
 }
 std::vector<Channel *> Poller::Poll(int timeout) {

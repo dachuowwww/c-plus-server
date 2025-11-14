@@ -11,7 +11,6 @@
 /home/dachuo/my_socket/build/test/CMakeFiles/edit_cache.dir
 /home/dachuo/my_socket/build/test/CMakeFiles/multiple_client.dir
 /home/dachuo/my_socket/build/test/CMakeFiles/client.dir
-/home/dachuo/my_socket/build/test/CMakeFiles/test_thread_poll.dir
 /home/dachuo/my_socket/build/test/CMakeFiles/check-tests.dir
 /home/dachuo/my_socket/build/test/CMakeFiles/server.dir
 /home/dachuo/my_socket/build/test/CMakeFiles/build-tests.dir

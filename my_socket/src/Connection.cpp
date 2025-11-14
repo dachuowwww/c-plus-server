@@ -10,23 +10,30 @@
 using std::cout;
 using std::endl;
 using std::function;
-using std::shared_ptr;
 
 const int SERV_BUFFER = 1024;
-Connection::Connection(shared_ptr<EventLoop> loop, shared_ptr<Socket> socket)
-    : loop_(std::move(loop)), conn_socket_(std::move(socket)) {
+Connection::Connection(EventLoop *loop, int cln_fd) : loop_(loop) {
   if (loop_ != nullptr) {
-    conn_channel_ = std::make_unique<Channel>(loop_, conn_socket_->GetFd());
+    conn_channel_ = std::make_unique<Channel>(loop_, cln_fd);
   }
+  conn_socket_ = std::make_unique<Socket>(cln_fd);
+  conn_socket_->SetNonBlocking();
   input_buffer_ = std::make_unique<Buffer>();
   output_buffer_ = std::make_unique<Buffer>();
-  SetState(State::Connected);
+  state_ = State::Connected;  // 默认已连接才可以进行客户端的读写操作
 }
 Connection::~Connection() = default;
-void Connection::SetRemoveConnection(function<void(shared_ptr<Socket> &)> cb) { remove_ = std::move(cb); }
+void Connection::SetRemoveConnection(function<void(int)> &&cb) { remove_ = std::move(cb); }
+
+void Connection::RemoveConnection() {
+  conn_channel_->RemoveInEpoll();
+  remove_(conn_socket_->GetFd());
+}  // 关闭进行中的读写操作，并移除连接
+
 bool Connection::IsInEpoll() const { return conn_channel_->IfInEpoll(); }
-int Connection::GetFd() const { return conn_channel_->GetFd(); }
+int Connection::GetFd() const { return conn_socket_->GetFd(); }
 void Connection::SetET() { conn_channel_->UseET(); }
+
 void Connection::EnableReading() { conn_channel_->EnableReading(); }
 // void Connection::Echo() {
 //   if (!IsConnected()) {
@@ -64,15 +71,16 @@ void Connection::EnableReading() { conn_channel_->EnableReading(); }
 //     }
 //   }
 // }
-void Connection::Bussiness() {
-  Read();
-  handle_read_func_(this);
-}
 
 void Connection::SetHandleReadFunc(function<void(Connection *)> cb) {
   handle_read_func_ = std::move(cb);
   // conn_channel_->SetReadCallback([this]() { handle_read_func_(this); });
-  conn_channel_->SetReadCallback(std::bind(&Connection::Bussiness, this));  // 调用可省略，取地址不行。
+  conn_channel_->SetReadCallback([this]() { this->ListenClientMessage(); });  // 调用可省略，取地址不行。
+}
+
+void Connection::ListenClientMessage() {
+  Read();
+  handle_read_func_(this);
 }
 
 void Connection::Send(const char *data) {
@@ -80,23 +88,23 @@ void Connection::Send(const char *data) {
   Write();
 }
 void Connection::Read() {
-  Errif(state_ != State::Connected, "connection not connected");  // 静态断言，如果断言失败，程序终止
-  input_buffer_->Clear();                                         // 不能去，因为非租塞使用append处理数据
+  Errif(state_ != State::Connected, "Read connection not connected");  // 静态断言，如果断言失败，程序终止
+  input_buffer_->Clear();  // 不能去，因为非租塞使用append处理数据
   if (conn_socket_->IsNonBlocking()) {
-    Connection::ReadNonBlocking();  // 程序进行中进行连接判断，如果连接正常，进行阻塞IO读取
+    ReadNonBlocking();  // 程序进行中进行连接判断，如果连接正常，进行阻塞IO读取
   } else {
-    Connection::ReadBlocking();
+    ReadBlocking();
   }
 }
 
 void Connection::Write() {
-  Errif(state_ != State::Connected, "connection not connected");
+  Errif(state_ != State::Connected, "Write connection not connected");
   if (conn_socket_->IsNonBlocking()) {
-    Connection::WriteNonBlocking();
+    WriteNonBlocking();
   } else {
-    Connection::WriteBlocking();
+    WriteBlocking();
   }
-  output_buffer_->Clear();
+  //output_buffer_->Clear();
 }
 
 void Connection::ReadNonBlocking() {
@@ -120,7 +128,7 @@ void Connection::ReadNonBlocking() {
       break;
     }
     if (bytes_read == 0) {  // EOF，对方断开连接
-      cout << "EOF, fd " << conn_socket_->GetFd() << " disconnected" << endl;
+      cout << "Read EOF, fd " << conn_socket_->GetFd() << " disconnected" << endl;
       SetState(State::Closed);
       break;
     }
@@ -135,17 +143,21 @@ void Connection::ReadBlocking() {
   char buf[SERV_BUFFER];
   while (true) {
     memset(buf, 0, sizeof(buf));
+    size_t had_read = 0;
+    size_t bytes_to_read = output_buffer_->GetSize();
     ssize_t bytes_read = read(conn_socket_->GetFd(), buf, sizeof(buf));
     if (bytes_read > 0) {
-      input_buffer_->SetData(buf);
-      break;
+      input_buffer_->Append(buf, bytes_read);
+      had_read += bytes_read;
+      if(had_read >= bytes_to_read){ break;}  // 提高与非阻塞IO的兼容性
+      continue;
     }
     if (bytes_read == -1 && errno == EINTR) {  // 对方正常中断、继续读取
       cout << "continue reading" << endl;
       continue;
     }
     if (bytes_read == 0) {  // EOF，对方断开连接
-      cout << "EOF, fd " << conn_socket_->GetFd() << " disconnected" << endl;
+      cout << "Read EOF, fd " << conn_socket_->GetFd() << " disconnected" << endl;
       SetState(State::Closed);
       break;
     }
@@ -165,7 +177,7 @@ void Connection::WriteNonBlocking() {
     ssize_t n = write(fd, buf.c_str() + bytes_written, bytes_to_write - bytes_written);
     if (n > 0) {
       bytes_written += n;
-      if (bytes_written == bytes_to_write) {
+      if (bytes_written >= bytes_to_write) {
         break;
       }
       continue;
@@ -178,6 +190,11 @@ void Connection::WriteNonBlocking() {
       cout << "buffer full, wait for writing" << endl;
       break;
     }
+    // if (n == -1 && errno == EPIPE) {
+    //   cout << "broken pipe, fd " << conn_socket_->GetFd() << " disconnected" << endl;
+    //   SetState(State::Closed);
+    // break;
+    // }
     cout << "other write error" << endl;
     SetState(State::Closed);
     break;
@@ -188,7 +205,7 @@ void Connection::WriteBlocking() {
   while (true) {
     ssize_t n = write(conn_socket_->GetFd(), output_buffer_->GetData(), output_buffer_->GetSize());
     if (n > 0) {
-      //std::cout << "write " << n << " bytes , content: " << output_buffer_->GetData() << std::endl;
+      // std::cout << "write " << n << " bytes , content: " << output_buffer_->GetData() << std::endl;
       break;
     }
     if (n == -1 && errno == EINTR) {  // 对方正常中断、继续写入
@@ -207,11 +224,6 @@ const char *Connection::ReadInputBuffer() const { return input_buffer_->GetData(
 
 void Connection::SetOutput(const char *data) { output_buffer_->SetData(data); }
 
-void Connection::RemoveConnection() {
-  conn_channel_->RemoveInEpoll();
-  remove_(conn_socket_);
-}  // 关闭进行中的读写操作，并移除连接
-
-void Connection::SetState(State state) { state_ = state; }
+void Connection::SetState(State state) { state_ = state; }  // 这种类型（enum、int、struct 无指针成员）完全不需要 move。
 
 Connection::State Connection::GetState() const { return state_; }

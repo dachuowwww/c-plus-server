@@ -202,19 +202,6 @@ client/fast:
 .PHONY : client/fast
 
 #=============================================================================
-# Target rules for targets named test_thread_poll
-
-# Build rule for target.
-test_thread_poll: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 test_thread_poll
-.PHONY : test_thread_poll
-
-# fast build rule for target.
-test_thread_poll/fast:
-	$(MAKE) -f test/CMakeFiles/test_thread_poll.dir/build.make test/CMakeFiles/test_thread_poll.dir/build
-.PHONY : test_thread_poll/fast
-
-#=============================================================================
 # Target rules for targets named check-tests
 
 # Build rule for target.
@@ -268,7 +255,6 @@ help:
 	@echo "... PINE_SHARED"
 	@echo "... multiple_client"
 	@echo "... client"
-	@echo "... test_thread_poll"
 	@echo "... check-tests"
 	@echo "... server"
 	@echo "... build-tests"

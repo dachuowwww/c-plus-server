@@ -17,35 +17,36 @@ class Connection {
     Failed,
   };
 
-  Connection(std::shared_ptr<EventLoop> loop, std::shared_ptr<Socket> conn_socket);
+  Connection(EventLoop *loop, int cln_fd);
   ~Connection();
-  void SetRemoveConnection(std::function<void(std::shared_ptr<Socket> &)> cb);
+  void SetRemoveConnection(std::function<void(int)> &&cb);
   void RemoveConnection();
+
   [[nodiscard]] bool IsInEpoll() const;
   [[nodiscard]] int GetFd() const;
+  [[nodiscard]] const char *ReadInputBuffer() const;
+  [[nodiscard]] State GetState() const;
+
   void EnableReading();
-  void Bussiness();
-  void SetHandleReadFunc(std::function<void(Connection *)> cb);
   void SetET();
+  void SetHandleReadFunc(std::function<void(Connection *)> cb);
+
+  void ListenClientMessage();
   // void Echo();
   void Send(const char *data);
   void Read();
   void Write();
-
   void KeyBoardInput();
-  void SetOutput(const char *data);
 
+  void SetOutput(const char *data);
   void SetState(State state);
 
-  [[nodiscard]] const char *ReadInputBuffer() const;
-  [[nodiscard]] State GetState() const;
-
  private:
-  std::shared_ptr<EventLoop> loop_;
-  std::shared_ptr<Socket> conn_socket_;
+  EventLoop *loop_ = nullptr;
+  std::unique_ptr<Socket> conn_socket_;
   std::unique_ptr<Channel> conn_channel_;
   std::function<void(Connection *)> handle_read_func_;
-  std::function<void(std::shared_ptr<Socket> &)> remove_;
+  std::function<void(int)> remove_;
   State state_ = State::Invaild;
 
   std::unique_ptr<Buffer> input_buffer_;

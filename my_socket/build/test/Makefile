@@ -141,21 +141,6 @@ client/fast:
 .PHONY : client/fast
 
 # Convenience name for target.
-test/CMakeFiles/test_thread_poll.dir/rule:
-	cd /home/dachuo/my_socket/build && $(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/test_thread_poll.dir/rule
-.PHONY : test/CMakeFiles/test_thread_poll.dir/rule
-
-# Convenience name for target.
-test_thread_poll: test/CMakeFiles/test_thread_poll.dir/rule
-
-.PHONY : test_thread_poll
-
-# fast build rule for target.
-test_thread_poll/fast:
-	cd /home/dachuo/my_socket/build && $(MAKE) -f test/CMakeFiles/test_thread_poll.dir/build.make test/CMakeFiles/test_thread_poll.dir/build
-.PHONY : test_thread_poll/fast
-
-# Convenience name for target.
 test/CMakeFiles/check-tests.dir/rule:
 	cd /home/dachuo/my_socket/build && $(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/check-tests.dir/rule
 .PHONY : test/CMakeFiles/check-tests.dir/rule
@@ -281,33 +266,6 @@ server.cpp.s:
 	cd /home/dachuo/my_socket/build && $(MAKE) -f test/CMakeFiles/server.dir/build.make test/CMakeFiles/server.dir/server.cpp.s
 .PHONY : server.cpp.s
 
-test_thread_poll.o: test_thread_poll.cpp.o
-
-.PHONY : test_thread_poll.o
-
-# target to build an object file
-test_thread_poll.cpp.o:
-	cd /home/dachuo/my_socket/build && $(MAKE) -f test/CMakeFiles/test_thread_poll.dir/build.make test/CMakeFiles/test_thread_poll.dir/test_thread_poll.cpp.o
-.PHONY : test_thread_poll.cpp.o
-
-test_thread_poll.i: test_thread_poll.cpp.i
-
-.PHONY : test_thread_poll.i
-
-# target to preprocess a source file
-test_thread_poll.cpp.i:
-	cd /home/dachuo/my_socket/build && $(MAKE) -f test/CMakeFiles/test_thread_poll.dir/build.make test/CMakeFiles/test_thread_poll.dir/test_thread_poll.cpp.i
-.PHONY : test_thread_poll.cpp.i
-
-test_thread_poll.s: test_thread_poll.cpp.s
-
-.PHONY : test_thread_poll.s
-
-# target to generate assembly for a file
-test_thread_poll.cpp.s:
-	cd /home/dachuo/my_socket/build && $(MAKE) -f test/CMakeFiles/test_thread_poll.dir/build.make test/CMakeFiles/test_thread_poll.dir/test_thread_poll.cpp.s
-.PHONY : test_thread_poll.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -318,7 +276,6 @@ help:
 	@echo "... edit_cache"
 	@echo "... multiple_client"
 	@echo "... client"
-	@echo "... test_thread_poll"
 	@echo "... check-tests"
 	@echo "... server"
 	@echo "... build-tests"
@@ -331,9 +288,6 @@ help:
 	@echo "... server.o"
 	@echo "... server.i"
 	@echo "... server.s"
-	@echo "... test_thread_poll.o"
-	@echo "... test_thread_poll.i"
-	@echo "... test_thread_poll.s"
 .PHONY : help
 
 

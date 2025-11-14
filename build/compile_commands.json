@@ -21,11 +21,6 @@
 },
 {
   "directory": "/home/dachuo/build/src",
-  "command": "/usr/bin/c++  -DPINE_SHARED_EXPORTS -I/home/dachuo/my_socket/src/include   -fPIC -Wall -Wextra -std=c++20 -pthread -Wno-unused-parameter -Wno-attributes -DOS_LINUX -g -O0 -ggdb -fsanitize=address -fno-omit-frame-pointer -fno-optimize-sibling-calls -fPIC   -std=gnu++2a -o CMakeFiles/PINE_SHARED.dir/Epoll.cpp.o -c /home/dachuo/my_socket/src/Epoll.cpp",
-  "file": "/home/dachuo/my_socket/src/Epoll.cpp"
-},
-{
-  "directory": "/home/dachuo/build/src",
   "command": "/usr/bin/c++  -DPINE_SHARED_EXPORTS -I/home/dachuo/my_socket/src/include   -fPIC -Wall -Wextra -std=c++20 -pthread -Wno-unused-parameter -Wno-attributes -DOS_LINUX -g -O0 -ggdb -fsanitize=address -fno-omit-frame-pointer -fno-optimize-sibling-calls -fPIC   -std=gnu++2a -o CMakeFiles/PINE_SHARED.dir/Error.cpp.o -c /home/dachuo/my_socket/src/Error.cpp",
   "file": "/home/dachuo/my_socket/src/Error.cpp"
 },
