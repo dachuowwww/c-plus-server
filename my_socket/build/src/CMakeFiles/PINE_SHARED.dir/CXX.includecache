@@ -6,12 +6,6 @@
 
 #IncludeRegexTransform: 
 
-../src/include/Buffer.h
-string
--
-Macro.h
-../src/include/Macro.h
-
 ../src/include/Channel.h
 sys/epoll.h
 -
@@ -24,47 +18,53 @@ memory
 Macro.h
 ../src/include/Macro.h
 
-../src/include/Connection.h
-functional
+../src/include/CurrentThread.h
+pthread.h
 -
-memory
+cstdint
 -
-Macro.h
-../src/include/Macro.h
 
 ../src/include/Error.h
 
 ../src/include/EventLoop.h
+functional
+-
 memory
 -
-Macro.h
-../src/include/Macro.h
-
-../src/include/Macro.h
-
-../src/include/Socket.h
-arpa/inet.h
+vector
 -
 Macro.h
 ../src/include/Macro.h
 
-/home/dachuo/my_socket/src/Connection.cpp
-Connection.h
-/home/dachuo/my_socket/src/Connection.h
-unistd.h
+../src/include/Macro.h
+
+../src/include/Poller.h
+sys/epoll.h
 -
-cstring
+sys/event.h
+-
+vector
+-
+Macro.h
+../src/include/Macro.h
+
+/home/dachuo/my_socket/src/EventLoop.cpp
+EventLoop.h
+/home/dachuo/my_socket/src/EventLoop.h
+sys/eventfd.h
 -
 iostream
 -
-Buffer.h
-/home/dachuo/my_socket/src/Buffer.h
+mutex
+-
+vector
+-
 Channel.h
 /home/dachuo/my_socket/src/Channel.h
+CurrentThread.h
+/home/dachuo/my_socket/src/CurrentThread.h
 Error.h
 /home/dachuo/my_socket/src/Error.h
-EventLoop.h
-/home/dachuo/my_socket/src/EventLoop.h
-Socket.h
-/home/dachuo/my_socket/src/Socket.h
+Poller.h
+/home/dachuo/my_socket/src/Poller.h
 

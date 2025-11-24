@@ -13,6 +13,7 @@ src/CMakeFiles/PINE_SHARED.dir/Buffer.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/Buffer.cpp.o: ../src/Buffer.cpp
 
 src/CMakeFiles/PINE_SHARED.dir/Channel.cpp.o: ../src/include/Channel.h
+src/CMakeFiles/PINE_SHARED.dir/Channel.cpp.o: ../src/include/Connection.h
 src/CMakeFiles/PINE_SHARED.dir/Channel.cpp.o: ../src/include/Error.h
 src/CMakeFiles/PINE_SHARED.dir/Channel.cpp.o: ../src/include/EventLoop.h
 src/CMakeFiles/PINE_SHARED.dir/Channel.cpp.o: ../src/include/Macro.h
@@ -27,10 +28,15 @@ src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/include/Socket.h
 src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/Connection.cpp
 
+src/CMakeFiles/PINE_SHARED.dir/CurrentThread.cpp.o: ../src/include/CurrentThread.h
+src/CMakeFiles/PINE_SHARED.dir/CurrentThread.cpp.o: ../src/CurrentThread.cpp
+
 src/CMakeFiles/PINE_SHARED.dir/Error.cpp.o: ../src/Error.cpp
 src/CMakeFiles/PINE_SHARED.dir/Error.cpp.o: ../src/include/Error.h
 
 src/CMakeFiles/PINE_SHARED.dir/EventLoop.cpp.o: ../src/include/Channel.h
+src/CMakeFiles/PINE_SHARED.dir/EventLoop.cpp.o: ../src/include/CurrentThread.h
+src/CMakeFiles/PINE_SHARED.dir/EventLoop.cpp.o: ../src/include/Error.h
 src/CMakeFiles/PINE_SHARED.dir/EventLoop.cpp.o: ../src/include/EventLoop.h
 src/CMakeFiles/PINE_SHARED.dir/EventLoop.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/EventLoop.cpp.o: ../src/include/Poller.h

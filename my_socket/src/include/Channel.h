@@ -5,6 +5,7 @@
 #include <memory>
 #include "Macro.h"
 class EventLoop;
+class Connection;
 class Channel {
  public:
   static const int READ_EVENT;
@@ -33,6 +34,9 @@ class Channel {
   void SetReadCallback(std::function<void()> &&cb);
   void SetWriteCallback(std::function<void()> &&cb);
   void HandleEvent();
+  void HandleEventWithGuard();
+
+  void Tie(const std::shared_ptr<Connection> &conn);
 
  private:
   EventLoop *loop_ = nullptr;
@@ -40,6 +44,8 @@ class Channel {
   uint16_t listen_events_ = 0;  // 注册的事件 EPOLLRDHUP
   uint16_t ready_events_ = 0;   // 实际发生的事件
   bool in_epoll_ = false;       // 是否在epoll树上
+  std::weak_ptr<void> tie_;     // 确保多态性
+  bool tied_ = false;
 
   std::function<void()> read_call_back_;
   std::function<void()> write_call_back_;

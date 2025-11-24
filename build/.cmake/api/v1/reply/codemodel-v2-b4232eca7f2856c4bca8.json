@@ -54,8 +54,7 @@
 						3,
 						5,
 						8,
-						9,
-						10
+						9
 					]
 				}
 			],
@@ -81,8 +80,7 @@
 						6,
 						7,
 						8,
-						9,
-						10
+						9
 					]
 				}
 			],
@@ -91,14 +89,14 @@
 				{
 					"directoryIndex" : 1,
 					"id" : "PINE_SHARED::@145eef247bfb46b6828c",
-					"jsonFile" : "target-PINE_SHARED-Debug-6bf06be83d0d4218d906.json",
+					"jsonFile" : "target-PINE_SHARED-Debug-3f185609504000a5518c.json",
 					"name" : "PINE_SHARED",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 2,
 					"id" : "build-tests::@36f028580bb02cc8272a",
-					"jsonFile" : "target-build-tests-Debug-240b12b9ceb0d1fa0278.json",
+					"jsonFile" : "target-build-tests-Debug-1e5a3cb1751bc1f8341c.json",
 					"name" : "build-tests",
 					"projectIndex" : 0
 				},
@@ -112,7 +110,7 @@
 				{
 					"directoryIndex" : 2,
 					"id" : "check-tests::@36f028580bb02cc8272a",
-					"jsonFile" : "target-check-tests-Debug-55672ea07a5b106b22e7.json",
+					"jsonFile" : "target-check-tests-Debug-42e5a2e36c9c7fbe4cd4.json",
 					"name" : "check-tests",
 					"projectIndex" : 0
 				},
@@ -156,13 +154,6 @@
 					"id" : "server::@36f028580bb02cc8272a",
 					"jsonFile" : "target-server-Debug-c0e503b8bc18e712d21d.json",
 					"name" : "server",
-					"projectIndex" : 0
-				},
-				{
-					"directoryIndex" : 2,
-					"id" : "test_thread_poll::@36f028580bb02cc8272a",
-					"jsonFile" : "target-test_thread_poll-Debug-e544fc3a7778000fcb28.json",
-					"name" : "test_thread_poll",
 					"projectIndex" : 0
 				}
 			]

@@ -7,7 +7,7 @@ class Socket;
 class Channel;
 class Buffer;
 
-class Connection {
+class Connection : public std::enable_shared_from_this<Connection> {
  public:
   enum class State {
     Invaild = 1,
@@ -19,17 +19,20 @@ class Connection {
 
   Connection(EventLoop *loop, int cln_fd);
   ~Connection();
-  void SetRemoveConnection(std::function<void(int)> &&cb);
+  void SetRemoveConnection(std::function<void(const std::shared_ptr<Connection> &conn)> &&cb);
   void RemoveConnection();
 
   [[nodiscard]] bool IsInEpoll() const;
   [[nodiscard]] int GetFd() const;
   [[nodiscard]] const char *ReadInputBuffer() const;
   [[nodiscard]] State GetState() const;
+  [[nodiscard]] EventLoop *GetLoop() const;
 
-  void EnableReading();
+  // void EnableReading();
+  void ConnectionEstablished();
+  void ConnectionDestructor();
   void SetET();
-  void SetHandleReadFunc(std::function<void(Connection *)> cb);
+  void SetHandleReadFunc(std::function<void(const std::shared_ptr<Connection> &conn)> cb);
 
   void ListenClientMessage();
   // void Echo();
@@ -45,8 +48,8 @@ class Connection {
   EventLoop *loop_ = nullptr;
   std::unique_ptr<Socket> conn_socket_;
   std::unique_ptr<Channel> conn_channel_;
-  std::function<void(Connection *)> handle_read_func_;
-  std::function<void(int)> remove_;
+  std::function<void(const std::shared_ptr<Connection> &conn)> handle_read_func_;
+  std::function<void(const std::shared_ptr<Connection> &conn)> remove_;
   State state_ = State::Invaild;
 
   std::unique_ptr<Buffer> input_buffer_;

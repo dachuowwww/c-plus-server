@@ -29,27 +29,34 @@ Server::Server(EventLoop *loop) : main_reactor_(loop) {
 }
 Server::~Server() = default;
 
-void Server::OnConnect(function<void(Connection *)> &&cb) { new_connection_callback_ = std::move(cb); }
+void Server::OnConnect(function<void(const std::shared_ptr<Connection> &conn)> &&cb) {
+  new_connection_callback_ = std::move(cb);
+}
 
 void Server::NewConnection(int cln_fd) {
   int idx = static_cast<int>(cln_fd % subreactors_.size());
-  auto clnt_conn = std::make_unique<Connection>(subreactors_[idx].get(), cln_fd);
+  auto clnt_conn = std::make_shared<Connection>(subreactors_[idx].get(), cln_fd);
   // function<void(Connection *)> cb1 = std::bind(&Handle, this, std::placeholders::_1);
   // 没有必要，因为Server::Handle已经绑定了this指针
   clnt_conn->SetHandleReadFunc(new_connection_callback_);
-  clnt_conn->SetRemoveConnection([this](int cln_fd) { Server::RemoveConnection(cln_fd); });
+  clnt_conn->SetRemoveConnection([this](const std::shared_ptr<Connection> &conn) { Server::RemoveConnection(conn); });
   clnt_conn->SetET();
-  clnt_conn->EnableReading();
-  connections_[cln_fd] = std::move(clnt_conn);
+  // clnt_conn->EnableReading();
+  connections_[cln_fd] = clnt_conn;  // 线程不安全  +1
+  clnt_conn->ConnectionEstablished();
 }
 
-void Server::RemoveConnection(int cln_fd) {
-  if (connections_.find(cln_fd) == connections_.end()) {
-    cout << "client fd " << cln_fd << " not found in connection map" << std::endl;
-    return;
-  }
-  connections_.erase(cln_fd);
-  cout << "client fd " << cln_fd << " removed from connection map" << std::endl;
+void Server::RemoveConnection(const std::shared_ptr<Connection> &conn) {
+  Errif(connections_.find(conn->GetFd()) == connections_.end(), "client fd not found in connection map");
+  main_reactor_->RunOneFunc(std::bind(&Server::RemoveConnectionInLoop, this, conn));
+}
+
+void Server::RemoveConnectionInLoop(const std::shared_ptr<Connection> &conn) {
+  connections_.erase(conn->GetFd());  // -1
+  cout << "client fd " << conn->GetFd() << " removed from connection map" << std::endl;
+
+  EventLoop *loop = conn->GetLoop();
+  loop->QueueOneFunc(std::bind(&Connection::ConnectionDestructor, conn));
 }
 
 // void Server::OpenThreadPool(){

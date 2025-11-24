@@ -1,5 +1,6 @@
 #include "Channel.h"
 #include <iostream>
+#include "Connection.h"
 #include "Error.h"
 #include "EventLoop.h"
 using std::cout;
@@ -30,7 +31,7 @@ void Channel::SetInEpoll() { in_epoll_ = true; }
 
 void Channel::RemoveInEpoll() {
   if (in_epoll_) {
-    loop_->Delete(this);
+    loop_->Delete(this);  // 线程安全
     listen_events_ = 0;
     ready_events_ = 0;
     in_epoll_ = false;
@@ -83,10 +84,24 @@ void Channel::SetReadyEvents(int n) {
   }
 }
 void Channel::HandleEvent() {
+  if (tied_) {
+    auto guard = tie_.lock();  // +1
+    HandleEventWithGuard();
+  } else {
+    HandleEventWithGuard();
+  }
+}  // -1
+
+void Channel::HandleEventWithGuard() {
   if ((ready_events_ & READ_EVENT) && read_call_back_) {  // 客户端退出连接也会读取
     read_call_back_();
   }
   if ((ready_events_ & WRITE_EVENT) && write_call_back_) {
     write_call_back_();
   }
+}
+
+void Channel::Tie(const std::shared_ptr<Connection> &conn) {
+  tie_ = conn;
+  tied_ = true;
 }

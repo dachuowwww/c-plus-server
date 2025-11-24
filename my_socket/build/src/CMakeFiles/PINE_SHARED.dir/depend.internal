@@ -14,6 +14,7 @@ src/CMakeFiles/PINE_SHARED.dir/Buffer.cpp.o
  /home/dachuo/my_socket/src/Buffer.cpp
 src/CMakeFiles/PINE_SHARED.dir/Channel.cpp.o
  ../src/include/Channel.h
+ ../src/include/Connection.h
  ../src/include/Error.h
  ../src/include/EventLoop.h
  ../src/include/Macro.h
@@ -27,11 +28,16 @@ src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o
  ../src/include/Macro.h
  ../src/include/Socket.h
  /home/dachuo/my_socket/src/Connection.cpp
+src/CMakeFiles/PINE_SHARED.dir/CurrentThread.cpp.o
+ ../src/include/CurrentThread.h
+ /home/dachuo/my_socket/src/CurrentThread.cpp
 src/CMakeFiles/PINE_SHARED.dir/Error.cpp.o
  /home/dachuo/my_socket/src/Error.cpp
  /home/dachuo/my_socket/src/include/Error.h
 src/CMakeFiles/PINE_SHARED.dir/EventLoop.cpp.o
  ../src/include/Channel.h
+ ../src/include/CurrentThread.h
+ ../src/include/Error.h
  ../src/include/EventLoop.h
  ../src/include/Macro.h
  ../src/include/Poller.h

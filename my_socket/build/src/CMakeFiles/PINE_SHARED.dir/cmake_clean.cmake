@@ -5,6 +5,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/PINE_SHARED.dir/Buffer.cpp.o"
   "CMakeFiles/PINE_SHARED.dir/Channel.cpp.o"
   "CMakeFiles/PINE_SHARED.dir/Connection.cpp.o"
+  "CMakeFiles/PINE_SHARED.dir/CurrentThread.cpp.o"
   "CMakeFiles/PINE_SHARED.dir/Error.cpp.o"
   "CMakeFiles/PINE_SHARED.dir/EventLoop.cpp.o"
   "CMakeFiles/PINE_SHARED.dir/Poller.cpp.o"

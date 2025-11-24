@@ -39,12 +39,6 @@
 				"file" : 0,
 				"line" : 15,
 				"parent" : 0
-			},
-			{
-				"command" : 1,
-				"file" : 0,
-				"line" : 15,
-				"parent" : 0
 			}
 		]
 	},
@@ -60,10 +54,6 @@
 		},
 		{
 			"backtrace" : 4,
-			"id" : "test_thread_poll::@36f028580bb02cc8272a"
-		},
-		{
-			"backtrace" : 5,
 			"id" : "server::@36f028580bb02cc8272a"
 		}
 	],

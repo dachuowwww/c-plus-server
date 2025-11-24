@@ -13,28 +13,44 @@ using std::function;
 
 const int SERV_BUFFER = 1024;
 Connection::Connection(EventLoop *loop, int cln_fd) : loop_(loop) {
-  if (loop_ != nullptr) {
-    conn_channel_ = std::make_unique<Channel>(loop_, cln_fd);
-  }
   conn_socket_ = std::make_unique<Socket>(cln_fd);
-  conn_socket_->SetNonBlocking();
   input_buffer_ = std::make_unique<Buffer>();
   output_buffer_ = std::make_unique<Buffer>();
   state_ = State::Connected;  // 默认已连接才可以进行客户端的读写操作
+  if (loop_ != nullptr) {
+    conn_socket_->SetNonBlocking();
+
+    conn_channel_ = std::make_unique<Channel>(loop_, cln_fd);
+    conn_channel_->SetReadCallback([this]() { this->ListenClientMessage(); });  // 命名空间调用可省略，取地址不行。
+  }
 }
 Connection::~Connection() = default;
-void Connection::SetRemoveConnection(function<void(int)> &&cb) { remove_ = std::move(cb); }
+
+void Connection::ConnectionEstablished() {
+  conn_channel_->Tie(shared_from_this());  // 构造函数不能写shared_from_this，因为还没构造完毕。对象内部创建一个指向自己的共享指针 +1
+  conn_channel_->EnableReading();
+}
+
+void Connection::ConnectionDestructor() {
+  int fd = conn_channel_->GetFd();
+  conn_channel_->RemoveInEpoll();
+  cout << "client fd " << fd << " has been ultimately removed" << std::endl;
+} // -1
+
+void Connection::SetRemoveConnection(function<void(const std::shared_ptr<Connection> &conn)> &&cb) {
+  remove_ = std::move(cb);
+}
 
 void Connection::RemoveConnection() {
-  conn_channel_->RemoveInEpoll();
-  remove_(conn_socket_->GetFd());
+  remove_(shared_from_this());  // 不会泄露但是很危险 use after free
 }  // 关闭进行中的读写操作，并移除连接
 
 bool Connection::IsInEpoll() const { return conn_channel_->IfInEpoll(); }
+EventLoop *Connection::GetLoop() const { return loop_; }
 int Connection::GetFd() const { return conn_socket_->GetFd(); }
 void Connection::SetET() { conn_channel_->UseET(); }
 
-void Connection::EnableReading() { conn_channel_->EnableReading(); }
+// void Connection::EnableReading() {  }
 // void Connection::Echo() {
 //   if (!IsConnected()) {
 //     cout << "client fd " << conn_socket_->GetFd() << " disconnected" << endl;
@@ -72,15 +88,17 @@ void Connection::EnableReading() { conn_channel_->EnableReading(); }
 //   }
 // }
 
-void Connection::SetHandleReadFunc(function<void(Connection *)> cb) {
+void Connection::SetHandleReadFunc(function<void(const std::shared_ptr<Connection> &conn)> cb) {
   handle_read_func_ = std::move(cb);
   // conn_channel_->SetReadCallback([this]() { handle_read_func_(this); });
-  conn_channel_->SetReadCallback([this]() { this->ListenClientMessage(); });  // 调用可省略，取地址不行。
 }
 
 void Connection::ListenClientMessage() {
   Read();
-  handle_read_func_(this);
+  if (state_ != State::Connected) {
+    return;
+  }
+  handle_read_func_(shared_from_this());
 }
 
 void Connection::Send(const char *data) {
@@ -104,7 +122,7 @@ void Connection::Write() {
   } else {
     WriteBlocking();
   }
-  //output_buffer_->Clear();
+  // output_buffer_->Clear();
 }
 
 void Connection::ReadNonBlocking() {
@@ -130,10 +148,12 @@ void Connection::ReadNonBlocking() {
     if (bytes_read == 0) {  // EOF，对方断开连接
       cout << "Read EOF, fd " << conn_socket_->GetFd() << " disconnected" << endl;
       SetState(State::Closed);
+      RemoveConnection();
       break;
     }
     cout << "other read error" << endl;
     SetState(State::Closed);
+    RemoveConnection();
     break;
   }
 }
@@ -149,7 +169,9 @@ void Connection::ReadBlocking() {
     if (bytes_read > 0) {
       input_buffer_->Append(buf, bytes_read);
       had_read += bytes_read;
-      if(had_read >= bytes_to_read){ break;}  // 提高与非阻塞IO的兼容性
+      if (had_read >= bytes_to_read) {
+        break;
+      }  // 提高与非阻塞IO的兼容性
       continue;
     }
     if (bytes_read == -1 && errno == EINTR) {  // 对方正常中断、继续读取
@@ -159,10 +181,12 @@ void Connection::ReadBlocking() {
     if (bytes_read == 0) {  // EOF，对方断开连接
       cout << "Read EOF, fd " << conn_socket_->GetFd() << " disconnected" << endl;
       SetState(State::Closed);
+      // RemoveConnection();
       break;
     }
     cout << "other read error" << endl;
     SetState(State::Closed);
+    // RemoveConnection();
     break;
   }
 }
@@ -197,6 +221,7 @@ void Connection::WriteNonBlocking() {
     // }
     cout << "other write error" << endl;
     SetState(State::Closed);
+    RemoveConnection();
     break;
   }
 }
@@ -214,6 +239,7 @@ void Connection::WriteBlocking() {
     }
     cout << "other write error" << endl;
     SetState(State::Closed);
+    // RemoveConnection();
     break;
   }
 }

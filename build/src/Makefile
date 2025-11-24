@@ -233,6 +233,33 @@ Connection.cpp.s:
 	cd /home/dachuo/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.s
 .PHONY : Connection.cpp.s
 
+CurrentThread.o: CurrentThread.cpp.o
+
+.PHONY : CurrentThread.o
+
+# target to build an object file
+CurrentThread.cpp.o:
+	cd /home/dachuo/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/CurrentThread.cpp.o
+.PHONY : CurrentThread.cpp.o
+
+CurrentThread.i: CurrentThread.cpp.i
+
+.PHONY : CurrentThread.i
+
+# target to preprocess a source file
+CurrentThread.cpp.i:
+	cd /home/dachuo/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/CurrentThread.cpp.i
+.PHONY : CurrentThread.cpp.i
+
+CurrentThread.s: CurrentThread.cpp.s
+
+.PHONY : CurrentThread.s
+
+# target to generate assembly for a file
+CurrentThread.cpp.s:
+	cd /home/dachuo/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/CurrentThread.cpp.s
+.PHONY : CurrentThread.cpp.s
+
 Error.o: Error.cpp.o
 
 .PHONY : Error.o
@@ -286,33 +313,6 @@ EventLoop.s: EventLoop.cpp.s
 EventLoop.cpp.s:
 	cd /home/dachuo/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/EventLoop.cpp.s
 .PHONY : EventLoop.cpp.s
-
-InetAddress.o: InetAddress.cpp.o
-
-.PHONY : InetAddress.o
-
-# target to build an object file
-InetAddress.cpp.o:
-	cd /home/dachuo/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/InetAddress.cpp.o
-.PHONY : InetAddress.cpp.o
-
-InetAddress.i: InetAddress.cpp.i
-
-.PHONY : InetAddress.i
-
-# target to preprocess a source file
-InetAddress.cpp.i:
-	cd /home/dachuo/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/InetAddress.cpp.i
-.PHONY : InetAddress.cpp.i
-
-InetAddress.s: InetAddress.cpp.s
-
-.PHONY : InetAddress.s
-
-# target to generate assembly for a file
-InetAddress.cpp.s:
-	cd /home/dachuo/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/InetAddress.cpp.s
-.PHONY : InetAddress.cpp.s
 
 Poller.o: Poller.cpp.o
 
@@ -443,15 +443,15 @@ help:
 	@echo "... Connection.o"
 	@echo "... Connection.i"
 	@echo "... Connection.s"
+	@echo "... CurrentThread.o"
+	@echo "... CurrentThread.i"
+	@echo "... CurrentThread.s"
 	@echo "... Error.o"
 	@echo "... Error.i"
 	@echo "... Error.s"
 	@echo "... EventLoop.o"
 	@echo "... EventLoop.i"
 	@echo "... EventLoop.s"
-	@echo "... InetAddress.o"
-	@echo "... InetAddress.i"
-	@echo "... InetAddress.s"
 	@echo "... Poller.o"
 	@echo "... Poller.i"
 	@echo "... Poller.s"

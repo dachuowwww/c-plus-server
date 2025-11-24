@@ -40,10 +40,12 @@ void OneClient(int msgs, int wait) {
   while (count < msgs) {
     cln_conn.Send("I'm client!");
     if ((cln_conn.GetState() == Connection::State::Closed)) {
+      cout << "Client fd: " << cln_conn.GetFd() << " write error, exit" << endl;
       break;
     }
     cln_conn.Read();
     if ((cln_conn.GetState() == Connection::State::Closed)) {
+      cout << "Client fd: " << cln_conn.GetFd() << " read error, exit" << endl;
       break;
     }
     cout << "Client fd: " << cln_conn.GetFd() << " accept no." << count++
