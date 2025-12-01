@@ -10,6 +10,8 @@
 
 EventLoop::EventLoop() {
   poller_ = std::make_unique<Poller>();
+  tid_ = current_thread::Tid();
+  std::cout << "EventLoop created in thread tid_=" << tid_ << std::endl;
   wakeup_fd_ = ::eventfd(0, EFD_NONBLOCK | EFD_CLOEXEC);
   wakeup_channel_ = std::make_unique<Channel>(this, wakeup_fd_);
   wakeup_channel_->SetReadCallback(std::bind(&EventLoop::HandleRead, this));
@@ -33,10 +35,9 @@ void EventLoop::DoToDoList() {
 }
 
 void EventLoop::Loop() {
-  tid_ = current_thread::Tid();
   while (true) {
     std::vector<Channel *> chs;
-    chs = poller_->Poll(); // 阻塞等待事件发生
+    chs = poller_->Poll();  // 阻塞等待事件发生
     for (auto *it : chs) {  // more clare
       it->HandleEvent();
     }

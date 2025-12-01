@@ -42,6 +42,17 @@ src/CMakeFiles/PINE_SHARED.dir/EventLoop.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/EventLoop.cpp.o: ../src/include/Poller.h
 src/CMakeFiles/PINE_SHARED.dir/EventLoop.cpp.o: ../src/EventLoop.cpp
 
+src/CMakeFiles/PINE_SHARED.dir/EventLoopThread.cpp.o: ../src/include/EventLoop.h
+src/CMakeFiles/PINE_SHARED.dir/EventLoopThread.cpp.o: ../src/include/EventLoopThread.h
+src/CMakeFiles/PINE_SHARED.dir/EventLoopThread.cpp.o: ../src/include/Macro.h
+src/CMakeFiles/PINE_SHARED.dir/EventLoopThread.cpp.o: ../src/EventLoopThread.cpp
+
+src/CMakeFiles/PINE_SHARED.dir/EventLoopThreadPool.cpp.o: ../src/include/EventLoop.h
+src/CMakeFiles/PINE_SHARED.dir/EventLoopThreadPool.cpp.o: ../src/include/EventLoopThread.h
+src/CMakeFiles/PINE_SHARED.dir/EventLoopThreadPool.cpp.o: ../src/include/EventLoopThreadPool.h
+src/CMakeFiles/PINE_SHARED.dir/EventLoopThreadPool.cpp.o: ../src/include/Macro.h
+src/CMakeFiles/PINE_SHARED.dir/EventLoopThreadPool.cpp.o: ../src/EventLoopThreadPool.cpp
+
 src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.o: ../src/include/Channel.h
 src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.o: ../src/include/Error.h
 src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.o: ../src/include/Macro.h
@@ -49,13 +60,12 @@ src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.o: ../src/include/Poller.h
 src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.o: ../src/Poller.cpp
 
 src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/include/Acceptor.h
-src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/include/Channel.h
 src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/include/Connection.h
 src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/include/Error.h
 src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/include/EventLoop.h
+src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/include/EventLoopThreadPool.h
 src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/include/Server.h
-src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/include/ThreadPool.h
 src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/Server.cpp
 
 src/CMakeFiles/PINE_SHARED.dir/Socket.cpp.o: ../src/include/Error.h

@@ -27,7 +27,8 @@ Connection::Connection(EventLoop *loop, int cln_fd) : loop_(loop) {
 Connection::~Connection() = default;
 
 void Connection::ConnectionEstablished() {
-  conn_channel_->Tie(shared_from_this());  // 构造函数不能写shared_from_this，因为还没构造完毕。对象内部创建一个指向自己的共享指针 +1
+  conn_channel_->Tie(
+      shared_from_this());  // 构造函数不能写shared_from_this，因为还没构造完毕。对象内部创建一个指向自己的共享指针 +1
   conn_channel_->EnableReading();
 }
 
@@ -35,7 +36,7 @@ void Connection::ConnectionDestructor() {
   int fd = conn_channel_->GetFd();
   conn_channel_->RemoveInEpoll();
   cout << "client fd " << fd << " has been ultimately removed" << std::endl;
-} // -1
+}  // -1
 
 void Connection::SetRemoveConnection(function<void(const std::shared_ptr<Connection> &conn)> &&cb) {
   remove_ = std::move(cb);

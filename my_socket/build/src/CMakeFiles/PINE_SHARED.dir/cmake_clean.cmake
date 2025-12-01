@@ -8,6 +8,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/PINE_SHARED.dir/CurrentThread.cpp.o"
   "CMakeFiles/PINE_SHARED.dir/Error.cpp.o"
   "CMakeFiles/PINE_SHARED.dir/EventLoop.cpp.o"
+  "CMakeFiles/PINE_SHARED.dir/EventLoopThread.cpp.o"
+  "CMakeFiles/PINE_SHARED.dir/EventLoopThreadPool.cpp.o"
   "CMakeFiles/PINE_SHARED.dir/Poller.cpp.o"
   "CMakeFiles/PINE_SHARED.dir/Server.cpp.o"
   "CMakeFiles/PINE_SHARED.dir/Socket.cpp.o"
