@@ -368,6 +368,114 @@ EventLoopThreadPool.cpp.s:
 	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/EventLoopThreadPool.cpp.s
 .PHONY : EventLoopThreadPool.cpp.s
 
+HttpContext.o: HttpContext.cpp.o
+
+.PHONY : HttpContext.o
+
+# target to build an object file
+HttpContext.cpp.o:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/HttpContext.cpp.o
+.PHONY : HttpContext.cpp.o
+
+HttpContext.i: HttpContext.cpp.i
+
+.PHONY : HttpContext.i
+
+# target to preprocess a source file
+HttpContext.cpp.i:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/HttpContext.cpp.i
+.PHONY : HttpContext.cpp.i
+
+HttpContext.s: HttpContext.cpp.s
+
+.PHONY : HttpContext.s
+
+# target to generate assembly for a file
+HttpContext.cpp.s:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/HttpContext.cpp.s
+.PHONY : HttpContext.cpp.s
+
+HttpRequest.o: HttpRequest.cpp.o
+
+.PHONY : HttpRequest.o
+
+# target to build an object file
+HttpRequest.cpp.o:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/HttpRequest.cpp.o
+.PHONY : HttpRequest.cpp.o
+
+HttpRequest.i: HttpRequest.cpp.i
+
+.PHONY : HttpRequest.i
+
+# target to preprocess a source file
+HttpRequest.cpp.i:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/HttpRequest.cpp.i
+.PHONY : HttpRequest.cpp.i
+
+HttpRequest.s: HttpRequest.cpp.s
+
+.PHONY : HttpRequest.s
+
+# target to generate assembly for a file
+HttpRequest.cpp.s:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/HttpRequest.cpp.s
+.PHONY : HttpRequest.cpp.s
+
+HttpResponse.o: HttpResponse.cpp.o
+
+.PHONY : HttpResponse.o
+
+# target to build an object file
+HttpResponse.cpp.o:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/HttpResponse.cpp.o
+.PHONY : HttpResponse.cpp.o
+
+HttpResponse.i: HttpResponse.cpp.i
+
+.PHONY : HttpResponse.i
+
+# target to preprocess a source file
+HttpResponse.cpp.i:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/HttpResponse.cpp.i
+.PHONY : HttpResponse.cpp.i
+
+HttpResponse.s: HttpResponse.cpp.s
+
+.PHONY : HttpResponse.s
+
+# target to generate assembly for a file
+HttpResponse.cpp.s:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/HttpResponse.cpp.s
+.PHONY : HttpResponse.cpp.s
+
+HttpServer.o: HttpServer.cpp.o
+
+.PHONY : HttpServer.o
+
+# target to build an object file
+HttpServer.cpp.o:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o
+.PHONY : HttpServer.cpp.o
+
+HttpServer.i: HttpServer.cpp.i
+
+.PHONY : HttpServer.i
+
+# target to preprocess a source file
+HttpServer.cpp.i:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.i
+.PHONY : HttpServer.cpp.i
+
+HttpServer.s: HttpServer.cpp.s
+
+.PHONY : HttpServer.s
+
+# target to generate assembly for a file
+HttpServer.cpp.s:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.s
+.PHONY : HttpServer.cpp.s
+
 Poller.o: Poller.cpp.o
 
 .PHONY : Poller.o
@@ -512,6 +620,18 @@ help:
 	@echo "... EventLoopThreadPool.o"
 	@echo "... EventLoopThreadPool.i"
 	@echo "... EventLoopThreadPool.s"
+	@echo "... HttpContext.o"
+	@echo "... HttpContext.i"
+	@echo "... HttpContext.s"
+	@echo "... HttpRequest.o"
+	@echo "... HttpRequest.i"
+	@echo "... HttpRequest.s"
+	@echo "... HttpResponse.o"
+	@echo "... HttpResponse.i"
+	@echo "... HttpResponse.s"
+	@echo "... HttpServer.o"
+	@echo "... HttpServer.i"
+	@echo "... HttpServer.s"
 	@echo "... Poller.o"
 	@echo "... Poller.i"
 	@echo "... Poller.s"

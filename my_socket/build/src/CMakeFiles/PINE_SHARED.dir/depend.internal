@@ -25,6 +25,7 @@ src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o
  ../src/include/Connection.h
  ../src/include/Error.h
  ../src/include/EventLoop.h
+ ../src/include/HttpContext.h
  ../src/include/Macro.h
  ../src/include/Socket.h
  /home/dachuo/my_socket/src/Connection.cpp
@@ -53,6 +54,30 @@ src/CMakeFiles/PINE_SHARED.dir/EventLoopThreadPool.cpp.o
  ../src/include/EventLoopThreadPool.h
  ../src/include/Macro.h
  /home/dachuo/my_socket/src/EventLoopThreadPool.cpp
+src/CMakeFiles/PINE_SHARED.dir/HttpContext.cpp.o
+ ../src/include/Error.h
+ ../src/include/HttpContext.h
+ ../src/include/HttpRequest.h
+ ../src/include/Macro.h
+ /home/dachuo/my_socket/src/HttpContext.cpp
+src/CMakeFiles/PINE_SHARED.dir/HttpRequest.cpp.o
+ ../src/include/HttpRequest.h
+ ../src/include/Macro.h
+ /home/dachuo/my_socket/src/HttpRequest.cpp
+src/CMakeFiles/PINE_SHARED.dir/HttpResponse.cpp.o
+ ../src/include/HttpResponse.h
+ ../src/include/Macro.h
+ /home/dachuo/my_socket/src/HttpResponse.cpp
+src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o
+ ../src/include/Connection.h
+ ../src/include/EventLoop.h
+ ../src/include/HttpContext.h
+ ../src/include/HttpRequest.h
+ ../src/include/HttpResponse.h
+ ../src/include/HttpServer.h
+ ../src/include/Macro.h
+ ../src/include/Server.h
+ /home/dachuo/my_socket/src/HttpServer.cpp
 src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.o
  ../src/include/Channel.h
  ../src/include/Error.h

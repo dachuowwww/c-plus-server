@@ -8,7 +8,7 @@ class Channel;
 
 class Acceptor {
  public:
-  explicit Acceptor(EventLoop *loop);
+  explicit Acceptor(EventLoop *loop, const char *ip, uint16_t port);
   ~Acceptor();
 
   void SetNewConnectionCallback(std::function<void(int)> &&cb);

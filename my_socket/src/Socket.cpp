@@ -82,11 +82,9 @@ void Socket::Connect(const char *ip, uint16_t port) {
     if (conn_err == -1 && errno == EINPROGRESS) {
       while (true) {
         fd_set write_set;  // 是 select() 系统调用使用的文件描述符集合类型
-        // NOLINT
         // NOLINTNEXTLINE(hicpp-no-assembler, readability-isolate-declaration)
         FD_ZERO(&write_set);
         // 清空集合
-        // NOLINT
         // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-constant-array-index)
         FD_SET(sock_fd_, &write_set);
         // 将 sock_fd_ 加入集合

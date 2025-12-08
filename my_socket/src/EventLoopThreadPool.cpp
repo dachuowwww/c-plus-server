@@ -1,12 +1,12 @@
 #include "EventLoopThreadPool.h"
-#include "EventLoopThread.h"
 #include "EventLoop.h"
+#include "EventLoopThread.h"
 
 EventLoopThreadPool::EventLoopThreadPool(EventLoop *main_reactor, int numThreads)
     : main_reactor_(main_reactor), num_threads_(numThreads), next_(0) {
-    if (num_threads_ <= 0) {
-        num_threads_ = 1;
-    }
+  if (num_threads_ <= 0) {
+    num_threads_ = 1;
+  }
 }
 
 EventLoopThreadPool::~EventLoopThreadPool() = default;
@@ -21,11 +21,11 @@ void EventLoopThreadPool::Start() {
 }
 
 EventLoop *EventLoopThreadPool::NextLoop() {
-    if (!event_loops_.empty()){
-        if (next_ == event_loops_.size()){
-        next_ = 0;
-        }
-        return event_loops_[next_++];
+  if (!event_loops_.empty()) {
+    if (next_ == event_loops_.size()) {
+      next_ = 0;
     }
-    return main_reactor_;
+    return event_loops_[next_++];
+  }
+  return main_reactor_;
 }

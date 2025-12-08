@@ -6,6 +6,7 @@
 #include "Channel.h"
 #include "Error.h"
 #include "EventLoop.h"
+#include "HttpContext.h"
 #include "Socket.h"
 using std::cout;
 using std::endl;
@@ -23,6 +24,7 @@ Connection::Connection(EventLoop *loop, int cln_fd) : loop_(loop) {
     conn_channel_ = std::make_unique<Channel>(loop_, cln_fd);
     conn_channel_->SetReadCallback([this]() { this->ListenClientMessage(); });  // 命名空间调用可省略，取地址不行。
   }
+  context_ = std::make_unique<HttpContext>();
 }
 Connection::~Connection() = default;
 
@@ -182,12 +184,16 @@ void Connection::ReadBlocking() {
     if (bytes_read == 0) {  // EOF，对方断开连接
       cout << "Read EOF, fd " << conn_socket_->GetFd() << " disconnected" << endl;
       SetState(State::Closed);
-      // RemoveConnection();
+      if (remove_) {
+        RemoveConnection();
+      }
       break;
     }
     cout << "other read error" << endl;
     SetState(State::Closed);
-    // RemoveConnection();
+    if (remove_) {
+      RemoveConnection();
+    }
     break;
   }
 }
@@ -240,7 +246,9 @@ void Connection::WriteBlocking() {
     }
     cout << "other write error" << endl;
     SetState(State::Closed);
-    // RemoveConnection();
+    if (remove_) {
+      RemoveConnection();
+    }
     break;
   }
 }
@@ -249,8 +257,12 @@ void Connection::KeyBoardInput() { input_buffer_->SetKeyBoardInput(); }
 
 const char *Connection::ReadInputBuffer() const { return input_buffer_->GetData(); }
 
+int Connection::ReadInputBufferSize() const { return input_buffer_->GetSize(); }
+
 void Connection::SetOutput(const char *data) { output_buffer_->SetData(data); }
 
 void Connection::SetState(State state) { state_ = state; }  // 这种类型（enum、int、struct 无指针成员）完全不需要 move。
 
 Connection::State Connection::GetState() const { return state_; }
+
+HttpContext *Connection::GetContext() const { return context_.get(); }

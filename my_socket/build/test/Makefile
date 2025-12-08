@@ -126,6 +126,36 @@ multiple_client/fast:
 .PHONY : multiple_client/fast
 
 # Convenience name for target.
+test/CMakeFiles/httpserver.dir/rule:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/httpserver.dir/rule
+.PHONY : test/CMakeFiles/httpserver.dir/rule
+
+# Convenience name for target.
+httpserver: test/CMakeFiles/httpserver.dir/rule
+
+.PHONY : httpserver
+
+# fast build rule for target.
+httpserver/fast:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f test/CMakeFiles/httpserver.dir/build.make test/CMakeFiles/httpserver.dir/build
+.PHONY : httpserver/fast
+
+# Convenience name for target.
+test/CMakeFiles/http_context.dir/rule:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/http_context.dir/rule
+.PHONY : test/CMakeFiles/http_context.dir/rule
+
+# Convenience name for target.
+http_context: test/CMakeFiles/http_context.dir/rule
+
+.PHONY : http_context
+
+# fast build rule for target.
+http_context/fast:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f test/CMakeFiles/http_context.dir/build.make test/CMakeFiles/http_context.dir/build
+.PHONY : http_context/fast
+
+# Convenience name for target.
 test/CMakeFiles/client.dir/rule:
 	cd /home/dachuo/my_socket/build && $(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/client.dir/rule
 .PHONY : test/CMakeFiles/client.dir/rule
@@ -154,21 +184,6 @@ check-tests: test/CMakeFiles/check-tests.dir/rule
 check-tests/fast:
 	cd /home/dachuo/my_socket/build && $(MAKE) -f test/CMakeFiles/check-tests.dir/build.make test/CMakeFiles/check-tests.dir/build
 .PHONY : check-tests/fast
-
-# Convenience name for target.
-test/CMakeFiles/server.dir/rule:
-	cd /home/dachuo/my_socket/build && $(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/server.dir/rule
-.PHONY : test/CMakeFiles/server.dir/rule
-
-# Convenience name for target.
-server: test/CMakeFiles/server.dir/rule
-
-.PHONY : server
-
-# fast build rule for target.
-server/fast:
-	cd /home/dachuo/my_socket/build && $(MAKE) -f test/CMakeFiles/server.dir/build.make test/CMakeFiles/server.dir/build
-.PHONY : server/fast
 
 # Convenience name for target.
 test/CMakeFiles/build-tests.dir/rule:
@@ -212,6 +227,60 @@ client.cpp.s:
 	cd /home/dachuo/my_socket/build && $(MAKE) -f test/CMakeFiles/client.dir/build.make test/CMakeFiles/client.dir/client.cpp.s
 .PHONY : client.cpp.s
 
+http_context.o: http_context.cpp.o
+
+.PHONY : http_context.o
+
+# target to build an object file
+http_context.cpp.o:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f test/CMakeFiles/http_context.dir/build.make test/CMakeFiles/http_context.dir/http_context.cpp.o
+.PHONY : http_context.cpp.o
+
+http_context.i: http_context.cpp.i
+
+.PHONY : http_context.i
+
+# target to preprocess a source file
+http_context.cpp.i:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f test/CMakeFiles/http_context.dir/build.make test/CMakeFiles/http_context.dir/http_context.cpp.i
+.PHONY : http_context.cpp.i
+
+http_context.s: http_context.cpp.s
+
+.PHONY : http_context.s
+
+# target to generate assembly for a file
+http_context.cpp.s:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f test/CMakeFiles/http_context.dir/build.make test/CMakeFiles/http_context.dir/http_context.cpp.s
+.PHONY : http_context.cpp.s
+
+httpserver.o: httpserver.cpp.o
+
+.PHONY : httpserver.o
+
+# target to build an object file
+httpserver.cpp.o:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f test/CMakeFiles/httpserver.dir/build.make test/CMakeFiles/httpserver.dir/httpserver.cpp.o
+.PHONY : httpserver.cpp.o
+
+httpserver.i: httpserver.cpp.i
+
+.PHONY : httpserver.i
+
+# target to preprocess a source file
+httpserver.cpp.i:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f test/CMakeFiles/httpserver.dir/build.make test/CMakeFiles/httpserver.dir/httpserver.cpp.i
+.PHONY : httpserver.cpp.i
+
+httpserver.s: httpserver.cpp.s
+
+.PHONY : httpserver.s
+
+# target to generate assembly for a file
+httpserver.cpp.s:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f test/CMakeFiles/httpserver.dir/build.make test/CMakeFiles/httpserver.dir/httpserver.cpp.s
+.PHONY : httpserver.cpp.s
+
 multiple_client.o: multiple_client.cpp.o
 
 .PHONY : multiple_client.o
@@ -239,33 +308,6 @@ multiple_client.cpp.s:
 	cd /home/dachuo/my_socket/build && $(MAKE) -f test/CMakeFiles/multiple_client.dir/build.make test/CMakeFiles/multiple_client.dir/multiple_client.cpp.s
 .PHONY : multiple_client.cpp.s
 
-server.o: server.cpp.o
-
-.PHONY : server.o
-
-# target to build an object file
-server.cpp.o:
-	cd /home/dachuo/my_socket/build && $(MAKE) -f test/CMakeFiles/server.dir/build.make test/CMakeFiles/server.dir/server.cpp.o
-.PHONY : server.cpp.o
-
-server.i: server.cpp.i
-
-.PHONY : server.i
-
-# target to preprocess a source file
-server.cpp.i:
-	cd /home/dachuo/my_socket/build && $(MAKE) -f test/CMakeFiles/server.dir/build.make test/CMakeFiles/server.dir/server.cpp.i
-.PHONY : server.cpp.i
-
-server.s: server.cpp.s
-
-.PHONY : server.s
-
-# target to generate assembly for a file
-server.cpp.s:
-	cd /home/dachuo/my_socket/build && $(MAKE) -f test/CMakeFiles/server.dir/build.make test/CMakeFiles/server.dir/server.cpp.s
-.PHONY : server.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -275,19 +317,23 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... multiple_client"
+	@echo "... httpserver"
+	@echo "... http_context"
 	@echo "... client"
 	@echo "... check-tests"
-	@echo "... server"
 	@echo "... build-tests"
 	@echo "... client.o"
 	@echo "... client.i"
 	@echo "... client.s"
+	@echo "... http_context.o"
+	@echo "... http_context.i"
+	@echo "... http_context.s"
+	@echo "... httpserver.o"
+	@echo "... httpserver.i"
+	@echo "... httpserver.s"
 	@echo "... multiple_client.o"
 	@echo "... multiple_client.i"
 	@echo "... multiple_client.s"
-	@echo "... server.o"
-	@echo "... server.i"
-	@echo "... server.s"
 .PHONY : help
 
 

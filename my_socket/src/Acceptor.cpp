@@ -7,9 +7,9 @@ using std::cout;
 using std::endl;
 using std::make_unique;
 
-Acceptor::Acceptor(EventLoop *loop) : loop_(loop) {
+Acceptor::Acceptor(EventLoop *loop, const char *ip, uint16_t port) : loop_(loop) {
   accept_socket_ = make_unique<Socket>();
-  accept_socket_->Bind("127.0.0.1", 8888);  // 客户端为自动分配ip和端口的关系，服务端需要绑定固定的ip和端口
+  accept_socket_->Bind(ip, port);  // 客户端为自动分配ip和端口的关系，服务端需要绑定固定的ip和端口
   accept_socket_->Listen();
 
   accept_channel_ = std::make_unique<Channel>(loop_, accept_socket_->GetFd());

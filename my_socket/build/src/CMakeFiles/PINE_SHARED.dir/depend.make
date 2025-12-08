@@ -24,6 +24,7 @@ src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/include/Channel.h
 src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/include/Connection.h
 src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/include/Error.h
 src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/include/EventLoop.h
+src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/include/HttpContext.h
 src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/include/Socket.h
 src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/Connection.cpp
@@ -52,6 +53,30 @@ src/CMakeFiles/PINE_SHARED.dir/EventLoopThreadPool.cpp.o: ../src/include/EventLo
 src/CMakeFiles/PINE_SHARED.dir/EventLoopThreadPool.cpp.o: ../src/include/EventLoopThreadPool.h
 src/CMakeFiles/PINE_SHARED.dir/EventLoopThreadPool.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/EventLoopThreadPool.cpp.o: ../src/EventLoopThreadPool.cpp
+
+src/CMakeFiles/PINE_SHARED.dir/HttpContext.cpp.o: ../src/include/Error.h
+src/CMakeFiles/PINE_SHARED.dir/HttpContext.cpp.o: ../src/include/HttpContext.h
+src/CMakeFiles/PINE_SHARED.dir/HttpContext.cpp.o: ../src/include/HttpRequest.h
+src/CMakeFiles/PINE_SHARED.dir/HttpContext.cpp.o: ../src/include/Macro.h
+src/CMakeFiles/PINE_SHARED.dir/HttpContext.cpp.o: ../src/HttpContext.cpp
+
+src/CMakeFiles/PINE_SHARED.dir/HttpRequest.cpp.o: ../src/include/HttpRequest.h
+src/CMakeFiles/PINE_SHARED.dir/HttpRequest.cpp.o: ../src/include/Macro.h
+src/CMakeFiles/PINE_SHARED.dir/HttpRequest.cpp.o: ../src/HttpRequest.cpp
+
+src/CMakeFiles/PINE_SHARED.dir/HttpResponse.cpp.o: ../src/include/HttpResponse.h
+src/CMakeFiles/PINE_SHARED.dir/HttpResponse.cpp.o: ../src/include/Macro.h
+src/CMakeFiles/PINE_SHARED.dir/HttpResponse.cpp.o: ../src/HttpResponse.cpp
+
+src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/Connection.h
+src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/EventLoop.h
+src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/HttpContext.h
+src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/HttpRequest.h
+src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/HttpResponse.h
+src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/HttpServer.h
+src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/Macro.h
+src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/Server.h
+src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/HttpServer.cpp
 
 src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.o: ../src/include/Channel.h
 src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.o: ../src/include/Error.h

@@ -13,8 +13,8 @@
 using std::cout;
 using std::endl;
 using std::function;
-Server::Server(EventLoop *loop) : main_reactor_(loop) {
-  acceptor_ = std::make_unique<Acceptor>(main_reactor_);
+Server::Server(EventLoop *loop, const char *ip, uint16_t port) : main_reactor_(loop) {
+  acceptor_ = std::make_unique<Acceptor>(main_reactor_, ip, port);
   acceptor_->SetNewConnectionCallback([this](int cln_fd) { Server::NewConnection(cln_fd); });
 
   unsigned int size = std::thread::hardware_concurrency();
@@ -33,8 +33,8 @@ Server::Server(EventLoop *loop) : main_reactor_(loop) {
 }
 Server::~Server() = default;
 
-void Server::OnConnect(function<void(const std::shared_ptr<Connection> &conn)> &&cb) {
-  new_connection_callback_ = std::move(cb);
+void Server::OnMessage(function<void(const std::shared_ptr<Connection> &conn)> &&cb) {
+  message_callback_ = std::move(cb);
 }
 
 void Server::NewConnection(int cln_fd) {
@@ -42,7 +42,7 @@ void Server::NewConnection(int cln_fd) {
   auto clnt_conn = std::make_shared<Connection>(event_loop_thread_pool_->NextLoop(), cln_fd);
   // function<void(Connection *)> cb1 = std::bind(&Handle, this, std::placeholders::_1);
   // 没有必要，因为Server::Handle已经绑定了this指针
-  clnt_conn->SetHandleReadFunc(new_connection_callback_);
+  clnt_conn->SetHandleReadFunc(message_callback_);
   clnt_conn->SetRemoveConnection([this](const std::shared_ptr<Connection> &conn) { Server::RemoveConnection(conn); });
   clnt_conn->SetET();
   // clnt_conn->EnableReading();

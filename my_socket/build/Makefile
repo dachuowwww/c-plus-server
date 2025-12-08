@@ -189,6 +189,32 @@ multiple_client/fast:
 .PHONY : multiple_client/fast
 
 #=============================================================================
+# Target rules for targets named httpserver
+
+# Build rule for target.
+httpserver: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 httpserver
+.PHONY : httpserver
+
+# fast build rule for target.
+httpserver/fast:
+	$(MAKE) -f test/CMakeFiles/httpserver.dir/build.make test/CMakeFiles/httpserver.dir/build
+.PHONY : httpserver/fast
+
+#=============================================================================
+# Target rules for targets named http_context
+
+# Build rule for target.
+http_context: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 http_context
+.PHONY : http_context
+
+# fast build rule for target.
+http_context/fast:
+	$(MAKE) -f test/CMakeFiles/http_context.dir/build.make test/CMakeFiles/http_context.dir/build
+.PHONY : http_context/fast
+
+#=============================================================================
 # Target rules for targets named client
 
 # Build rule for target.
@@ -213,19 +239,6 @@ check-tests: cmake_check_build_system
 check-tests/fast:
 	$(MAKE) -f test/CMakeFiles/check-tests.dir/build.make test/CMakeFiles/check-tests.dir/build
 .PHONY : check-tests/fast
-
-#=============================================================================
-# Target rules for targets named server
-
-# Build rule for target.
-server: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 server
-.PHONY : server
-
-# fast build rule for target.
-server/fast:
-	$(MAKE) -f test/CMakeFiles/server.dir/build.make test/CMakeFiles/server.dir/build
-.PHONY : server/fast
 
 #=============================================================================
 # Target rules for targets named build-tests
@@ -254,9 +267,10 @@ help:
 	@echo "... format"
 	@echo "... PINE_SHARED"
 	@echo "... multiple_client"
+	@echo "... httpserver"
+	@echo "... http_context"
 	@echo "... client"
 	@echo "... check-tests"
-	@echo "... server"
 	@echo "... build-tests"
 .PHONY : help
 

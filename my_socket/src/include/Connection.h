@@ -2,10 +2,12 @@
 #include <functional>
 #include <memory>
 #include "Macro.h"
+class HttpContext;
 class EventLoop;
 class Socket;
 class Channel;
 class Buffer;
+class Context;
 
 class Connection : public std::enable_shared_from_this<Connection> {
  public:
@@ -25,8 +27,10 @@ class Connection : public std::enable_shared_from_this<Connection> {
   [[nodiscard]] bool IsInEpoll() const;
   [[nodiscard]] int GetFd() const;
   [[nodiscard]] const char *ReadInputBuffer() const;
+  [[nodiscard]] int ReadInputBufferSize() const;
   [[nodiscard]] State GetState() const;
   [[nodiscard]] EventLoop *GetLoop() const;
+  [[nodiscard]] HttpContext *GetContext() const;
 
   // void EnableReading();
   void ConnectionEstablished();
@@ -54,6 +58,11 @@ class Connection : public std::enable_shared_from_this<Connection> {
 
   std::unique_ptr<Buffer> input_buffer_;
   std::unique_ptr<Buffer> output_buffer_;
+
+  std::unique_ptr<HttpContext> context_;
+
+  // bool is_http_ = true;
+
   void ReadBlocking();
   void WriteBlocking();
   void ReadNonBlocking();
