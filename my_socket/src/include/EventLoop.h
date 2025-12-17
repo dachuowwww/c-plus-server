@@ -5,6 +5,8 @@
 #include "Macro.h"
 class Channel;
 class Poller;
+class TimeQueue;
+class TimeStamp;
 class EventLoop {
  public:
   EventLoop();
@@ -20,6 +22,10 @@ class EventLoop {
 
   void HandleRead();
 
+  void RunAt(TimeStamp timestamp, std::function<void()> &&cb);
+  void RunAfter(double wait_time, std::function<void()> &&cb);
+  void RunEvery(double interval, std::function<void()> &&cb);
+
  private:
   std::unique_ptr<Poller> poller_;
   std::vector<std::function<void()>> to_do_list_;
@@ -28,6 +34,8 @@ class EventLoop {
   int wakeup_fd_;
   std::unique_ptr<Channel> wakeup_channel_;
   bool calling_functors_ = false;  // 记录是否在调用dotodolist判断需不需要唤醒
+
+  std::unique_ptr<TimeQueue> timequeue_;
 
   DISALLOW_COPY_AND_ASSIGN(EventLoop);
 };

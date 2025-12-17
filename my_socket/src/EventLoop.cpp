@@ -7,6 +7,8 @@
 #include "CurrentThread.h"
 #include "Error.h"
 #include "Poller.h"
+#include "TimeQueue.h"
+#include "TimeStamp.h"
 
 EventLoop::EventLoop() {
   poller_ = std::make_unique<Poller>();
@@ -16,6 +18,7 @@ EventLoop::EventLoop() {
   wakeup_channel_ = std::make_unique<Channel>(this, wakeup_fd_);
   wakeup_channel_->SetReadCallback(std::bind(&EventLoop::HandleRead, this));
   wakeup_channel_->EnableReading();
+  timequeue_ = std::make_unique<TimeQueue>(this);
 }
 EventLoop::~EventLoop() = default;
 void EventLoop::Update(Channel *channel) { poller_->UpdateChannel(channel); }
@@ -74,4 +77,16 @@ void EventLoop::HandleRead() {
   ssize_t read_size = read(wakeup_fd_, &read_one_byte, sizeof(read_one_byte));
   (void)read_size;
   Errif(read_size != sizeof(read_one_byte), "Wake up read error.");
+}
+
+void EventLoop::RunAt(TimeStamp timestamp, std::function<void()> &&cb) {
+  timequeue_->Insert(timestamp, std::move(cb), 0.0);
+}
+
+void EventLoop::RunAfter(double wait_time, std::function<void()> &&cb) {
+  timequeue_->Insert(TimeStamp::AddTime(TimeStamp::Now(), wait_time), std::move(cb), 0.0);
+}
+
+void EventLoop::RunEvery(double interval, std::function<void()> &&cb) {
+  timequeue_->Insert(TimeStamp::AddTime(TimeStamp::Now(), interval), std::move(cb), interval);  // 不能以目前为定时器
 }

@@ -37,11 +37,16 @@ void Server::OnMessage(function<void(const std::shared_ptr<Connection> &conn)> &
   message_callback_ = std::move(cb);
 }
 
+void Server::OnConnect(function<void(const std::shared_ptr<Connection> &conn)> &&cb) {
+  connect_callback_ = std::move(cb);
+}
+
 void Server::NewConnection(int cln_fd) {
   // int idx = static_cast<int>(cln_fd % subreactors_.size());
   auto clnt_conn = std::make_shared<Connection>(event_loop_thread_pool_->NextLoop(), cln_fd);
   // function<void(Connection *)> cb1 = std::bind(&Handle, this, std::placeholders::_1);
   // 没有必要，因为Server::Handle已经绑定了this指针
+  clnt_conn->SetConnect(connect_callback_);
   clnt_conn->SetHandleReadFunc(message_callback_);
   clnt_conn->SetRemoveConnection([this](const std::shared_ptr<Connection> &conn) { Server::RemoveConnection(conn); });
   clnt_conn->SetET();

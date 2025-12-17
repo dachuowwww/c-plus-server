@@ -5,6 +5,7 @@
 #include "Connection.h"
 #include "HttpRequest.h"
 #include "HttpResponse.h"
+#include "TimeStamp.h"
 
 void Message(const std::shared_ptr<Connection> &conn) {  // 注册回调函数,需要修改内部元素所以不能设为const
   // conn->Read();
@@ -88,10 +89,10 @@ void Http(const HttpRequest &request, HttpResponse *response) {
 </html>)HTML");
       response->SetStatusCode(HttpResponse::HttpStatusCode::OK);
       response->SetStatusMessage("OK");
-    } else if(request.GetURL() == "/") {
+    } else if (request.GetURL() == "/") {
       response->SetContentType("text/html; charset=UTF-8");
       response->SetResponseBody("<font color=\"red\">您好!</font>");
-    }else if (request.GetURL() == "/helloyyq") {
+    } else if (request.GetURL() == "/helloyyq") {
       response->SetContentType("text/plain; charset=UTF-8");
       response->SetResponseBody("Hello 谢可欣宝宝!\n");
       response->SetStatusCode(HttpResponse::HttpStatusCode::OK);
@@ -106,6 +107,7 @@ void Http(const HttpRequest &request, HttpResponse *response) {
   }
 }
 
+void Every() { std::cout << TimeStamp::Now().ToFormattedString() << std::endl; }
 int main(int argc, char *argv[]) {
   std::string ip = "127.0.0.1";
   int port = 1234;
@@ -115,8 +117,13 @@ int main(int argc, char *argv[]) {
   }
 
   auto httpserver = std::make_unique<HttpServer>(ip.c_str(), port);
-  // httpserver->SetMessageCallBack(Message);
-  httpserver->SetHttpResponseCallBack(Http);
+  if (argc == 2) { // 加一个参数变echo_server
+    httpserver->SetMessageCallBack(Message);
+  } else {
+    httpserver->SetHttpResponseCallBack(Http);
+  }
+  httpserver->OnTimerEvery(3.0, Every);
   httpserver->Start();
+  sleep(10000);
   return 0;
 }

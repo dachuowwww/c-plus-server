@@ -32,6 +32,7 @@ void Connection::ConnectionEstablished() {
   conn_channel_->Tie(
       shared_from_this());  // 构造函数不能写shared_from_this，因为还没构造完毕。对象内部创建一个指向自己的共享指针 +1
   conn_channel_->EnableReading();
+  connnect_func_(shared_from_this());
 }
 
 void Connection::ConnectionDestructor() {
@@ -94,6 +95,10 @@ void Connection::SetET() { conn_channel_->UseET(); }
 void Connection::SetHandleReadFunc(function<void(const std::shared_ptr<Connection> &conn)> cb) {
   handle_read_func_ = std::move(cb);
   // conn_channel_->SetReadCallback([this]() { handle_read_func_(this); });
+}
+
+void Connection::SetConnect(function<void(const std::shared_ptr<Connection> &conn)> cb) {
+  connnect_func_ = std::move(cb);
 }
 
 void Connection::ListenClientMessage() {
@@ -266,3 +271,7 @@ void Connection::SetState(State state) { state_ = state; }  // 这种类型（en
 Connection::State Connection::GetState() const { return state_; }
 
 HttpContext *Connection::GetContext() const { return context_.get(); }
+
+void Connection::UpdateTimeStamp() { conn_time_ = TimeStamp::Now(); }
+
+TimeStamp Connection::GetTimeStamp() const { return conn_time_; }

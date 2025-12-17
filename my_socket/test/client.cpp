@@ -15,7 +15,7 @@ struct sockaddr_in serv_addr;
 int main() {
   auto sock = std::make_unique<Socket>();
   // sock->SetNonBlocking();
-  sock->Connect("127.0.0.1", 8888);
+  sock->Connect("127.0.0.1", 1234);
   Connection cln_conn(nullptr, sock->GetFd());
   while (true) {
     cln_conn.KeyBoardInput();

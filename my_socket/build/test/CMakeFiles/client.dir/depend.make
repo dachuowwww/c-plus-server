@@ -4,5 +4,6 @@
 test/CMakeFiles/client.dir/client.cpp.o: ../src/include/Connection.h
 test/CMakeFiles/client.dir/client.cpp.o: ../src/include/Macro.h
 test/CMakeFiles/client.dir/client.cpp.o: ../src/include/Socket.h
+test/CMakeFiles/client.dir/client.cpp.o: ../src/include/TimeStamp.h
 test/CMakeFiles/client.dir/client.cpp.o: ../test/client.cpp
 

@@ -17,6 +17,7 @@ src/CMakeFiles/PINE_SHARED.dir/Channel.cpp.o: ../src/include/Connection.h
 src/CMakeFiles/PINE_SHARED.dir/Channel.cpp.o: ../src/include/Error.h
 src/CMakeFiles/PINE_SHARED.dir/Channel.cpp.o: ../src/include/EventLoop.h
 src/CMakeFiles/PINE_SHARED.dir/Channel.cpp.o: ../src/include/Macro.h
+src/CMakeFiles/PINE_SHARED.dir/Channel.cpp.o: ../src/include/TimeStamp.h
 src/CMakeFiles/PINE_SHARED.dir/Channel.cpp.o: ../src/Channel.cpp
 
 src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/include/Buffer.h
@@ -27,6 +28,7 @@ src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/include/EventLoop.h
 src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/include/HttpContext.h
 src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/include/Socket.h
+src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/include/TimeStamp.h
 src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/Connection.cpp
 
 src/CMakeFiles/PINE_SHARED.dir/CurrentThread.cpp.o: ../src/include/CurrentThread.h
@@ -41,6 +43,8 @@ src/CMakeFiles/PINE_SHARED.dir/EventLoop.cpp.o: ../src/include/Error.h
 src/CMakeFiles/PINE_SHARED.dir/EventLoop.cpp.o: ../src/include/EventLoop.h
 src/CMakeFiles/PINE_SHARED.dir/EventLoop.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/EventLoop.cpp.o: ../src/include/Poller.h
+src/CMakeFiles/PINE_SHARED.dir/EventLoop.cpp.o: ../src/include/TimeQueue.h
+src/CMakeFiles/PINE_SHARED.dir/EventLoop.cpp.o: ../src/include/TimeStamp.h
 src/CMakeFiles/PINE_SHARED.dir/EventLoop.cpp.o: ../src/EventLoop.cpp
 
 src/CMakeFiles/PINE_SHARED.dir/EventLoopThread.cpp.o: ../src/include/EventLoop.h
@@ -76,6 +80,7 @@ src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/HttpResponse.h
 src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/HttpServer.h
 src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/Server.h
+src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/TimeStamp.h
 src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/HttpServer.cpp
 
 src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.o: ../src/include/Channel.h
@@ -91,6 +96,7 @@ src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/include/EventLoop.h
 src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/include/EventLoopThreadPool.h
 src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/include/Server.h
+src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/include/TimeStamp.h
 src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/Server.cpp
 
 src/CMakeFiles/PINE_SHARED.dir/Socket.cpp.o: ../src/include/Error.h
@@ -102,4 +108,22 @@ src/CMakeFiles/PINE_SHARED.dir/ThreadPool.cpp.o: ../src/include/Error.h
 src/CMakeFiles/PINE_SHARED.dir/ThreadPool.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/ThreadPool.cpp.o: ../src/include/ThreadPool.h
 src/CMakeFiles/PINE_SHARED.dir/ThreadPool.cpp.o: ../src/ThreadPool.cpp
+
+src/CMakeFiles/PINE_SHARED.dir/TimeQueue.cpp.o: ../src/include/Channel.h
+src/CMakeFiles/PINE_SHARED.dir/TimeQueue.cpp.o: ../src/include/Error.h
+src/CMakeFiles/PINE_SHARED.dir/TimeQueue.cpp.o: ../src/include/EventLoop.h
+src/CMakeFiles/PINE_SHARED.dir/TimeQueue.cpp.o: ../src/include/Macro.h
+src/CMakeFiles/PINE_SHARED.dir/TimeQueue.cpp.o: ../src/include/TimeQueue.h
+src/CMakeFiles/PINE_SHARED.dir/TimeQueue.cpp.o: ../src/include/TimeStamp.h
+src/CMakeFiles/PINE_SHARED.dir/TimeQueue.cpp.o: ../src/include/Timer.h
+src/CMakeFiles/PINE_SHARED.dir/TimeQueue.cpp.o: ../src/TimeQueue.cpp
+
+src/CMakeFiles/PINE_SHARED.dir/TimeStamp.cpp.o: ../src/include/Macro.h
+src/CMakeFiles/PINE_SHARED.dir/TimeStamp.cpp.o: ../src/include/TimeStamp.h
+src/CMakeFiles/PINE_SHARED.dir/TimeStamp.cpp.o: ../src/TimeStamp.cpp
+
+src/CMakeFiles/PINE_SHARED.dir/Timer.cpp.o: ../src/include/Macro.h
+src/CMakeFiles/PINE_SHARED.dir/Timer.cpp.o: ../src/include/TimeStamp.h
+src/CMakeFiles/PINE_SHARED.dir/Timer.cpp.o: ../src/include/Timer.h
+src/CMakeFiles/PINE_SHARED.dir/Timer.cpp.o: ../src/Timer.cpp
 

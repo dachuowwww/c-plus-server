@@ -584,6 +584,87 @@ ThreadPool.cpp.s:
 	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/ThreadPool.cpp.s
 .PHONY : ThreadPool.cpp.s
 
+TimeQueue.o: TimeQueue.cpp.o
+
+.PHONY : TimeQueue.o
+
+# target to build an object file
+TimeQueue.cpp.o:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/TimeQueue.cpp.o
+.PHONY : TimeQueue.cpp.o
+
+TimeQueue.i: TimeQueue.cpp.i
+
+.PHONY : TimeQueue.i
+
+# target to preprocess a source file
+TimeQueue.cpp.i:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/TimeQueue.cpp.i
+.PHONY : TimeQueue.cpp.i
+
+TimeQueue.s: TimeQueue.cpp.s
+
+.PHONY : TimeQueue.s
+
+# target to generate assembly for a file
+TimeQueue.cpp.s:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/TimeQueue.cpp.s
+.PHONY : TimeQueue.cpp.s
+
+TimeStamp.o: TimeStamp.cpp.o
+
+.PHONY : TimeStamp.o
+
+# target to build an object file
+TimeStamp.cpp.o:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/TimeStamp.cpp.o
+.PHONY : TimeStamp.cpp.o
+
+TimeStamp.i: TimeStamp.cpp.i
+
+.PHONY : TimeStamp.i
+
+# target to preprocess a source file
+TimeStamp.cpp.i:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/TimeStamp.cpp.i
+.PHONY : TimeStamp.cpp.i
+
+TimeStamp.s: TimeStamp.cpp.s
+
+.PHONY : TimeStamp.s
+
+# target to generate assembly for a file
+TimeStamp.cpp.s:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/TimeStamp.cpp.s
+.PHONY : TimeStamp.cpp.s
+
+Timer.o: Timer.cpp.o
+
+.PHONY : Timer.o
+
+# target to build an object file
+Timer.cpp.o:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/Timer.cpp.o
+.PHONY : Timer.cpp.o
+
+Timer.i: Timer.cpp.i
+
+.PHONY : Timer.i
+
+# target to preprocess a source file
+Timer.cpp.i:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/Timer.cpp.i
+.PHONY : Timer.cpp.i
+
+Timer.s: Timer.cpp.s
+
+.PHONY : Timer.s
+
+# target to generate assembly for a file
+Timer.cpp.s:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/Timer.cpp.s
+.PHONY : Timer.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -644,6 +725,15 @@ help:
 	@echo "... ThreadPool.o"
 	@echo "... ThreadPool.i"
 	@echo "... ThreadPool.s"
+	@echo "... TimeQueue.o"
+	@echo "... TimeQueue.i"
+	@echo "... TimeQueue.s"
+	@echo "... TimeStamp.o"
+	@echo "... TimeStamp.i"
+	@echo "... TimeStamp.s"
+	@echo "... Timer.o"
+	@echo "... Timer.i"
+	@echo "... Timer.s"
 .PHONY : help
 
 

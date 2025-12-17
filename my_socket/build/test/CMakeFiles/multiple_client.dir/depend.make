@@ -6,5 +6,6 @@ test/CMakeFiles/multiple_client.dir/multiple_client.cpp.o: ../src/include/Error.
 test/CMakeFiles/multiple_client.dir/multiple_client.cpp.o: ../src/include/Macro.h
 test/CMakeFiles/multiple_client.dir/multiple_client.cpp.o: ../src/include/Socket.h
 test/CMakeFiles/multiple_client.dir/multiple_client.cpp.o: ../src/include/ThreadPool.h
+test/CMakeFiles/multiple_client.dir/multiple_client.cpp.o: ../src/include/TimeStamp.h
 test/CMakeFiles/multiple_client.dir/multiple_client.cpp.o: ../test/multiple_client.cpp
 

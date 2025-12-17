@@ -6,5 +6,6 @@ test/CMakeFiles/httpserver.dir/httpserver.cpp.o: ../src/include/HttpRequest.h
 test/CMakeFiles/httpserver.dir/httpserver.cpp.o: ../src/include/HttpResponse.h
 test/CMakeFiles/httpserver.dir/httpserver.cpp.o: ../src/include/HttpServer.h
 test/CMakeFiles/httpserver.dir/httpserver.cpp.o: ../src/include/Macro.h
+test/CMakeFiles/httpserver.dir/httpserver.cpp.o: ../src/include/TimeStamp.h
 test/CMakeFiles/httpserver.dir/httpserver.cpp.o: ../test/httpserver.cpp
 

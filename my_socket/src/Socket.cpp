@@ -65,9 +65,7 @@ int Socket::Accept() {
     cln_fd = ::accept(sock_fd_, (sockaddr *)&cln_addr, &addr_size);
     Errif(cln_fd == -1, "blocking socket accept error");
   }
-  cout << "new client fd " << cln_fd << "! IP: " << inet_ntoa(cln_addr.sin_addr) << " Port:" << ntohs(cln_addr.sin_port)
-       << endl;
-  // 处理客户端连接请求
+
   return cln_fd;
 }
 void Socket::Connect(const char *ip, uint16_t port) {

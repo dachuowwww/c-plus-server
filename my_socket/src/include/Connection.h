@@ -2,6 +2,7 @@
 #include <functional>
 #include <memory>
 #include "Macro.h"
+#include "TimeStamp.h"
 class HttpContext;
 class EventLoop;
 class Socket;
@@ -37,6 +38,7 @@ class Connection : public std::enable_shared_from_this<Connection> {
   void ConnectionDestructor();
   void SetET();
   void SetHandleReadFunc(std::function<void(const std::shared_ptr<Connection> &conn)> cb);
+  void SetConnect(std::function<void(const std::shared_ptr<Connection> &conn)> cb);
 
   void ListenClientMessage();
   // void Echo();
@@ -48,11 +50,15 @@ class Connection : public std::enable_shared_from_this<Connection> {
   void SetOutput(const char *data);
   void SetState(State state);
 
+  void UpdateTimeStamp();
+  TimeStamp GetTimeStamp() const;
+
  private:
   EventLoop *loop_ = nullptr;
   std::unique_ptr<Socket> conn_socket_;
   std::unique_ptr<Channel> conn_channel_;
   std::function<void(const std::shared_ptr<Connection> &conn)> handle_read_func_;
+  std::function<void(const std::shared_ptr<Connection> &conn)> connnect_func_;
   std::function<void(const std::shared_ptr<Connection> &conn)> remove_;
   State state_ = State::Invaild;
 
@@ -60,6 +66,7 @@ class Connection : public std::enable_shared_from_this<Connection> {
   std::unique_ptr<Buffer> output_buffer_;
 
   std::unique_ptr<HttpContext> context_;
+  TimeStamp conn_time_ = TimeStamp::Now();
 
   // bool is_http_ = true;
 

@@ -18,6 +18,9 @@ file(REMOVE_RECURSE
   "CMakeFiles/PINE_SHARED.dir/Server.cpp.o"
   "CMakeFiles/PINE_SHARED.dir/Socket.cpp.o"
   "CMakeFiles/PINE_SHARED.dir/ThreadPool.cpp.o"
+  "CMakeFiles/PINE_SHARED.dir/TimeQueue.cpp.o"
+  "CMakeFiles/PINE_SHARED.dir/TimeStamp.cpp.o"
+  "CMakeFiles/PINE_SHARED.dir/Timer.cpp.o"
 )
 
 # Per-language clean rules from dependency scanning.

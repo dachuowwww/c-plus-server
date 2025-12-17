@@ -19,6 +19,7 @@ class Server {
   void RemoveConnectionInLoop(const std::shared_ptr<Connection> &conn);
 
   void OnMessage(std::function<void(const std::shared_ptr<Connection> &conn)> &&cb);
+  void OnConnect(std::function<void(const std::shared_ptr<Connection> &conn)> &&cb);
 
  private:
   EventLoop *main_reactor_;  // 主Reactor,在acceptor中监听连接请求
@@ -28,6 +29,7 @@ class Server {
   // std::unique_ptr<ThreadPool> thread_pool_;                           // 线程池，用于处理客户端请求
   std::unique_ptr<EventLoopThreadPool> event_loop_thread_pool_;
   std::function<void(const std::shared_ptr<Connection> &conn)> message_callback_;
+  std::function<void(const std::shared_ptr<Connection> &conn)> connect_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(Server);
 };
