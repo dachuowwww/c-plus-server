@@ -2,9 +2,11 @@
 #include <unistd.h>
 #include <iostream>
 #include <memory>
+#include "AsyncLogging.h"
 #include "Connection.h"
 #include "HttpRequest.h"
 #include "HttpResponse.h"
+#include "Logger.h"
 #include "TimeStamp.h"
 
 void Message(const std::shared_ptr<Connection> &conn) {  // 注册回调函数,需要修改内部元素所以不能设为const
@@ -108,22 +110,29 @@ void Http(const HttpRequest &request, HttpResponse *response) {
 }
 
 void Every() { std::cout << TimeStamp::Now().ToFormattedString() << std::endl; }
+std::unique_ptr<AsyncLogging> async_log;
+void AsyncOutput(const char *msg, int len) { async_log->Append(msg, len); }
+void AsyncFlush() { async_log->Flush(); }
 int main(int argc, char *argv[]) {
   std::string ip = "127.0.0.1";
-  int port = 1234;
+  int port = 8888;
   if (argc == 3) {
     ip = argv[1];
     port = std::atoi(argv[2]);
   }
-
+  async_log = std::make_unique<AsyncLogging>("");
+  Logger::SetOutput(AsyncOutput);
+  Logger::SetFlush(AsyncFlush);
+  async_log->Start();
   auto httpserver = std::make_unique<HttpServer>(ip.c_str(), port);
-  if (argc == 2) { // 加一个参数变echo_server
+  if (argc == 2) {  // 加一个参数变echo_server
     httpserver->SetMessageCallBack(Message);
   } else {
     httpserver->SetHttpResponseCallBack(Http);
   }
-  httpserver->OnTimerEvery(3.0, Every);
+  // httpserver->OnTimerEvery(3.0, Every);
+
+  
   httpserver->Start();
-  sleep(10000);
   return 0;
 }

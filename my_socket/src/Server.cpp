@@ -9,6 +9,7 @@
 #include "EventLoop.h"
 // #include "ThreadPool.h"
 #include "EventLoopThreadPool.h"
+#include "Logger.h"
 
 using std::cout;
 using std::endl;
@@ -56,6 +57,8 @@ void Server::NewConnection(int cln_fd) {
 }
 
 void Server::RemoveConnection(const std::shared_ptr<Connection> &conn) {
+  LOG_INFO << "Server::HandleCloseInLoop - RemoveConnection [fd#" << conn->GetFd() << "]";
+
   Errif(connections_.find(conn->GetFd()) == connections_.end(), "client fd not found in connection map");
   main_reactor_->RunOneFunc(std::bind(&Server::RemoveConnectionInLoop, this, conn));
 }

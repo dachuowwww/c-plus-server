@@ -49,7 +49,7 @@ void TimeQueue::ResetTimers() {
     }
   }
   if (!timers_.empty()) {
-    ResetTimerfd(timers_.begin()->first); // 每次都要重置
+    ResetTimerfd(timers_.begin()->first);  // 每次都要重置
   }
 }
 
@@ -58,6 +58,9 @@ void TimeQueue::ResetTimerfd(const TimeStamp &new_time) {
   struct itimerspec new_value {};
   struct itimerspec old_value {};
   int64_t dif = new_time.Time() - TimeStamp::Now().Time();
+  if (dif < 100) {
+    dif = 100; 
+  }
   // std::cout<<dif<<std::endl;
   new_value.it_value.tv_sec = static_cast<time_t>(dif / MICROSECOND_2_SECOND);
   new_value.it_value.tv_nsec = static_cast<int64_t>((dif % MICROSECOND_2_SECOND) * 1000);

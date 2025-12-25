@@ -150,7 +150,7 @@ void Connection::ReadNonBlocking() {
     if (bytes_read == -1 &&
         ((errno == EAGAIN) || (errno == EWOULDBLOCK))) {  // 非阻塞IO，这个条件表示数据全部读取完毕；读到 EAGAIN
                                                           // 时立即返回，再由事件机制在下一次有新数据到来时重新触发。
-      cout << "finish reading once, errno: " << errno << endl;
+      // cout << "finish reading once, errno: " << errno << endl;
       break;
     }
     if (bytes_read == 0) {  // EOF，对方断开连接

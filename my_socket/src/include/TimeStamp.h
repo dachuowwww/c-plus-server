@@ -8,6 +8,7 @@ const int MICROSECOND_2_SECOND = 1000 * 1000;
 
 class TimeStamp {
  public:
+  TimeStamp() = default;
   explicit TimeStamp(int64_t micro_seconds);
   ~TimeStamp() = default;
   TimeStamp(const TimeStamp &) = default;             // 拷贝构造

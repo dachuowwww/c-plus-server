@@ -16,6 +16,8 @@ Macro.h
 TimeStamp.h
 ../src/include/TimeStamp.h
 
+../src/include/Error.h
+
 ../src/include/EventLoop.h
 functional
 -
@@ -53,6 +55,28 @@ functional
 -
 memory
 -
+Macro.h
+../src/include/Macro.h
+
+../src/include/LogStream.h
+algorithm
+-
+cstdint
+-
+cstring
+-
+memory
+-
+Error.h
+../src/include/Error.h
+Macro.h
+../src/include/Macro.h
+
+../src/include/Logger.h
+memory
+-
+LogStream.h
+../src/include/LogStream.h
 Macro.h
 ../src/include/Macro.h
 
@@ -97,6 +121,8 @@ HttpRequest.h
 /home/dachuo/my_socket/src/HttpRequest.h
 HttpResponse.h
 /home/dachuo/my_socket/src/HttpResponse.h
+Logger.h
+/home/dachuo/my_socket/src/Logger.h
 Server.h
 /home/dachuo/my_socket/src/Server.h
 TimeStamp.h

@@ -6,6 +6,22 @@
 
 #IncludeRegexTransform: 
 
+../src/include/AsyncLogging.h
+condition_variable
+-
+memory
+-
+mutex
+-
+thread
+-
+vector
+-
+LogStream.h
+../src/include/LogStream.h
+Macro.h
+../src/include/Macro.h
+
 ../src/include/Connection.h
 functional
 -
@@ -15,6 +31,8 @@ Macro.h
 ../src/include/Macro.h
 TimeStamp.h
 ../src/include/TimeStamp.h
+
+../src/include/Error.h
 
 ../src/include/HttpRequest.h
 string
@@ -40,6 +58,28 @@ memory
 Macro.h
 ../src/include/Macro.h
 
+../src/include/LogStream.h
+algorithm
+-
+cstdint
+-
+cstring
+-
+memory
+-
+Error.h
+../src/include/Error.h
+Macro.h
+../src/include/Macro.h
+
+../src/include/Logger.h
+memory
+-
+LogStream.h
+../src/include/LogStream.h
+Macro.h
+../src/include/Macro.h
+
 ../src/include/Macro.h
 
 ../src/include/TimeStamp.h
@@ -61,12 +101,16 @@ iostream
 -
 memory
 -
+AsyncLogging.h
+/home/dachuo/my_socket/test/AsyncLogging.h
 Connection.h
 /home/dachuo/my_socket/test/Connection.h
 HttpRequest.h
 /home/dachuo/my_socket/test/HttpRequest.h
 HttpResponse.h
 /home/dachuo/my_socket/test/HttpResponse.h
+Logger.h
+/home/dachuo/my_socket/test/Logger.h
 TimeStamp.h
 /home/dachuo/my_socket/test/TimeStamp.h
 

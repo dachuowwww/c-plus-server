@@ -152,6 +152,33 @@ Acceptor.cpp.s:
 	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/Acceptor.cpp.s
 .PHONY : Acceptor.cpp.s
 
+AsyncLogging.o: AsyncLogging.cpp.o
+
+.PHONY : AsyncLogging.o
+
+# target to build an object file
+AsyncLogging.cpp.o:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/AsyncLogging.cpp.o
+.PHONY : AsyncLogging.cpp.o
+
+AsyncLogging.i: AsyncLogging.cpp.i
+
+.PHONY : AsyncLogging.i
+
+# target to preprocess a source file
+AsyncLogging.cpp.i:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/AsyncLogging.cpp.i
+.PHONY : AsyncLogging.cpp.i
+
+AsyncLogging.s: AsyncLogging.cpp.s
+
+.PHONY : AsyncLogging.s
+
+# target to generate assembly for a file
+AsyncLogging.cpp.s:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/AsyncLogging.cpp.s
+.PHONY : AsyncLogging.cpp.s
+
 Buffer.o: Buffer.cpp.o
 
 .PHONY : Buffer.o
@@ -476,6 +503,114 @@ HttpServer.cpp.s:
 	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.s
 .PHONY : HttpServer.cpp.s
 
+Latch.o: Latch.cpp.o
+
+.PHONY : Latch.o
+
+# target to build an object file
+Latch.cpp.o:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/Latch.cpp.o
+.PHONY : Latch.cpp.o
+
+Latch.i: Latch.cpp.i
+
+.PHONY : Latch.i
+
+# target to preprocess a source file
+Latch.cpp.i:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/Latch.cpp.i
+.PHONY : Latch.cpp.i
+
+Latch.s: Latch.cpp.s
+
+.PHONY : Latch.s
+
+# target to generate assembly for a file
+Latch.cpp.s:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/Latch.cpp.s
+.PHONY : Latch.cpp.s
+
+LogFile.o: LogFile.cpp.o
+
+.PHONY : LogFile.o
+
+# target to build an object file
+LogFile.cpp.o:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/LogFile.cpp.o
+.PHONY : LogFile.cpp.o
+
+LogFile.i: LogFile.cpp.i
+
+.PHONY : LogFile.i
+
+# target to preprocess a source file
+LogFile.cpp.i:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/LogFile.cpp.i
+.PHONY : LogFile.cpp.i
+
+LogFile.s: LogFile.cpp.s
+
+.PHONY : LogFile.s
+
+# target to generate assembly for a file
+LogFile.cpp.s:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/LogFile.cpp.s
+.PHONY : LogFile.cpp.s
+
+LogStream.o: LogStream.cpp.o
+
+.PHONY : LogStream.o
+
+# target to build an object file
+LogStream.cpp.o:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/LogStream.cpp.o
+.PHONY : LogStream.cpp.o
+
+LogStream.i: LogStream.cpp.i
+
+.PHONY : LogStream.i
+
+# target to preprocess a source file
+LogStream.cpp.i:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/LogStream.cpp.i
+.PHONY : LogStream.cpp.i
+
+LogStream.s: LogStream.cpp.s
+
+.PHONY : LogStream.s
+
+# target to generate assembly for a file
+LogStream.cpp.s:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/LogStream.cpp.s
+.PHONY : LogStream.cpp.s
+
+Logger.o: Logger.cpp.o
+
+.PHONY : Logger.o
+
+# target to build an object file
+Logger.cpp.o:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/Logger.cpp.o
+.PHONY : Logger.cpp.o
+
+Logger.i: Logger.cpp.i
+
+.PHONY : Logger.i
+
+# target to preprocess a source file
+Logger.cpp.i:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/Logger.cpp.i
+.PHONY : Logger.cpp.i
+
+Logger.s: Logger.cpp.s
+
+.PHONY : Logger.s
+
+# target to generate assembly for a file
+Logger.cpp.s:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/Logger.cpp.s
+.PHONY : Logger.cpp.s
+
 Poller.o: Poller.cpp.o
 
 .PHONY : Poller.o
@@ -677,6 +812,9 @@ help:
 	@echo "... Acceptor.o"
 	@echo "... Acceptor.i"
 	@echo "... Acceptor.s"
+	@echo "... AsyncLogging.o"
+	@echo "... AsyncLogging.i"
+	@echo "... AsyncLogging.s"
 	@echo "... Buffer.o"
 	@echo "... Buffer.i"
 	@echo "... Buffer.s"
@@ -713,6 +851,18 @@ help:
 	@echo "... HttpServer.o"
 	@echo "... HttpServer.i"
 	@echo "... HttpServer.s"
+	@echo "... Latch.o"
+	@echo "... Latch.i"
+	@echo "... Latch.s"
+	@echo "... LogFile.o"
+	@echo "... LogFile.i"
+	@echo "... LogFile.s"
+	@echo "... LogStream.o"
+	@echo "... LogStream.i"
+	@echo "... LogStream.s"
+	@echo "... Logger.o"
+	@echo "... Logger.i"
+	@echo "... Logger.s"
 	@echo "... Poller.o"
 	@echo "... Poller.i"
 	@echo "... Poller.s"
