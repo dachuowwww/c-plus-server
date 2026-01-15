@@ -39,7 +39,7 @@ LogStream &LogStream::operator<<(char v) {
   return *this;
 }
 
-// 原生字符串输出到缓冲区
+// 原生字符串输出到缓冲区 结尾带'\0'的字符串
 LogStream &LogStream::operator<<(const char *str) {
   if (str) {
     buffer_->Append(str, strlen(str));

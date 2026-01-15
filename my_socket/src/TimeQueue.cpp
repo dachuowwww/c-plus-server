@@ -59,7 +59,7 @@ void TimeQueue::ResetTimerfd(const TimeStamp &new_time) {
   struct itimerspec old_value {};
   int64_t dif = new_time.Time() - TimeStamp::Now().Time();
   if (dif < 100) {
-    dif = 100; 
+    dif = 100;
   }
   // std::cout<<dif<<std::endl;
   new_value.it_value.tv_sec = static_cast<time_t>(dif / MICROSECOND_2_SECOND);

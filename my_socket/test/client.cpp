@@ -15,11 +15,11 @@ struct sockaddr_in serv_addr;
 int main() {
   auto sock = std::make_unique<Socket>();
   // sock->SetNonBlocking();
-  sock->Connect("127.0.0.1", 1234);
+  sock->Connect("127.0.0.1", 8888);
   Connection cln_conn(nullptr, sock->GetFd());
   while (true) {
-    cln_conn.KeyBoardInput();
-    cln_conn.Send(cln_conn.ReadInputBuffer());
+    cln_conn.KeyBoardToOutput();
+    cln_conn.Write();
     if ((cln_conn.GetState() == Connection::State::Closed)) {
       cout << "client write error, exit" << endl;
       break;
@@ -29,7 +29,7 @@ int main() {
       cout << "client read error, exit" << endl;
       break;
     }
-    cout << "message from server : " << cln_conn.ReadInputBuffer() << endl;
+    cout << "message from server : " << cln_conn.RetriveInputBuffer() << endl;
   }
   return 0;
 }

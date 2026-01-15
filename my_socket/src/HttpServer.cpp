@@ -31,26 +31,28 @@ void HttpServer::OnConnnectCallback(const std::shared_ptr<Connection> &conn) {
            << "[ fd#" << clnt_fd << " ]"
            << " from " << inet_ntoa(cln_addr.sin_addr) << ":" << ntohs(cln_addr.sin_port);
   if (auto_shutdown_) {
-    loop_->RunAfter(10.0, bind(&HttpServer::OverTime, this, std::weak_ptr<Connection>(conn)));
+    conn->GetLoop()->RunAfter(10.0,
+                              bind(&HttpServer::OverTime, this, std::weak_ptr<Connection>(conn)));  // 防止线程冲突
   }
 }
 
 void HttpServer::OnHttpRequest(const std::shared_ptr<Connection> &conn) {
   HttpContext *context = conn->GetContext();
-  if (!context->ParaseRequest(conn->ReadInputBuffer(), conn->ReadInputBufferSize())) {
+  int n = conn->ReadInputBufferSize();
+  if (!context->ParaseRequest(conn->RetriveInputBuffer().c_str(), n)) {
     conn->Send("HTTP/1.1 400 Bad Request\r\n\r\n");
     conn->SetState(Connection::State::Closed);
     if (conn->IsInEpoll()) {
       conn->RemoveConnection();
     }
   } else {
-    std::cout << context->GetHttpRequest()->GetURL()
-              << ", request successfully. Method:" << context->GetHttpRequest()->GetMethodString() << std::endl;
+    LOG_INFO << context->GetHttpRequest()->GetURL()
+             << ", request successfully. Method:" << context->GetHttpRequest()->GetMethodString();
     OnHttpReponse(conn);
     context->ResetState();
-    if (auto_shutdown_) {
-      conn->UpdateTimeStamp();
-    }
+    // if (auto_shutdown_) {
+    //   conn->UpdateTimeStamp();
+    // }
   }
 }
 
@@ -61,7 +63,7 @@ void HttpServer::OnHttpReponse(const std::shared_ptr<Connection> &conn) {
   auto response = std::make_unique<HttpResponse>(close);
   http_call_back_(*request, response.get());
   // std::cout << response->GetResponse()<< std::endl;
-  conn->Send(response->GetResponse().c_str());
+  conn->Send(response->GetResponse()); // 带图片时不能用strlen
   if (response->IfClose()) {
     conn->SetState(Connection::State::Closed);
     conn->RemoveConnection();
@@ -69,8 +71,7 @@ void HttpServer::OnHttpReponse(const std::shared_ptr<Connection> &conn) {
 }
 
 void HttpServer::SetMessageCallBack(std::function<void(const std::shared_ptr<Connection> &conn)> &&cb) {
-  message_call_back_ = std::move(cb);
-  server_->OnMessage(std::move(message_call_back_));
+  server_->OnMessage(std::move(cb));
 }
 
 void HttpServer::SetHttpResponseCallBack(std::function<void(const HttpRequest &request, HttpResponse *response)> &&cb) {
@@ -88,8 +89,11 @@ void HttpServer::OverTime(const std::weak_ptr<Connection> &conn) {
     if (TimeStamp::AddTime(conn_ptr->GetTimeStamp(), AUTOCLOSETIMEOUT) < TimeStamp::Now()) {
       conn_ptr->RemoveConnection();
     } else {
-      loop_->RunAfter((double)(AUTOCLOSETIMEOUT - (TimeStamp::Now().Time()-conn_ptr->GetTimeStamp().Time()) / MICROSECOND_2_SECOND) + 1.0,
-                      bind(&HttpServer::OverTime, this, conn));
+      loop_->RunAfter(
+          (double)(AUTOCLOSETIMEOUT - (TimeStamp::Now().Time() - static_cast<double>(conn_ptr->GetTimeStamp().Time())) /
+                                          MICROSECOND_2_SECOND) +
+              1.0,
+          bind(&HttpServer::OverTime, this, conn));
     }
   }
 }

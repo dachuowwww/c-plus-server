@@ -57,7 +57,7 @@ void Server::NewConnection(int cln_fd) {
 }
 
 void Server::RemoveConnection(const std::shared_ptr<Connection> &conn) {
-  LOG_INFO << "Server::HandleCloseInLoop - RemoveConnection [fd#" << conn->GetFd() << "]";
+  // LOG_INFO << "Server::HandleCloseInLoop - RemoveConnection [fd#" << conn->GetFd() << "]";
 
   Errif(connections_.find(conn->GetFd()) == connections_.end(), "client fd not found in connection map");
   main_reactor_->RunOneFunc(std::bind(&Server::RemoveConnectionInLoop, this, conn));
@@ -65,7 +65,7 @@ void Server::RemoveConnection(const std::shared_ptr<Connection> &conn) {
 
 void Server::RemoveConnectionInLoop(const std::shared_ptr<Connection> &conn) {
   connections_.erase(conn->GetFd());  // -1
-  cout << "client fd " << conn->GetFd() << " removed from connection map" << std::endl;
+  // LOG_INFO << "Server::RemoveConnectionInLoop - Client fd " << conn->GetFd() << " removed from connection map";
 
   EventLoop *loop = conn->GetLoop();
   loop->QueueOneFunc(std::bind(&Connection::ConnectionDestructor, conn));

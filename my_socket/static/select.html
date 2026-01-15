@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .box{
+            background-color: lightgoldenrodyellow;
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 100px auto;
+            padding-left: 50px;
+            padding-right:50px;
+            border: 2px solid #a5a5a5;
+            border-radius: 30px 0px 30px 0px;
+            box-shadow: 2px 2px 2px #e1e5ee;
+        }
+        h2{
+            width: 100px;
+            height: 24px;
+            font-size: 24px;
+        }
+        span{
+            color: darkred;
+        }
+        button {
+            float: left;
+            width: 60px;
+            margin:50px 20px 20px 20px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="box">
+    <h2>随机点名</h2>
+    <p>抽到的人是：<span>xxx</span></p>
+    <button class = "start">开始</button>
+    <button class = 'over'>结束</button>
+</div>
+<script>
+    let names =['谢可欣','杨宜铨','yyq','qq','欣','宝宝']
+    let n
+    let random
+    const name = document.querySelector('span')
+    const start = document.querySelector('.start')
+    const over = document.querySelector('.over')
+    start. addEventListener('click', function(){
+        n = setInterval(function (){
+            random = Math.floor(Math.random()*names.length)
+            name.innerText = `${names[random]}`
+        }, 50)
+    })
+    over.addEventListener('click',function (){
+        clearInterval(n)
+        names.splice(random,1)
+        //如果放结束按钮外面则点击结束按钮不会触发
+        if(names.length === 1){
+            start.disabled = over.disabled = true
+        }
+    })
+
+</script>
+</body>
+</html>

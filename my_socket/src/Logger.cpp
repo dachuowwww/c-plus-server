@@ -35,7 +35,8 @@ Logger::Impl::Impl(std::unique_ptr<SourceFile> &&source, int line, Logger::LogLe
   FormattedTime();
   current_thread::Tid();
   stream_ << StreamTemplate(current_thread::ToStringTid(), current_thread::LengthTid());
-  stream_ << StreamTemplate(GetLevelString(), 7);  // 头文件需要包含重载运算符的完整体
+  stream_ << " ";
+  stream_ << StreamTemplate(GetLevelString(), 9);  // 头文件需要包含重载运算符的完整体
 }
 
 Logger::Impl::~Impl() {
@@ -71,17 +72,17 @@ LogStream &Logger::Impl::GetLogStream() { return stream_; }
 const char *Logger::Impl::GetLevelString() const {
   switch (level_) {
     case DEBUG:
-      return "DEBUG  ";  // 注意要读满七个字节
+      return "DEBUG   ";  // 注意要读满八个字节（无\0)
     case INFO:
-      return "INFO   ";
+      return "INFO    ";
     case WARN:
-      return "WARN   ";
+      return "WARN    ";
     case ERROR:
-      return "ERROR  ";
+      return "ERROR   ";
     case FATAL:
-      return "FATAL  ";
+      return "FATAL   ";
     default:
-      return "UNKNOWN";
+      return "UNKNOWN ";
       break;
   }
 }

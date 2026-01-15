@@ -7,6 +7,7 @@
 #include "Error.h"
 #include "EventLoop.h"
 #include "HttpContext.h"
+#include "Logger.h"
 #include "Socket.h"
 using std::cout;
 using std::endl;
@@ -23,6 +24,7 @@ Connection::Connection(EventLoop *loop, int cln_fd) : loop_(loop) {
 
     conn_channel_ = std::make_unique<Channel>(loop_, cln_fd);
     conn_channel_->SetReadCallback([this]() { this->ListenClientMessage(); });  // 命名空间调用可省略，取地址不行。
+    conn_channel_->SetWriteCallback([this]() { this->SendClientMessage(); });
   }
   context_ = std::make_unique<HttpContext>();
 }
@@ -38,7 +40,7 @@ void Connection::ConnectionEstablished() {
 void Connection::ConnectionDestructor() {
   int fd = conn_channel_->GetFd();
   conn_channel_->RemoveInEpoll();
-  cout << "client fd " << fd << " has been ultimately removed" << std::endl;
+  LOG_INFO << "Client fd " << fd << " has been ultimately removed";
 }  // -1
 
 void Connection::SetRemoveConnection(function<void(const std::shared_ptr<Connection> &conn)> &&cb) {
@@ -108,14 +110,44 @@ void Connection::ListenClientMessage() {
   }
   handle_read_func_(shared_from_this());
 }
-
-void Connection::Send(const char *data) {
-  output_buffer_->SetData(data);
+void Connection::SendClientMessage() {
   Write();
+  if (state_ != State::Connected) {
+    return;
+  }
+}
+
+void Connection::Send(const std::string &data) { Send(data.c_str(), data.size()); }
+
+void Connection::Send(const char *data) { Send(data, static_cast<int>(strlen(data))); }
+
+void Connection::Send(const char *data, int size) {
+  int remaining = size;
+  int send_size = 0;
+  if (output_buffer_->ReadableBytes() == 0) {
+    send_size = write(conn_socket_->GetFd(), data, remaining);
+    if (send_size >= 0) {
+      remaining -= send_size;
+    } else if (send_size == -1 && ((errno == EAGAIN) || (errno == EWOULDBLOCK))) {
+      cout << "buffer full, wait for writing" << endl;
+      send_size = 0;
+    } else {
+      cout << "other write error" << endl;
+      LOG_ERROR << "TcpConnection::Send - TcpConnection Send ERROR";
+      SetState(State::Closed);
+      RemoveConnection();
+      return;
+    }
+  }
+  Errif(remaining > static_cast<int>(strlen(data)), "Connection::Send remaining size error");
+  if (remaining > 0) {
+    output_buffer_->Append(data + send_size, remaining);
+    conn_channel_->EnableWriting();
+  }
 }
 void Connection::Read() {
   Errif(state_ != State::Connected, "Read connection not connected");  // 静态断言，如果断言失败，程序终止
-  input_buffer_->Clear();  // 不能去，因为非租塞使用append处理数据
+  input_buffer_->RetreiveAll();  // 不能去，因为非租塞使用append处理数据
   if (conn_socket_->IsNonBlocking()) {
     ReadNonBlocking();  // 程序进行中进行连接判断，如果连接正常，进行阻塞IO读取
   } else {
@@ -123,7 +155,7 @@ void Connection::Read() {
   }
 }
 
-void Connection::Write() {
+void Connection::Write() {  // 为未发完的信息服务
   Errif(state_ != State::Connected, "Write connection not connected");
   if (conn_socket_->IsNonBlocking()) {
     WriteNonBlocking();
@@ -151,15 +183,16 @@ void Connection::ReadNonBlocking() {
         ((errno == EAGAIN) || (errno == EWOULDBLOCK))) {  // 非阻塞IO，这个条件表示数据全部读取完毕；读到 EAGAIN
                                                           // 时立即返回，再由事件机制在下一次有新数据到来时重新触发。
       // cout << "finish reading once, errno: " << errno << endl;
+      UpdateTimeStamp();
       break;
     }
     if (bytes_read == 0) {  // EOF，对方断开连接
-      cout << "Read EOF, fd " << conn_socket_->GetFd() << " disconnected" << endl;
+      LOG_ERROR << "Read EOF, fd " << conn_socket_->GetFd() << " disconnected";
       SetState(State::Closed);
       RemoveConnection();
       break;
     }
-    cout << "other read error" << endl;
+    LOG_ERROR << "other read error";
     SetState(State::Closed);
     RemoveConnection();
     break;
@@ -169,102 +202,84 @@ void Connection::ReadNonBlocking() {
 void Connection::ReadBlocking() {
   // std::cout << "blocking read" << std::endl;
   char buf[SERV_BUFFER];
+  memset(buf, 0, sizeof(buf));
+  int had_read = read(conn_socket_->GetFd(), buf, sizeof(buf));
+  if (had_read > 0) {
+    input_buffer_->Append(buf, had_read);
+    UpdateTimeStamp();
+    // input_buffer_->Append("\0");
+  } else if (had_read == 0) {  // EOF，对方断开连接
+    LOG_ERROR << "Read EOF, fd " << conn_socket_->GetFd() << " disconnected";
+    SetState(State::Closed);
+    if (remove_) {
+      RemoveConnection();
+    }
+  }
+}
+
+void Connection::WriteNonBlocking() {
+  // std::cout << "non-blocking write" << std::endl;
+  int bytes_to_write = output_buffer_->ReadableBytes();
+  if (bytes_to_write == 0) {
+    conn_channel_->DisableWriting();
+    return;
+  }
+  // std::string buf = output_buffer_->RetreiveAllAsString();
+  int bytes_written = 0;
+
+  int fd = conn_socket_->GetFd();
+  bytes_written = write(fd, output_buffer_->Peek(), bytes_to_write);
+  if (bytes_written > 0) {
+    output_buffer_->Retreive(static_cast<int>(bytes_written));
+  } else if (bytes_written == -1 &&
+             ((errno == EAGAIN) || (errno == EWOULDBLOCK))) {  // 非阻塞IO，这个条件表示缓冲区已满，需要等待
+    cout << "buffer full, wait for writing" << endl;
+  } else {
+    LOG_ERROR << "other write error";
+    SetState(State::Closed);
+    RemoveConnection();
+  }
+}
+void Connection::WriteBlocking() {
+  // std::cout << "blocking write" << std::endl;
+  int had_write = 0;
+  size_t bytes_to_write = output_buffer_->ReadableBytes();
   while (true) {
-    memset(buf, 0, sizeof(buf));
-    size_t had_read = 0;
-    size_t bytes_to_read = output_buffer_->GetSize();
-    ssize_t bytes_read = read(conn_socket_->GetFd(), buf, sizeof(buf));
-    if (bytes_read > 0) {
-      input_buffer_->Append(buf, bytes_read);
-      had_read += bytes_read;
-      if (had_read >= bytes_to_read) {
+    had_write = write(conn_socket_->GetFd(), output_buffer_->Peek(), bytes_to_write);
+    if (had_write > 0) {
+      // std::cout << "write " << n << " bytes , content: " << output_buffer_->GetData() << std::endl;
+      bytes_to_write -= had_write;
+      output_buffer_->Retreive(static_cast<int>(had_write));
+      if (bytes_to_write == 0) {
         break;
-      }  // 提高与非阻塞IO的兼容性
+      }
+    } else if (had_write == -1 && errno == EINTR) {  // 对方正常中断、继续写入
+      cout << "continue writing" << endl;
       continue;
-    }
-    if (bytes_read == -1 && errno == EINTR) {  // 对方正常中断、继续读取
-      cout << "continue reading" << endl;
-      continue;
-    }
-    if (bytes_read == 0) {  // EOF，对方断开连接
-      cout << "Read EOF, fd " << conn_socket_->GetFd() << " disconnected" << endl;
+    } else {
+      LOG_ERROR << "other write error";
       SetState(State::Closed);
       if (remove_) {
         RemoveConnection();
       }
       break;
     }
-    cout << "other read error" << endl;
-    SetState(State::Closed);
-    if (remove_) {
-      RemoveConnection();
-    }
-    break;
   }
 }
 
-void Connection::WriteNonBlocking() {
-  // std::cout << "non-blocking write" << std::endl;
-  std::string buf = output_buffer_->GetData();
-  size_t bytes_written = 0;
-  size_t bytes_to_write = output_buffer_->GetSize();
-  int fd = conn_socket_->GetFd();
-  while (true) {
-    ssize_t n = write(fd, buf.c_str() + bytes_written, bytes_to_write - bytes_written);
-    if (n > 0) {
-      bytes_written += n;
-      if (bytes_written >= bytes_to_write) {
-        break;
-      }
-      continue;
-    }
-    if (n == -1 && errno == EINTR) {  // 对方正常中断、继续写入
-      cout << "continue writing" << endl;
-      continue;
-    }
-    if (n == -1 && ((errno == EAGAIN) || (errno == EWOULDBLOCK))) {  // 非阻塞IO，这个条件表示缓冲区已满，需要等待
-      cout << "buffer full, wait for writing" << endl;
-      break;
-    }
-    // if (n == -1 && errno == EPIPE) {
-    //   cout << "broken pipe, fd " << conn_socket_->GetFd() << " disconnected" << endl;
-    //   SetState(State::Closed);
-    // break;
-    // }
-    cout << "other write error" << endl;
-    SetState(State::Closed);
-    RemoveConnection();
-    break;
-  }
-}
-void Connection::WriteBlocking() {
-  // std::cout << "blocking write" << std::endl;
-  while (true) {
-    ssize_t n = write(conn_socket_->GetFd(), output_buffer_->GetData(), output_buffer_->GetSize());
-    if (n > 0) {
-      // std::cout << "write " << n << " bytes , content: " << output_buffer_->GetData() << std::endl;
-      break;
-    }
-    if (n == -1 && errno == EINTR) {  // 对方正常中断、继续写入
-      cout << "continue writing" << endl;
-      continue;
-    }
-    cout << "other write error" << endl;
-    SetState(State::Closed);
-    if (remove_) {
-      RemoveConnection();
-    }
-    break;
-  }
-}
+void Connection::KeyBoardToOutput() { output_buffer_->AppendKeyBoard(); }
 
-void Connection::KeyBoardInput() { input_buffer_->SetKeyBoardInput(); }
+std::string Connection::ReadInputBuffer() const { return input_buffer_->PeekAllString(); }
 
-const char *Connection::ReadInputBuffer() const { return input_buffer_->GetData(); }
+int Connection::ReadInputBufferSize() const { return input_buffer_->ReadableBytes(); }
 
-int Connection::ReadInputBufferSize() const { return input_buffer_->GetSize(); }
+std::string Connection::ReadOutputBuffer() const { return output_buffer_->PeekAllString(); }
 
-void Connection::SetOutput(const char *data) { output_buffer_->SetData(data); }
+int Connection::ReadOutputBufferSize() const { return input_buffer_->ReadableBytes(); }
+
+std::string Connection::RetriveInputBuffer() const { return input_buffer_->RetreiveAllAsString(); }
+
+void Connection::SetOutput(const char *data) { output_buffer_->Append(data); }
 
 void Connection::SetState(State state) { state_ = state; }  // 这种类型（enum、int、struct 无指针成员）完全不需要 move。
 

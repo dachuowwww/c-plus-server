@@ -27,6 +27,8 @@ functional
 -
 memory
 -
+string
+-
 Macro.h
 ../src/include/Macro.h
 TimeStamp.h
@@ -96,6 +98,8 @@ string
 HttpServer.h
 /home/dachuo/my_socket/test/HttpServer.h
 unistd.h
+-
+fstream
 -
 iostream
 -

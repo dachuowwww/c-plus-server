@@ -58,14 +58,15 @@ void Channel::EnableWriting() {
   listen_events_ |= WRITE_EVENT;
   loop_->Update(this);
 }
-// void Channel::DisableWriting() {
-//   listen_events_ &= ~WRITE_EVENT;
-//   if (listen_events_ == 0) {
-//     loop_->Delete(this);
-//   } else {
-//     loop_->Update(this);
-//   }
-// }
+
+void Channel::DisableWriting() {
+  listen_events_ &= ~WRITE_EVENT;
+  if (listen_events_ == 0) {
+    loop_->Delete(this);
+  } else {
+    loop_->Update(this);
+  }
+}
 
 void Channel::UseET() {
   listen_events_ |= ET_EVENT;

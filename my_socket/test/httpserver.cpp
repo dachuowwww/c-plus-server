@@ -1,5 +1,6 @@
 #include "HttpServer.h"
 #include <unistd.h>
+#include <fstream>
 #include <iostream>
 #include <memory>
 #include "AsyncLogging.h"
@@ -9,94 +10,63 @@
 #include "Logger.h"
 #include "TimeStamp.h"
 
+std::string ReadFile(const std::string &filename) {
+  std::ifstream is(filename.c_str(), std::ifstream::in);
+  if (!is.is_open()) {
+    LOG_ERROR << "ReadFile: open file " << filename << " failed!";
+    return "";
+  }
+  is.seekg(0, std::ifstream::end);
+  int length = static_cast<int>(is.tellg());
+  is.seekg(0, std::ifstream::beg);
+  char *buffer = new char[length];
+  is.read(buffer, length);
+  is.close();
+  std::string content(buffer, length);
+  delete[] buffer;
+  return content;
+}
+
 void Message(const std::shared_ptr<Connection> &conn) {  // 注册回调函数,需要修改内部元素所以不能设为const
   // conn->Read();
-  std::cout << "new message from client " << conn->GetFd() << " : " << conn->ReadInputBuffer() << std::endl;
-  conn->Send(conn->ReadInputBuffer());
+  LOG_INFO << "New message from client " << conn->GetFd() << " : " << conn->ReadInputBuffer();
+  conn->Send(conn->RetriveInputBuffer());
 }
 
 void Http(const HttpRequest &request, HttpResponse *response) {
-  if (request.GetMethodString() != "GET") {
-    response->SetStatusCode(HttpResponse::HttpStatusCode::BAD_RESQUEST);
-    response->SetStatusMessage("BAD_RESQUEST");
-    response->SetClose();
-  } else {
-    if (request.GetURL() == "/select") {
+  if (request.GetMethodString() == "GET") {
+    const std::string& url = request.GetURL();
+    if (url == "/select") {
       response->SetContentType("text/html; charset=UTF-8");
-      response->SetResponseBody(R"HTML(<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <style>
-        .box{
-            background-color: lightgoldenrodyellow;
-            position: relative;
-            width: 200px;
-            height: 200px;
-            margin: 100px auto;
-            padding-left: 50px;
-            padding-right:50px;
-            border: 2px solid #a5a5a5;
-            border-radius: 30px 0px 30px 0px;
-            box-shadow: 2px 2px 2px #e1e5ee;
-        }
-        h2{
-            width: 100px;
-            height: 24px;
-            font-size: 24px;
-        }
-        span{
-            color: darkred;
-        }
-        button {
-            float: left;
-            width: 60px;
-            margin:50px 20px 20px 20px;
-        }
-
-    </style>
-</head>
-<body>
-<div class="box">
-    <h2>随机点名</h2>
-    <p>抽到的人是：<span>xxx</span></p>
-    <button class = "start">开始</button>
-    <button class = 'over'>结束</button>
-</div>
-<script>
-    let names =['谢可欣','杨宜铨','yyq','qq','欣','宝宝']
-    let n
-    let random
-    const name = document.querySelector('span')
-    const start = document.querySelector('.start')
-    const over = document.querySelector('.over')
-    start. addEventListener('click', function(){
-        n = setInterval(function (){
-            random = Math.floor(Math.random()*names.length)
-            name.innerText = `${names[random]}`
-        }, 50)
-    })
-    over.addEventListener('click',function (){
-        clearInterval(n)
-        names.splice(random,1)
-        //如果放结束按钮外面则点击结束按钮不会触发
-        if(names.length === 1){
-            start.disabled = over.disabled = true
-        }
-    })
-
-</script>
-</body>
-</html>)HTML");
+      response->SetResponseBody(ReadFile("../static/select.html"));
       response->SetStatusCode(HttpResponse::HttpStatusCode::OK);
       response->SetStatusMessage("OK");
-    } else if (request.GetURL() == "/") {
+    } else if (url == "/hello") {
       response->SetContentType("text/html; charset=UTF-8");
       response->SetResponseBody("<font color=\"red\">您好!</font>");
-    } else if (request.GetURL() == "/helloyyq") {
+    } else if (url == "/helloyyq") {
       response->SetContentType("text/plain; charset=UTF-8");
       response->SetResponseBody("Hello 谢可欣宝宝!\n");
+      response->SetStatusCode(HttpResponse::HttpStatusCode::OK);
+      response->SetStatusMessage("OK");
+    } else if (url == "/") {
+      response->SetContentType("text/html; charset=UTF-8");
+      response->SetResponseBody(ReadFile("../static/index.html"));
+      response->SetStatusCode(HttpResponse::HttpStatusCode::OK);
+      response->SetStatusMessage("OK");
+    } else if (url == "/xkx.jpg") {
+      response->SetContentType("image/jpeg");
+      response->SetResponseBody(ReadFile("../static/xkx.jpg"));
+      response->SetStatusCode(HttpResponse::HttpStatusCode::OK);
+      response->SetStatusMessage("OK");
+    } else if (url == "/mhw") {
+      response->SetContentType("text/html; charset=UTF-8");
+      response->SetResponseBody(ReadFile("../static/mhw.html"));
+      response->SetStatusCode(HttpResponse::HttpStatusCode::OK);
+      response->SetStatusMessage("OK");
+    } else if (url == "/cat.jpg") {
+      response->SetContentType("image/jpeg");
+      response->SetResponseBody(ReadFile("../static/cat.jpg"));
       response->SetStatusCode(HttpResponse::HttpStatusCode::OK);
       response->SetStatusMessage("OK");
     } else {
@@ -106,6 +76,32 @@ void Http(const HttpRequest &request, HttpResponse *response) {
       response->SetStatusMessage("NOT_FOUND");
       response->SetClose();
     }
+  } else if (request.GetMethodString() == "POST") {
+    if (request.GetURL() == "/login") {
+      const std::string& body = request.GetBody();
+      int user_pos = body.find("username=");
+      int pass_pos = body.find("password=");
+
+      user_pos += 9;
+      pass_pos += 9;
+
+      int and_pos = body.find('&', user_pos);
+      int end_pos = body.length();
+      std::string username = body.substr(user_pos, and_pos - user_pos);
+      std::string password = body.substr(pass_pos, end_pos - pass_pos);
+      if (username == "xkx" && password == "pig") {
+        response->SetResponseBody("Login successfully!\n");
+      } else {
+        response->SetResponseBody("Login failed!\n");
+      }
+      response->SetContentType("text/plain; charset=UTF-8");
+      response->SetStatusCode(HttpResponse::HttpStatusCode::OK);
+      response->SetStatusMessage("OK");
+    }
+  } else {
+    response->SetStatusCode(HttpResponse::HttpStatusCode::BAD_RESQUEST);
+    response->SetStatusMessage("BAD_RESQUEST");
+    response->SetClose();
   }
 }
 
@@ -132,7 +128,6 @@ int main(int argc, char *argv[]) {
   }
   // httpserver->OnTimerEvery(3.0, Every);
 
-  
   httpserver->Start();
   return 0;
 }

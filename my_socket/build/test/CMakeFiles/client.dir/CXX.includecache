@@ -11,6 +11,8 @@ functional
 -
 memory
 -
+string
+-
 Macro.h
 ../src/include/Macro.h
 TimeStamp.h

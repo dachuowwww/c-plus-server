@@ -18,6 +18,7 @@ src/CMakeFiles/PINE_SHARED.dir/AsyncLogging.cpp.o: ../src/include/TimeStamp.h
 src/CMakeFiles/PINE_SHARED.dir/AsyncLogging.cpp.o: ../src/AsyncLogging.cpp
 
 src/CMakeFiles/PINE_SHARED.dir/Buffer.cpp.o: ../src/include/Buffer.h
+src/CMakeFiles/PINE_SHARED.dir/Buffer.cpp.o: ../src/include/Error.h
 src/CMakeFiles/PINE_SHARED.dir/Buffer.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/Buffer.cpp.o: ../src/Buffer.cpp
 
@@ -35,6 +36,8 @@ src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/include/Connection.h
 src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/include/Error.h
 src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/include/EventLoop.h
 src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/include/HttpContext.h
+src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/include/LogStream.h
+src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/include/Logger.h
 src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/include/Socket.h
 src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/include/TimeStamp.h

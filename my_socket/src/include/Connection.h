@@ -1,6 +1,7 @@
 #pragma once
 #include <functional>
 #include <memory>
+#include <string>
 #include "Macro.h"
 #include "TimeStamp.h"
 class HttpContext;
@@ -27,8 +28,11 @@ class Connection : public std::enable_shared_from_this<Connection> {
 
   [[nodiscard]] bool IsInEpoll() const;
   [[nodiscard]] int GetFd() const;
-  [[nodiscard]] const char *ReadInputBuffer() const;
+  [[nodiscard]] std::string ReadInputBuffer() const;
   [[nodiscard]] int ReadInputBufferSize() const;
+  [[nodiscard]] std::string ReadOutputBuffer() const;
+  [[nodiscard]] int ReadOutputBufferSize() const;
+  [[nodiscard]] std::string RetriveInputBuffer() const;
   [[nodiscard]] State GetState() const;
   [[nodiscard]] EventLoop *GetLoop() const;
   [[nodiscard]] HttpContext *GetContext() const;
@@ -41,11 +45,15 @@ class Connection : public std::enable_shared_from_this<Connection> {
   void SetConnect(std::function<void(const std::shared_ptr<Connection> &conn)> cb);
 
   void ListenClientMessage();
+  void SendClientMessage();
   // void Echo();
+  void Send(const std::string &data);
+
   void Send(const char *data);
+  void Send(const char *data, int size); // 一般情况最好声明长度，避免多次调用strlen
   void Read();
   void Write();
-  void KeyBoardInput();
+  void KeyBoardToOutput();
 
   void SetOutput(const char *data);
   void SetState(State state);

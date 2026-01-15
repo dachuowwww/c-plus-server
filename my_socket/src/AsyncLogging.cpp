@@ -57,7 +57,7 @@ void AsyncLogging::ThreadFunc() {  // 后端日志线程函数
         cv_.wait_until(lock, std::chrono::system_clock::now() + BUFFERWRITETIMEOUT * std::chrono::milliseconds(1000),
                        []() { return false; });
       }
-      buffers_.emplace_back(std::move(current_buffer_));
+      buffers_.emplace_back(std::move(current_buffer_));  // buffers_可能还是空
       current_buffer_ = std::move(new_current);
       active_buffers.swap(buffers_);
       if (!next_buffer_) {
@@ -72,19 +72,23 @@ void AsyncLogging::ThreadFunc() {  // 后端日志线程函数
       log_file->Write(buffer->Buffer(), buffer->GetLength());
     }
 
-    if (active_buffers.size() > 2){
-        active_buffers.resize(2);  // 换来的缓冲区进行重用
+    if (active_buffers.size() > 2) {
+      active_buffers.resize(2);  // 换来的缓冲区进行重用
     }
-    
 
     new_current = std::move(active_buffers.back());
     new_current->Clear();
     active_buffers.pop_back();
 
     if (!new_next) {
-      new_next = std::move(active_buffers.back());
-      new_next->Clear();
-      active_buffers.pop_back();
+      if (!active_buffers.empty()) {
+        new_next = std::move(active_buffers.back());
+        new_next->Clear();
+        active_buffers.pop_back();
+      } else {
+        new_next = std::make_unique<FixedBuffer<FIXEDLARGEBUFFFERSIZE>>();
+        new_next->Clear();
+      }
     }
     active_buffers.clear();
   }

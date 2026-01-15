@@ -25,7 +25,7 @@ class HttpServer {
   bool auto_shutdown_ = true;
   std::unique_ptr<Server> server_;
   std::unique_ptr<EventLoop> loop_;
-  std::function<void(const std::shared_ptr<Connection> &conn)> message_call_back_;
+  // std::function<void(const std::shared_ptr<Connection> &conn)> message_call_back_;
   std::function<void(const HttpRequest &request, HttpResponse *response)> http_call_back_;
 
   DISALLOW_COPY_AND_ASSIGN(HttpServer);

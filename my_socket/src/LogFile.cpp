@@ -19,7 +19,6 @@ LogFile::~LogFile() {
 
 void LogFile::Write(const char *message, int len) {
   size_t pos = 0;
-  printf("%s",file_);  // 直接写入文件
   while (pos < static_cast<size_t>(len)) {
     pos += fwrite_unlocked(message + pos, sizeof(char), len - pos, file_);
   }

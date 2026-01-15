@@ -26,7 +26,7 @@ class AsyncLogging {
 
   bool running_ = false;
   const char *filepath_ = nullptr;
-  
+
   std::mutex mutex_;
   std::condition_variable cv_;
   std::unique_ptr<Latch> latch_;
@@ -34,7 +34,7 @@ class AsyncLogging {
   std::unique_ptr<FixedBuffer<FIXEDLARGEBUFFFERSIZE>> current_buffer_;
   std::unique_ptr<FixedBuffer<FIXEDLARGEBUFFFERSIZE>> next_buffer_;
   std::vector<std::unique_ptr<FixedBuffer<FIXEDLARGEBUFFFERSIZE>>> buffers_;
-    std::jthread thread_;
+  std::jthread thread_;
   DISALLOW_COPY_AND_ASSIGN(AsyncLogging);
 };
 
