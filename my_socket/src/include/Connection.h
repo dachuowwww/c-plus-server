@@ -50,7 +50,8 @@ class Connection : public std::enable_shared_from_this<Connection> {
   void Send(const std::string &data);
 
   void Send(const char *data);
-  void Send(const char *data, int size); // 一般情况最好声明长度，避免多次调用strlen
+  void Send(const char *data, int size);  // 一般情况最好声明长度，避免多次调用strlen
+  void SendFile(int fd, int size);
   void Read();
   void Write();
   void KeyBoardToOutput();

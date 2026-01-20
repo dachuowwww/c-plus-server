@@ -1,4 +1,5 @@
 #include "Connection.h"
+#include <sys/sendfile.h>
 #include <unistd.h>
 #include <cstring>
 #include <iostream>
@@ -145,6 +146,26 @@ void Connection::Send(const char *data, int size) {
     conn_channel_->EnableWriting();
   }
 }
+
+void Connection::SendFile(int fd, int size) {
+  ssize_t data_size = static_cast<ssize_t>(size);
+  ssize_t send_size = 0;
+  while (send_size < data_size) {
+    ssize_t bytes_write = sendfile(GetFd(), fd, (off_t *)&send_size, data_size - send_size);
+    if (bytes_write > 0) {
+      send_size += bytes_write;
+    } else if (bytes_write == -1) {
+      if (errno == EINTR || errno == EAGAIN || (errno == EWOULDBLOCK)) {
+        continue;
+      }
+      break;
+    } else {
+      LOG_ERROR << "Connection::SendFile - TcpConnection Send ERROR";
+      break;
+    }
+  }
+}
+
 void Connection::Read() {
   Errif(state_ != State::Connected, "Read connection not connected");  // 静态断言，如果断言失败，程序终止
   input_buffer_->RetreiveAll();  // 不能去，因为非租塞使用append处理数据

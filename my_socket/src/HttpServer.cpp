@@ -1,12 +1,11 @@
 #include "HttpServer.h"
 #include <arpa/inet.h>
+
 #include <iostream>
 #include "Connection.h"
 #include "EventLoop.h"
 #include "HttpContext.h"
-#include "HttpRequest.h"
 #include "HttpResponse.h"
-#include "Logger.h"
 #include "Server.h"
 #include "TimeStamp.h"
 
@@ -38,8 +37,8 @@ void HttpServer::OnConnnectCallback(const std::shared_ptr<Connection> &conn) {
 
 void HttpServer::OnHttpRequest(const std::shared_ptr<Connection> &conn) {
   HttpContext *context = conn->GetContext();
-  int n = conn->ReadInputBufferSize();
-  if (!context->ParaseRequest(conn->RetriveInputBuffer().c_str(), n)) {
+  int size = conn->ReadInputBufferSize(); // 提前获取大小，retrive会清空
+  if (!context->ParaseRequest(conn->RetriveInputBuffer().c_str(), size)) {
     conn->Send("HTTP/1.1 400 Bad Request\r\n\r\n");
     conn->SetState(Connection::State::Closed);
     if (conn->IsInEpoll()) {
@@ -48,8 +47,11 @@ void HttpServer::OnHttpRequest(const std::shared_ptr<Connection> &conn) {
   } else {
     LOG_INFO << context->GetHttpRequest()->GetURL()
              << ", request successfully. Method:" << context->GetHttpRequest()->GetMethodString();
-    OnHttpReponse(conn);
-    context->ResetState();
+    if (conn->GetContext()->IsComplete()) {
+      OnHttpReponse(conn);
+      context->ResetState();
+    }
+
     // if (auto_shutdown_) {
     //   conn->UpdateTimeStamp();
     // }
@@ -60,10 +62,26 @@ void HttpServer::OnHttpReponse(const std::shared_ptr<Connection> &conn) {
   HttpRequest const *request = conn->GetContext()->GetHttpRequest();
   bool close = request->GetHeader("Connection") == "Close" ||
                (request->GetVersionString() == "Http1.0" && request->GetHeader("Connection") == "Keep-Alive");
+  if (request->GetHeader("Content-Type") == "multipart/form-data") {  // 处理文件上传
+    FileUpload(request);
+  }
   auto response = std::make_unique<HttpResponse>(close);
   http_call_back_(*request, response.get());
   // std::cout << response->GetResponse()<< std::endl;
-  conn->Send(response->GetResponse()); // 带图片时不能用strlen
+  if (response->GetBodyType() == "HTML_TYPE") {
+    conn->Send(response->GetResponse());  // 带图片时不能用strlen
+  } else {
+    conn->Send(response->GetPreBody());
+
+    conn->SendFile(response->GetFileId(), response->GetContentLength());
+    int ret = ::close(response->GetFileId());
+    if (ret == -1) {
+      LOG_ERROR << "close file error";
+    } else {
+      LOG_INFO << "close file success";
+    }
+  }
+
   if (response->IfClose()) {
     conn->SetState(Connection::State::Closed);
     conn->RemoveConnection();

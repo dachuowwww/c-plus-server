@@ -1,7 +1,11 @@
 #pragma once
 #include <functional>
 #include <memory>
+#include <string>
+#include <fstream>
+#include "Logger.h"
 #include "Macro.h"
+#include "HttpRequest.h"
 class Connection;
 class Server;
 class EventLoop;
@@ -21,8 +25,10 @@ class HttpServer {
   void Start();
   void OverTime(const std::weak_ptr<Connection> &conn);
 
+  static void FileUpload(const HttpRequest *request);
+
  private:
-  bool auto_shutdown_ = true;
+  bool auto_shutdown_ = false;
   std::unique_ptr<Server> server_;
   std::unique_ptr<EventLoop> loop_;
   // std::function<void(const std::shared_ptr<Connection> &conn)> message_call_back_;
@@ -30,3 +36,27 @@ class HttpServer {
 
   DISALLOW_COPY_AND_ASSIGN(HttpServer);
 };
+
+void HttpServer::FileUpload(const HttpRequest *request) {
+  size_t b_index = request->GetHeader("Content-Type").find("boundary=");
+  std::string boundary = request->GetHeader("Content-Type").substr(b_index + std::string("boundary=").size());
+
+  size_t fn_index = request->GetBody().find("filename=\"");
+  if (fn_index == std::string::npos) {
+    LOG_ERROR << "Upload filename not found";
+    return;
+  }
+  fn_index += std::string("filename=\"").size();
+  size_t fn_end_index = request->GetBody().find("\"\r\n", fn_index);
+  std::string filename = request->GetBody().substr(fn_index, fn_end_index - fn_index);
+
+  size_t f_index = request->GetBody().find("\r\n\r\n");
+  f_index += std::string("\r\n\r\n").size();
+  size_t f_end_index = request->GetBody().find("--" + boundary + "--", f_index);
+  std::string file_data = request->GetBody().substr(f_index, f_end_index - f_index);
+
+  // 保存文件
+  std::ofstream ofs("../files/" + filename, std::ios::out | std::ios::binary);
+  ofs.write(file_data.data(), file_data.size());
+  ofs.close();
+}

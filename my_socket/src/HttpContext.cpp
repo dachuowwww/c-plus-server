@@ -203,9 +203,12 @@ bool HttpContext::ParaseRequest(const char *begin, int size) {
         }
         break;
       case State::BODY: {
-        request_->SetBody(
-            std::string(start, const_cast<char *>(begin) + size));  // NOLINT(cppcoreguidelines-pro-type-const-cast)
-        state_ = State::COMPLETE;
+        int bodylength = size - static_cast<int>(start - begin);
+        request_->SetBody(std::string(
+            start, const_cast<char *>(begin) + size));  // NOLINT(cppcoreguidelines-pro-type-const-cast)
+        if (bodylength >= atoi(request_->GetHeader("Content-Length").c_str())) {
+          state_ = State::COMPLETE;
+        }
         break;
       }
       case State::INVAILD:
@@ -216,9 +219,11 @@ bool HttpContext::ParaseRequest(const char *begin, int size) {
     }
     end++;
   }
-  return state_ == State::COMPLETE;
+  return state_ == State::COMPLETE || state_ == State::BODY;
 }
 
 HttpRequest const *HttpContext::GetHttpRequest() const { return this->request_.get(); }
+
+bool HttpContext::IsComplete() const { return state_ == State::COMPLETE; }
 
 void HttpContext::ResetState() { state_ = State::START; }

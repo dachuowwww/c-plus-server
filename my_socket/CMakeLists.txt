@@ -126,8 +126,6 @@ add_custom_target(cpplint echo '${PINE_LINT_FILES}' | xargs -n12 -P8
         --filter=-legal/copyright,-build/include_subdir,-build/c++11,-readability/casting
         )
 
-
-
 add_custom_target(clang-tidy ${PINE_BUILD_SUPPORT_DIR}/run_clang_tidy.py
     -clang-tidy-binary ${CLANG_TIDY_BIN}
     -p ${CMAKE_BINARY_DIR}

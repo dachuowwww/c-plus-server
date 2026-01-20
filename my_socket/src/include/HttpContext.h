@@ -32,7 +32,7 @@ class HttpContext {
     CRLF,
     CRLFCR,
 
-    BODY,
+    BODY,  // content-length
 
     COMPLETE
   };
@@ -43,6 +43,7 @@ class HttpContext {
   bool ParaseRequest(const char *begin, int size);
   void ResetState();
   [[nodiscard]] HttpRequest const *GetHttpRequest() const;
+  [[nodiscard]] bool IsComplete() const;
 
  private:
   std::unique_ptr<HttpRequest> request_;

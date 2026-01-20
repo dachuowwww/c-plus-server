@@ -10,7 +10,7 @@ class Buffer {
   Buffer();
   ~Buffer() = default;
   void Append(const char *data);
-  void Append(const char *data, ssize_t len); // 一般情况最好声明长度，避免多次调用strlen
+  void Append(const char *data, ssize_t len);  // 一般情况最好声明长度，避免多次调用strlen
   void Append(const std::string &data);
   [[nodiscard]] int ReadableBytes() const;
   [[nodiscard]] int WritableBytes() const;
