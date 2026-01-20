@@ -3,7 +3,6 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <unistd.h>
-#include <format>
 #include <fstream>
 #include <iostream>
 #include <memory>
@@ -16,11 +15,12 @@
 #include "Logger.h"
 #include "TimeStamp.h"
 
-void Relocation(HttpResponse *response) {
-  response->SetContentType("text/html");
+void Relocation(HttpResponse *response, const char *location = "/") {
+  response->SetContentType("text/html; charset=UTF-8");
   response->SetStatusCode(HttpResponse::HttpStatusCode::K302K);
   response->SetStatusMessage("Moved Temporarily");
-  response->AddHeader("Location", "/");  // 重发url/
+  response->AddHeader("Location", location);  // 重发url/
+  response->SetClose();                       // 防止上一信息污染重定位
 }
 void FindAllFiles(const std::string &dir, std::vector<std::string> *files) {
   int count = 0;
@@ -32,7 +32,7 @@ void FindAllFiles(const std::string &dir, std::vector<std::string> *files) {
   }
   while ((entry = readdir(dp)) != nullptr) {
     std::string filename = entry->d_name;
-    if (filename != "." && filename != "..") {
+    if (filename != "." && filename != "..") {  // string在前会调用重载
       files->push_back(filename);
       count++;
     }
@@ -49,7 +49,7 @@ bool IsFindInDir(const std::string &file, const std::string &dir) {
     return false;
   }
   while ((entry = readdir(dp)) != nullptr) {
-    if (entry->d_name == file) {  // 字符串比较
+    if (file == entry->d_name) {  // 字符串比较
       closedir(dp);
       return true;
     }
@@ -79,17 +79,44 @@ std::string BuildFileHtml(const std::string &dir) {
   FindAllFiles(dir, &files);
   std::string file;
   for (const auto &filename : files) {
-    file += std::format(
-        "<tr><td>{}</td><td><a href=\"/open/{}\">浏览</a>"
-        "<a href=\"/download/{}\">下载</a>"
-        "<a href=\"/delete/{}\">删除</a></td></tr>\n",
-        filename, filename, filename, filename);
+    file += "<tr><td>";
+    file += filename;
+    file += "</td><td><a href=\"/open/";
+    file += filename;
+    file += "\">浏览</a><a href=\"/download/";
+    file += "\">下载</a><a href=\"/delete/";
+    file += "\">删除</a></td></tr>\n";
   }
 
   std::string tmp = "<!--filelist-->";
   std::string body = ReadFile("../static/fileserver.html");
   body.replace(body.find(tmp), tmp.length(), file);
   return body;
+}
+
+std::string BuildAnomFileHtml(const std::string &dir) {
+  std::vector<std::string> files;
+  FindAllFiles(dir, &files);
+  std::string file;
+  for (const auto &filename : files) {
+    file += "<tr><td>";
+    file += filename;
+    file += "</td><td><a href=\"/open/";
+    file += filename;
+    file += "\">浏览</a>";
+  }
+
+  std::string tmp = "<!--filelist-->";
+  std::string body = ReadFile("../static/anomfileserver.html");
+  body.replace(body.find(tmp), tmp.length(), file);
+  return body;
+}
+
+void OpenFileSystem(HttpResponse *response) {  // 不设置域名防止别人直接闯入
+  response->SetContentType("text/html; charset=UTF-8");
+  response->SetResponseBody(BuildFileHtml("../files"));
+  response->SetStatusCode(HttpResponse::HttpStatusCode::K200K);
+  response->SetStatusMessage("OK");
 }
 
 void Httpopen(const std::string &filename, HttpResponse *response) {
@@ -123,10 +150,13 @@ void Httpopen(const std::string &filename, HttpResponse *response) {
       response->SetStatusMessage("OK");
       LOG_INFO << "Open file " << filename << " success!";
     } else {
+      // std::cout<<"open file 1"<<filename<<std::endl;
       LOG_ERROR << "Open file " << filename << " failed!";
+      response->SetResponseBody("Open file ");
       Relocation(response);
     }
   } else {
+    // std::cout<<"open file 2"<<filename<<std::endl;
     LOG_ERROR << "Open file " << filename << " failed!";
     Relocation(response);
   }
@@ -136,7 +166,7 @@ void Httpdownload(const std::string &filename, HttpResponse *response) {
     int filefd = ::open(("../files/" + filename).c_str(), O_RDONLY);
     if (filefd < 0) {
       LOG_ERROR << "Download file " << filename << " failed!";
-      Relocation(response);
+      OpenFileSystem(response);
     } else {
       struct stat file_stat = {};
       fstat(filefd, &file_stat);
@@ -149,7 +179,7 @@ void Httpdownload(const std::string &filename, HttpResponse *response) {
     }
   } else {
     LOG_ERROR << "Download file " << filename << " failed!";
-    Relocation(response);
+    OpenFileSystem(response);
   }
 }
 void Httpdelete(const std::string &filename, HttpResponse *response) {
@@ -162,7 +192,7 @@ void Httpdelete(const std::string &filename, HttpResponse *response) {
   } else {
     LOG_ERROR << "Delete file " << filename << " failed!";
   }
-  Relocation(response);
+  OpenFileSystem(response);
 }
 void Message(const std::shared_ptr<Connection> &conn) {  // 注册回调函数,需要修改内部元素所以不能设为const
   // conn->Read();
@@ -175,21 +205,28 @@ void Http(const HttpRequest &request, HttpResponse *response) {
     const std::string &url = request.GetURL();
     if (url == "/") {
       response->SetContentType("text/html; charset=UTF-8");
-      response->SetResponseBody(BuildFileHtml("../files/"));
+      response->SetResponseBody(ReadFile("../static/index.html"));
       response->SetStatusCode(HttpResponse::HttpStatusCode::K200K);
       response->SetStatusMessage("OK");
-    } else if (url.substr(0, 5) == "/open") {  // 不包括\0
+    } else if (url.substr(0, 5) == "/open") {  // 不包括\0 中文未解码
       Httpopen(url.substr(6), response);       // 不带斜杠
     } else if (url.substr(0, 9) == "/download") {
       Httpdownload(url.substr(10), response);
     } else if (url.substr(0, 7) == "/delete") {
       Httpdelete(url.substr(8), response);
+    } else if (url.substr(0, 5) == "/anom") {
+      response->SetContentType("text/html; charset=UTF-8");
+      response->SetResponseBody(BuildAnomFileHtml("../files"));
+      response->SetStatusCode(HttpResponse::HttpStatusCode::K200K);
+      response->SetStatusMessage("OK");
+    } else if (url.substr(0, 4) == "/ret") {
+      Relocation(response);
     } else {
       response->SetStatusCode(HttpResponse::HttpStatusCode::K400BADREQUEST);
       response->SetStatusMessage("BAD_RESQUEST");
       response->SetClose();
     }
-  } else if (request.GetMethodString() == "POST") {
+  } else if (request.GetMethodString() == "POST") {  // post返回的内容需要有body
     if (request.GetURL() == "/login") {
       const std::string &body = request.GetBody();
       int user_pos = body.find("username=");
@@ -204,20 +241,18 @@ void Http(const HttpRequest &request, HttpResponse *response) {
       std::string password = body.substr(pass_pos, end_pos - pass_pos);
       LOG_INFO << "New message from POST client " << username << " : " << password;
       if (username == "xkx" && password == "pig") {
-        response->SetResponseBody("Login successfully!\n");
+        LOG_INFO << username << " login success! ";
+        OpenFileSystem(response);
       } else {
-        response->SetResponseBody("Login failed!\n");
+        LOG_INFO << username << " login failed! ";
+        Relocation(response);
       }
-      response->SetContentType("text/plain; charset=UTF-8");
-      response->SetStatusCode(HttpResponse::HttpStatusCode::K200K);
-      response->SetStatusMessage("OK");
-    } else if (request.GetURL() == "/upload") {
-      Relocation(response);
+    } else if (request.GetURL() == "/upload") {  // 上传成功才会到这里
+      OpenFileSystem(response);
     } else {
       LOG_ERROR << "Post request failed!";
       response->SetStatusCode(HttpResponse::HttpStatusCode::K400BADREQUEST);
       response->SetStatusMessage("BAD_RESQUEST");
-      response->SetClose();
     }
   } else {
     response->SetStatusCode(HttpResponse::HttpStatusCode::K400BADREQUEST);
@@ -232,7 +267,7 @@ void AsyncOutput(const char *msg, int len) { async_log->Append(msg, len); }
 void AsyncFlush() { async_log->Flush(); }
 int main(int argc, char *argv[]) {
   std::string ip = "0.0.0.0";
-  int port = 8888;
+  int port = 80;
   if (argc == 3) {
     ip = argv[1];
     port = std::atoi(argv[2]);

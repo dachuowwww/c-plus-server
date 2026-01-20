@@ -37,7 +37,7 @@ void HttpServer::OnConnnectCallback(const std::shared_ptr<Connection> &conn) {
 
 void HttpServer::OnHttpRequest(const std::shared_ptr<Connection> &conn) {
   HttpContext *context = conn->GetContext();
-  int size = conn->ReadInputBufferSize(); // 提前获取大小，retrive会清空
+  int size = conn->ReadInputBufferSize();  // 提前获取大小，retrive会清空
   if (!context->ParaseRequest(conn->RetriveInputBuffer().c_str(), size)) {
     conn->Send("HTTP/1.1 400 Bad Request\r\n\r\n");
     conn->SetState(Connection::State::Closed);
@@ -62,7 +62,7 @@ void HttpServer::OnHttpReponse(const std::shared_ptr<Connection> &conn) {
   HttpRequest const *request = conn->GetContext()->GetHttpRequest();
   bool close = request->GetHeader("Connection") == "Close" ||
                (request->GetVersionString() == "Http1.0" && request->GetHeader("Connection") == "Keep-Alive");
-  if (request->GetHeader("Content-Type") == "multipart/form-data") {  // 处理文件上传
+  if (request->GetHeader("Content-Type").find("multipart/form-data") != std::string::npos) {  // 处理文件上传
     FileUpload(request);
   }
   auto response = std::make_unique<HttpResponse>(close);
@@ -70,9 +70,9 @@ void HttpServer::OnHttpReponse(const std::shared_ptr<Connection> &conn) {
   // std::cout << response->GetResponse()<< std::endl;
   if (response->GetBodyType() == "HTML_TYPE") {
     conn->Send(response->GetResponse());  // 带图片时不能用strlen
+    // std::cout << response->GetResponse() << std::endl;
   } else {
     conn->Send(response->GetPreBody());
-
     conn->SendFile(response->GetFileId(), response->GetContentLength());
     int ret = ::close(response->GetFileId());
     if (ret == -1) {

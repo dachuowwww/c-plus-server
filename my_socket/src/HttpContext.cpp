@@ -204,8 +204,8 @@ bool HttpContext::ParaseRequest(const char *begin, int size) {
         break;
       case State::BODY: {
         int bodylength = size - static_cast<int>(start - begin);
-        request_->SetBody(std::string(
-            start, const_cast<char *>(begin) + size));  // NOLINT(cppcoreguidelines-pro-type-const-cast)
+        request_->SetBody(std::string(start, start + bodylength));  // NOLINT(cppcoreguidelines-pro-type-const-cast)
+        end = start + bodylength - 1;
         if (bodylength >= atoi(request_->GetHeader("Content-Length").c_str())) {
           state_ = State::COMPLETE;
         }

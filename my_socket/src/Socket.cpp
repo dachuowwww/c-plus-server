@@ -15,7 +15,10 @@ Socket::Socket() {
   Errif(sock_fd_ == -1, "socket create error");
 }
 
-Socket::Socket(int sock_fd) : sock_fd_(sock_fd) { Errif(sock_fd_ == -1, "socket create error"); }
+Socket::Socket(int sock_fd) {
+  sock_fd_ = sock_fd;
+  Errif(sock_fd_ == -1, "socket create error");
+}
 
 // Socket::Socket(int sock_fd, shared_ptr<InetAddress> InetAddr) : sock_fd_(sock_fd), addr_(std::move(InetAddr)) {
 //   addr_size_ = sizeof(*(addr_->AddrEntity()));  // 未Bind

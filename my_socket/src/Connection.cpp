@@ -140,7 +140,6 @@ void Connection::Send(const char *data, int size) {
       return;
     }
   }
-  Errif(remaining > static_cast<int>(strlen(data)), "Connection::Send remaining size error");
   if (remaining > 0) {
     output_buffer_->Append(data + send_size, remaining);
     conn_channel_->EnableWriting();
@@ -167,7 +166,11 @@ void Connection::SendFile(int fd, int size) {
 }
 
 void Connection::Read() {
-  Errif(state_ != State::Connected, "Read connection not connected");  // 静态断言，如果断言失败，程序终止
+  if (state_ != State::Connected) {
+    LOG_ERROR << "Read not connected";
+    RemoveConnection();
+    return;
+  }
   input_buffer_->RetreiveAll();  // 不能去，因为非租塞使用append处理数据
   if (conn_socket_->IsNonBlocking()) {
     ReadNonBlocking();  // 程序进行中进行连接判断，如果连接正常，进行阻塞IO读取
@@ -177,7 +180,11 @@ void Connection::Read() {
 }
 
 void Connection::Write() {  // 为未发完的信息服务
-  Errif(state_ != State::Connected, "Write connection not connected");
+  if (state_ != State::Connected) {
+    LOG_ERROR << "Write not connected";
+    RemoveConnection();
+    return;
+  }
   if (conn_socket_->IsNonBlocking()) {
     WriteNonBlocking();
   } else {

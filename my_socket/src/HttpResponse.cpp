@@ -24,13 +24,13 @@ std::string HttpResponse::GetPreBody() {
     response += "Connection:close\r\n";
   } else {
     response += "Connection:keep-alive\r\n";
-    response += "Content-Length:";
+    response += "Content-Length: ";
     response += std::to_string(body_.size());
     response += "\r\n";
   }
   for (auto &[key, value] : header_) {
     response += key;
-    response += ":";
+    response += ": ";
     response += value;
     response += "\r\n";
   }

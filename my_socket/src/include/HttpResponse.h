@@ -10,6 +10,7 @@ class HttpResponse {
     K200K = 200,
     K301K = 301,
     K302K = 302,
+    K303K = 303,
     K400BADREQUEST = 400,
     K403FORBIDDEN = 403,
     K404NOTFOUND = 404,

@@ -59,8 +59,9 @@ void EventLoop::QueueOneFunc(std::function<void()> &&cb) {
   if (!(IsInLoopThread()) | calling_functors_) {
     uint64_t write_one_byte = 1;
     ssize_t write_size = write(wakeup_fd_, &write_one_byte, sizeof(write_one_byte));
-    (void)write_size;
+
     Errif(write_size != sizeof(write_one_byte), "Wake up write error.");
+    (void)write_size;
   }
 }
 
@@ -75,8 +76,9 @@ void EventLoop::RunOneFunc(std::function<void()> &&cb) {
 void EventLoop::HandleRead() {
   uint64_t read_one_byte = 1;
   ssize_t read_size = read(wakeup_fd_, &read_one_byte, sizeof(read_one_byte));
-  (void)read_size;
+
   Errif(read_size != sizeof(read_one_byte), "Wake up read error.");
+  (void)read_size;
 }
 
 void EventLoop::RunAt(TimeStamp timestamp, std::function<void()> &&cb) {

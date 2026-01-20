@@ -1,11 +1,11 @@
 #pragma once
+#include <fstream>
 #include <functional>
 #include <memory>
 #include <string>
-#include <fstream>
+#include "HttpRequest.h"
 #include "Logger.h"
 #include "Macro.h"
-#include "HttpRequest.h"
 class Connection;
 class Server;
 class EventLoop;
@@ -28,7 +28,7 @@ class HttpServer {
   static void FileUpload(const HttpRequest *request);
 
  private:
-  bool auto_shutdown_ = false;
+  bool auto_shutdown_ = true;
   std::unique_ptr<Server> server_;
   std::unique_ptr<EventLoop> loop_;
   // std::function<void(const std::shared_ptr<Connection> &conn)> message_call_back_;
@@ -41,7 +41,7 @@ void HttpServer::FileUpload(const HttpRequest *request) {
   size_t b_index = request->GetHeader("Content-Type").find("boundary=");
   std::string boundary = request->GetHeader("Content-Type").substr(b_index + std::string("boundary=").size());
 
-  size_t fn_index = request->GetBody().find("filename=\"");
+  size_t fn_index = request->GetBody().find("filename");
   if (fn_index == std::string::npos) {
     LOG_ERROR << "Upload filename not found";
     return;
