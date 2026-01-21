@@ -141,6 +141,8 @@ src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o
  /home/dachuo/my_socket/src/Server.cpp
 src/CMakeFiles/PINE_SHARED.dir/Socket.cpp.o
  ../src/include/Error.h
+ ../src/include/LogStream.h
+ ../src/include/Logger.h
  ../src/include/Macro.h
  ../src/include/Socket.h
  /home/dachuo/my_socket/src/Socket.cpp

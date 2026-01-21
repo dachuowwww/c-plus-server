@@ -6,6 +6,7 @@
 #include <cstring>
 #include <iostream>
 #include "Error.h"
+#include "Logger.h"
 
 using std::cout;
 using std::endl;
@@ -61,12 +62,15 @@ int Socket::Accept() {
       if (cln_fd == -1 && (errno == EAGAIN || errno == EWOULDBLOCK)) {
         continue;
       }
-      Errif(true, "nonblocking socket accept error");
+      LOG_ERROR << "nonblocking socket " << cln_fd << " accept error";
+      break;
     }
   } else {
     // std::cout << "blocking socket accept" << std::endl;
     cln_fd = ::accept(sock_fd_, (sockaddr *)&cln_addr, &addr_size);
-    Errif(cln_fd == -1, "blocking socket accept error");
+    if (cln_fd == -1) {
+      LOG_ERROR << "blocking socket " << cln_fd << " accept error";
+    }
   }
 
   return cln_fd;

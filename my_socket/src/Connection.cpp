@@ -147,20 +147,15 @@ void Connection::Send(const char *data, int size) {
 }
 
 void Connection::SendFile(int fd, int size) {
+  off_t send_size = 0;
   ssize_t data_size = static_cast<ssize_t>(size);
-  ssize_t send_size = 0;
   while (send_size < data_size) {
-    ssize_t bytes_write = sendfile(GetFd(), fd, (off_t *)&send_size, data_size - send_size);
-    if (bytes_write > 0) {
-      send_size += bytes_write;
-    } else if (bytes_write == -1) {
-      if (errno == EINTR || errno == EAGAIN || (errno == EWOULDBLOCK)) {
-        continue;
+    ssize_t bytes_write = sendfile(GetFd(), fd, &send_size, data_size - send_size);  // off已经改变偏移量
+    if (bytes_write == -1) {
+      if (errno != EINTR || errno != EAGAIN || (errno != EWOULDBLOCK)) {
+        LOG_ERROR << "Connection::SendFile - TcpConnection Send ERROR";
+          break;
       }
-      break;
-    } else {
-      LOG_ERROR << "Connection::SendFile - TcpConnection Send ERROR";
-      break;
     }
   }
 }

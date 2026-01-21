@@ -15,7 +15,7 @@ class FixedBuffer {
   ~FixedBuffer() = default;
 
   void Append(const char *buf, int len) {
-    if (GetSpace() > len) {
+    if (GetSpace() >= len) {
       memcpy(cur_, buf, len);
       cur_ += len;
     } else {

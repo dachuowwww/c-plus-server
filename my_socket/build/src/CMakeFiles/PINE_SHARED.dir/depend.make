@@ -140,6 +140,8 @@ src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/include/TimeStamp.h
 src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/Server.cpp
 
 src/CMakeFiles/PINE_SHARED.dir/Socket.cpp.o: ../src/include/Error.h
+src/CMakeFiles/PINE_SHARED.dir/Socket.cpp.o: ../src/include/LogStream.h
+src/CMakeFiles/PINE_SHARED.dir/Socket.cpp.o: ../src/include/Logger.h
 src/CMakeFiles/PINE_SHARED.dir/Socket.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/Socket.cpp.o: ../src/include/Socket.h
 src/CMakeFiles/PINE_SHARED.dir/Socket.cpp.o: ../src/Socket.cpp

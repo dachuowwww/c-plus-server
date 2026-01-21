@@ -36,7 +36,7 @@ Logger::Impl::Impl(std::unique_ptr<SourceFile> &&source, int line, Logger::LogLe
   current_thread::Tid();
   stream_ << StreamTemplate(current_thread::ToStringTid(), current_thread::LengthTid());
   stream_ << " ";
-  stream_ << StreamTemplate(GetLevelString(), 9);  // 头文件需要包含重载运算符的完整体
+  stream_ << StreamTemplate(GetLevelString(), 8);  // 头文件需要包含重载运算符的完整体
 }
 
 Logger::Impl::~Impl() {
@@ -63,7 +63,7 @@ void Logger::Impl::FormattedTime() {
     t_lastsecond = seconds;
   }
   Formator us(".%06dZ", microseconds);
-  stream_ << StreamTemplate(t_time, 17) << StreamTemplate(us.GetValue(), 9);
+  stream_ << StreamTemplate(t_time, 18) << StreamTemplate(us.GetValue(), 9);
 }
 
 void Logger::Impl::Finish() { stream_ << "-" << sourcefile_->data_ << ":" << line_ << "\n"; }

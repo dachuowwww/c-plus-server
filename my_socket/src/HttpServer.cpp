@@ -61,7 +61,7 @@ void HttpServer::OnHttpRequest(const std::shared_ptr<Connection> &conn) {
 void HttpServer::OnHttpReponse(const std::shared_ptr<Connection> &conn) {
   HttpRequest const *request = conn->GetContext()->GetHttpRequest();
   bool close = request->GetHeader("Connection") == "Close" ||
-               (request->GetVersionString() == "Http1.0" && request->GetHeader("Connection") == "Keep-Alive");
+               (request->GetVersionString() == "Http1.0" && request->GetHeader("Connection") != "Keep-Alive");
   if (request->GetHeader("Content-Type").find("multipart/form-data") != std::string::npos) {  // 处理文件上传
     FileUpload(request);
   }

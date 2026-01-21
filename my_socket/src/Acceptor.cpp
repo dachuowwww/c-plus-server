@@ -20,7 +20,13 @@ Acceptor::~Acceptor() = default;
 
 void Acceptor::SetNewConnectionCallback(std::function<void(int)> &&cb) { new_connection_callback_ = std::move(cb); }
 
-void Acceptor::Accept() { new_connection_callback_(accept_socket_->Accept()); }
+void Acceptor::Accept() {
+  int fd = accept_socket_->Accept();
+  if (fd == -1) {
+    return;
+  }
+  new_connection_callback_(fd);
+}
 
 void Acceptor::EnableListening() {
   accept_channel_

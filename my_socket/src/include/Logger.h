@@ -54,7 +54,7 @@ inline Logger::LogLevel Logger::GetLevel() { return g_log_level; }
 
 // 日志宏
 #define LOG_DEBUG \
-  if (Logger::GetLevel() <= Logger::DEBUG) Logger(__FILE__, __LINE__, Logger::DEBUG, __func__).GetStream()
+  if (Logger::GetLevel() <= Logger::DEBUG) Logger(__FILE__, __LINE__, Logger::DEBUG).GetStream()
 #define LOG_INFO \
   if (Logger::GetLevel() <= Logger::INFO) Logger(__FILE__, __LINE__, Logger::INFO).GetStream()
 #define LOG_WARN Logger(__FILE__, __LINE__, Logger::WARN).GetStream()
