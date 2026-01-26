@@ -92,6 +92,12 @@ Macro.h
 
 ../src/include/Macro.h
 
+../src/include/Metrics.h
+atomic
+-
+cstdint
+-
+
 ../src/include/TimeStamp.h
 Macro.h
 -
@@ -133,6 +139,8 @@ HttpResponse.h
 /home/dachuo/my_socket/test/HttpResponse.h
 Logger.h
 /home/dachuo/my_socket/test/Logger.h
+Metrics.h
+/home/dachuo/my_socket/test/Metrics.h
 TimeStamp.h
 /home/dachuo/my_socket/test/TimeStamp.h
 

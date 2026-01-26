@@ -291,9 +291,22 @@ src/CMakeFiles/PINE_SHARED.dir/Logger.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/PINE_SHARED.dir/Logger.cpp.s"
 	cd /home/dachuo/my_socket/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/dachuo/my_socket/src/Logger.cpp -o CMakeFiles/PINE_SHARED.dir/Logger.cpp.s
 
+src/CMakeFiles/PINE_SHARED.dir/Metrics.cpp.o: src/CMakeFiles/PINE_SHARED.dir/flags.make
+src/CMakeFiles/PINE_SHARED.dir/Metrics.cpp.o: ../src/Metrics.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object src/CMakeFiles/PINE_SHARED.dir/Metrics.cpp.o"
+	cd /home/dachuo/my_socket/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/PINE_SHARED.dir/Metrics.cpp.o -c /home/dachuo/my_socket/src/Metrics.cpp
+
+src/CMakeFiles/PINE_SHARED.dir/Metrics.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/PINE_SHARED.dir/Metrics.cpp.i"
+	cd /home/dachuo/my_socket/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/dachuo/my_socket/src/Metrics.cpp > CMakeFiles/PINE_SHARED.dir/Metrics.cpp.i
+
+src/CMakeFiles/PINE_SHARED.dir/Metrics.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/PINE_SHARED.dir/Metrics.cpp.s"
+	cd /home/dachuo/my_socket/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/dachuo/my_socket/src/Metrics.cpp -o CMakeFiles/PINE_SHARED.dir/Metrics.cpp.s
+
 src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.o: src/CMakeFiles/PINE_SHARED.dir/flags.make
 src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.o: ../src/Poller.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.o"
 	cd /home/dachuo/my_socket/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/PINE_SHARED.dir/Poller.cpp.o -c /home/dachuo/my_socket/src/Poller.cpp
 
 src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.i: cmake_force
@@ -306,7 +319,7 @@ src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.s: cmake_force
 
 src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: src/CMakeFiles/PINE_SHARED.dir/flags.make
 src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/Server.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o"
 	cd /home/dachuo/my_socket/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/PINE_SHARED.dir/Server.cpp.o -c /home/dachuo/my_socket/src/Server.cpp
 
 src/CMakeFiles/PINE_SHARED.dir/Server.cpp.i: cmake_force
@@ -319,7 +332,7 @@ src/CMakeFiles/PINE_SHARED.dir/Server.cpp.s: cmake_force
 
 src/CMakeFiles/PINE_SHARED.dir/Socket.cpp.o: src/CMakeFiles/PINE_SHARED.dir/flags.make
 src/CMakeFiles/PINE_SHARED.dir/Socket.cpp.o: ../src/Socket.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object src/CMakeFiles/PINE_SHARED.dir/Socket.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object src/CMakeFiles/PINE_SHARED.dir/Socket.cpp.o"
 	cd /home/dachuo/my_socket/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/PINE_SHARED.dir/Socket.cpp.o -c /home/dachuo/my_socket/src/Socket.cpp
 
 src/CMakeFiles/PINE_SHARED.dir/Socket.cpp.i: cmake_force
@@ -332,7 +345,7 @@ src/CMakeFiles/PINE_SHARED.dir/Socket.cpp.s: cmake_force
 
 src/CMakeFiles/PINE_SHARED.dir/ThreadPool.cpp.o: src/CMakeFiles/PINE_SHARED.dir/flags.make
 src/CMakeFiles/PINE_SHARED.dir/ThreadPool.cpp.o: ../src/ThreadPool.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object src/CMakeFiles/PINE_SHARED.dir/ThreadPool.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object src/CMakeFiles/PINE_SHARED.dir/ThreadPool.cpp.o"
 	cd /home/dachuo/my_socket/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/PINE_SHARED.dir/ThreadPool.cpp.o -c /home/dachuo/my_socket/src/ThreadPool.cpp
 
 src/CMakeFiles/PINE_SHARED.dir/ThreadPool.cpp.i: cmake_force
@@ -345,7 +358,7 @@ src/CMakeFiles/PINE_SHARED.dir/ThreadPool.cpp.s: cmake_force
 
 src/CMakeFiles/PINE_SHARED.dir/TimeQueue.cpp.o: src/CMakeFiles/PINE_SHARED.dir/flags.make
 src/CMakeFiles/PINE_SHARED.dir/TimeQueue.cpp.o: ../src/TimeQueue.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object src/CMakeFiles/PINE_SHARED.dir/TimeQueue.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object src/CMakeFiles/PINE_SHARED.dir/TimeQueue.cpp.o"
 	cd /home/dachuo/my_socket/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/PINE_SHARED.dir/TimeQueue.cpp.o -c /home/dachuo/my_socket/src/TimeQueue.cpp
 
 src/CMakeFiles/PINE_SHARED.dir/TimeQueue.cpp.i: cmake_force
@@ -358,7 +371,7 @@ src/CMakeFiles/PINE_SHARED.dir/TimeQueue.cpp.s: cmake_force
 
 src/CMakeFiles/PINE_SHARED.dir/TimeStamp.cpp.o: src/CMakeFiles/PINE_SHARED.dir/flags.make
 src/CMakeFiles/PINE_SHARED.dir/TimeStamp.cpp.o: ../src/TimeStamp.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object src/CMakeFiles/PINE_SHARED.dir/TimeStamp.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object src/CMakeFiles/PINE_SHARED.dir/TimeStamp.cpp.o"
 	cd /home/dachuo/my_socket/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/PINE_SHARED.dir/TimeStamp.cpp.o -c /home/dachuo/my_socket/src/TimeStamp.cpp
 
 src/CMakeFiles/PINE_SHARED.dir/TimeStamp.cpp.i: cmake_force
@@ -371,7 +384,7 @@ src/CMakeFiles/PINE_SHARED.dir/TimeStamp.cpp.s: cmake_force
 
 src/CMakeFiles/PINE_SHARED.dir/Timer.cpp.o: src/CMakeFiles/PINE_SHARED.dir/flags.make
 src/CMakeFiles/PINE_SHARED.dir/Timer.cpp.o: ../src/Timer.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object src/CMakeFiles/PINE_SHARED.dir/Timer.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object src/CMakeFiles/PINE_SHARED.dir/Timer.cpp.o"
 	cd /home/dachuo/my_socket/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/PINE_SHARED.dir/Timer.cpp.o -c /home/dachuo/my_socket/src/Timer.cpp
 
 src/CMakeFiles/PINE_SHARED.dir/Timer.cpp.i: cmake_force
@@ -402,6 +415,7 @@ PINE_SHARED_OBJECTS = \
 "CMakeFiles/PINE_SHARED.dir/LogFile.cpp.o" \
 "CMakeFiles/PINE_SHARED.dir/LogStream.cpp.o" \
 "CMakeFiles/PINE_SHARED.dir/Logger.cpp.o" \
+"CMakeFiles/PINE_SHARED.dir/Metrics.cpp.o" \
 "CMakeFiles/PINE_SHARED.dir/Poller.cpp.o" \
 "CMakeFiles/PINE_SHARED.dir/Server.cpp.o" \
 "CMakeFiles/PINE_SHARED.dir/Socket.cpp.o" \
@@ -431,6 +445,7 @@ lib/libPINE_SHARED.so: src/CMakeFiles/PINE_SHARED.dir/Latch.cpp.o
 lib/libPINE_SHARED.so: src/CMakeFiles/PINE_SHARED.dir/LogFile.cpp.o
 lib/libPINE_SHARED.so: src/CMakeFiles/PINE_SHARED.dir/LogStream.cpp.o
 lib/libPINE_SHARED.so: src/CMakeFiles/PINE_SHARED.dir/Logger.cpp.o
+lib/libPINE_SHARED.so: src/CMakeFiles/PINE_SHARED.dir/Metrics.cpp.o
 lib/libPINE_SHARED.so: src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.o
 lib/libPINE_SHARED.so: src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o
 lib/libPINE_SHARED.so: src/CMakeFiles/PINE_SHARED.dir/Socket.cpp.o
@@ -440,7 +455,7 @@ lib/libPINE_SHARED.so: src/CMakeFiles/PINE_SHARED.dir/TimeStamp.cpp.o
 lib/libPINE_SHARED.so: src/CMakeFiles/PINE_SHARED.dir/Timer.cpp.o
 lib/libPINE_SHARED.so: src/CMakeFiles/PINE_SHARED.dir/build.make
 lib/libPINE_SHARED.so: src/CMakeFiles/PINE_SHARED.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Linking CXX shared library ../lib/libPINE_SHARED.so"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Linking CXX shared library ../lib/libPINE_SHARED.so"
 	cd /home/dachuo/my_socket/build/src && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/PINE_SHARED.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

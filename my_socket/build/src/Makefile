@@ -611,6 +611,33 @@ Logger.cpp.s:
 	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/Logger.cpp.s
 .PHONY : Logger.cpp.s
 
+Metrics.o: Metrics.cpp.o
+
+.PHONY : Metrics.o
+
+# target to build an object file
+Metrics.cpp.o:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/Metrics.cpp.o
+.PHONY : Metrics.cpp.o
+
+Metrics.i: Metrics.cpp.i
+
+.PHONY : Metrics.i
+
+# target to preprocess a source file
+Metrics.cpp.i:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/Metrics.cpp.i
+.PHONY : Metrics.cpp.i
+
+Metrics.s: Metrics.cpp.s
+
+.PHONY : Metrics.s
+
+# target to generate assembly for a file
+Metrics.cpp.s:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/Metrics.cpp.s
+.PHONY : Metrics.cpp.s
+
 Poller.o: Poller.cpp.o
 
 .PHONY : Poller.o
@@ -863,6 +890,9 @@ help:
 	@echo "... Logger.o"
 	@echo "... Logger.i"
 	@echo "... Logger.s"
+	@echo "... Metrics.o"
+	@echo "... Metrics.i"
+	@echo "... Metrics.s"
 	@echo "... Poller.o"
 	@echo "... Poller.i"
 	@echo "... Poller.s"

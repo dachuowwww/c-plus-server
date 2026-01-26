@@ -1,5 +1,6 @@
 #pragma once
 #include <functional>
+// #include <cstdint>
 #include <memory>
 #include <string>
 #include "Macro.h"
@@ -30,6 +31,7 @@ class Connection : public std::enable_shared_from_this<Connection> {
   [[nodiscard]] int GetFd() const;
   [[nodiscard]] std::string ReadInputBuffer() const;
   [[nodiscard]] int ReadInputBufferSize() const;
+  // void ConsumeInputBuffer(int len);
   [[nodiscard]] std::string ReadOutputBuffer() const;
   [[nodiscard]] int ReadOutputBufferSize() const;
   [[nodiscard]] std::string RetriveInputBuffer() const;
@@ -55,6 +57,7 @@ class Connection : public std::enable_shared_from_this<Connection> {
   void Read();
   void Write();
   void KeyBoardToOutput();
+  // void SetCloseAfterWrite();
 
   void SetOutput(const char *data);
   void SetState(State state);
@@ -83,6 +86,14 @@ class Connection : public std::enable_shared_from_this<Connection> {
   void WriteBlocking();
   void ReadNonBlocking();
   void WriteNonBlocking();
+  void SendFileInLoop();
+  // void MaybeClose();
+
+  // bool close_after_write_ = false;
+  bool sending_file_ = false;
+  int sendfile_fd_ = -1;
+  off_t sendfile_offset_ = 0;
+  size_t sendfile_remaining_ = 0;
 
   DISALLOW_COPY_AND_ASSIGN(Connection);
 };

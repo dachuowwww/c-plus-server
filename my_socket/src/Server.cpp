@@ -7,6 +7,7 @@
 #include "Connection.h"
 #include "Error.h"
 #include "EventLoop.h"
+#include "Metrics.h"
 // #include "ThreadPool.h"
 #include "EventLoopThreadPool.h"
 #include "Logger.h"
@@ -44,6 +45,7 @@ void Server::OnConnect(function<void(const std::shared_ptr<Connection> &conn)> &
 
 void Server::NewConnection(int cln_fd) {
   // int idx = static_cast<int>(cln_fd % subreactors_.size());
+  Metrics::OnAccept();
   auto clnt_conn = std::make_shared<Connection>(event_loop_thread_pool_->NextLoop(), cln_fd);
   // function<void(Connection *)> cb1 = std::bind(&Handle, this, std::placeholders::_1);
   // 没有必要，因为Server::Handle已经绑定了this指针
@@ -64,7 +66,9 @@ void Server::RemoveConnection(const std::shared_ptr<Connection> &conn) {
 }
 
 void Server::RemoveConnectionInLoop(const std::shared_ptr<Connection> &conn) {
-  connections_.erase(conn->GetFd());  // -1
+  if (connections_.erase(conn->GetFd()) > 0) {  // -1
+    Metrics::OnClose();
+  }
   // LOG_INFO << "Server::RemoveConnectionInLoop - Client fd " << conn->GetFd() << " removed from connection map";
 
   EventLoop *loop = conn->GetLoop();

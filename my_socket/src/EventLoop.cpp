@@ -83,12 +83,34 @@ void EventLoop::HandleRead() {
 
 void EventLoop::RunAt(TimeStamp timestamp, std::function<void()> &&cb) {
   timequeue_->Insert(timestamp, std::move(cb), 0.0);
+  // if (IsInLoopThread()) {
+  //   timequeue_->Insert(timestamp, std::move(cb), 0.0);
+  // } else {
+  //   QueueOneFunc([this, timestamp, cb = std::move(cb)]() mutable {
+  //     timequeue_->Insert(timestamp, std::move(cb), 0.0);
+  //   });
+  // }
 }
 
 void EventLoop::RunAfter(double wait_time, std::function<void()> &&cb) {
   timequeue_->Insert(TimeStamp::AddTime(TimeStamp::Now(), wait_time), std::move(cb), 0.0);
+  // if (IsInLoopThread()) {
+  //   timequeue_->Insert(TimeStamp::AddTime(TimeStamp::Now(), wait_time), std::move(cb), 0.0);
+  // } else {
+  //   QueueOneFunc([this, wait_time, cb = std::move(cb)]() mutable {
+  //     timequeue_->Insert(TimeStamp::AddTime(TimeStamp::Now(), wait_time), std::move(cb), 0.0);
+  //   });
+  // }
 }
 
 void EventLoop::RunEvery(double interval, std::function<void()> &&cb) {
   timequeue_->Insert(TimeStamp::AddTime(TimeStamp::Now(), interval), std::move(cb), interval);  // 不能以目前为定时器
+  // if (IsInLoopThread()) {
+  //   timequeue_->Insert(TimeStamp::AddTime(TimeStamp::Now(), interval), std::move(cb), interval);  //
+  //   不能以目前为定时器
+  // } else {
+  //   QueueOneFunc([this, interval, cb = std::move(cb)]() mutable {
+  //     timequeue_->Insert(TimeStamp::AddTime(TimeStamp::Now(), interval), std::move(cb), interval);
+  //   });
+  // }
 }

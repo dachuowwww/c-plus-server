@@ -226,4 +226,7 @@ HttpRequest const *HttpContext::GetHttpRequest() const { return this->request_.g
 
 bool HttpContext::IsComplete() const { return state_ == State::COMPLETE; }
 
-void HttpContext::ResetState() { state_ = State::START; }
+void HttpContext::ResetState() {
+  state_ = State::START;
+  request_ = std::make_unique<HttpRequest>();  // 重置请求对象为长连接用户使用
+}

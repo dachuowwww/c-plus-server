@@ -13,6 +13,7 @@
 #include "HttpRequest.h"
 #include "HttpResponse.h"
 #include "Logger.h"
+#include "Metrics.h"
 #include "TimeStamp.h"
 
 void Relocation(HttpResponse *response, const char *location = "/") {
@@ -27,7 +28,7 @@ void FindAllFiles(const std::string &dir, std::vector<std::string> *files) {
   DIR *dp = nullptr;
   struct dirent *entry = nullptr;
   if ((dp = opendir(dir.c_str())) == nullptr) {
-    LOG_ERROR << "Open directory " << dir << " failed!";
+    Errif(true, "Open directory failed!");
     return;
   }
   while ((entry = readdir(dp)) != nullptr) {
@@ -37,7 +38,7 @@ void FindAllFiles(const std::string &dir, std::vector<std::string> *files) {
       count++;
     }
   }
-  LOG_INFO << "Find " << count << " files in directory " << dir;
+  // LOG_INFO << "Find " << count << " files in directory " << dir;
   closedir(dp);
 }
 
@@ -45,7 +46,7 @@ bool IsFindInDir(const std::string &file, const std::string &dir) {
   DIR *dp = nullptr;
   struct dirent *entry = nullptr;
   if ((dp = opendir(dir.c_str())) == nullptr) {
-    LOG_ERROR << "Open directory " << dir << " failed!";
+    Errif(true, "Open directory failed!");
     return false;
   }
   while ((entry = readdir(dp)) != nullptr) {
@@ -60,7 +61,7 @@ bool IsFindInDir(const std::string &file, const std::string &dir) {
 std::string ReadFile(const std::string &filename) {
   std::ifstream is(filename.c_str(), std::ifstream::in);
   if (!is.is_open()) {
-    LOG_ERROR << "ReadFile: open file " << filename << " failed!";
+    Errif(true, "ReadFile: open file failed!");
     return "";
   }
   is.seekg(0, std::ifstream::end);
@@ -84,7 +85,9 @@ std::string BuildFileHtml(const std::string &dir) {
     file += "</td><td><a href=\"/open/";
     file += filename;
     file += "\">浏览</a><a href=\"/download/";
+    file += filename;
     file += "\">下载</a><a href=\"/delete/";
+    file += filename;
     file += "\">删除</a></td></tr>\n";
   }
 
@@ -151,13 +154,13 @@ void Httpopen(const std::string &filename, HttpResponse *response) {
       LOG_INFO << "Open file " << filename << " success!";
     } else {
       // std::cout<<"open file 1"<<filename<<std::endl;
-      LOG_ERROR << "Open file " << filename << " failed!";
+      Errif(true, "Open file failed!");
       response->SetResponseBody("Open file ");
       Relocation(response);
     }
   } else {
     // std::cout<<"open file 2"<<filename<<std::endl;
-    LOG_ERROR << "Open file " << filename << " failed!";
+    Errif(true, "Open file failed!");
     Relocation(response);
   }
 }
@@ -165,7 +168,7 @@ void Httpdownload(const std::string &filename, HttpResponse *response) {
   if (IsFindInDir(filename, "../files/")) {
     int filefd = ::open(("../files/" + filename).c_str(), O_RDONLY);
     if (filefd < 0) {
-      LOG_ERROR << "Download file " << filename << " failed!";
+      Errif(true, "Download file failed!");
       OpenFileSystem(response);
     } else {
       struct stat file_stat = {};
@@ -178,19 +181,19 @@ void Httpdownload(const std::string &filename, HttpResponse *response) {
       LOG_INFO << "Download file " << filename << " success!";
     }
   } else {
-    LOG_ERROR << "Download file " << filename << " failed!";
+    Errif(true, "Download file failed!");
     OpenFileSystem(response);
   }
 }
 void Httpdelete(const std::string &filename, HttpResponse *response) {
   if (IsFindInDir(filename, "../files/")) {
     if (remove(("../files/" + filename).c_str()) != 0) {
-      LOG_ERROR << "Delete file " << filename << " failed!";
+      Errif(true, "Delete file failed!");
     } else {
       LOG_INFO << "Delete file " << filename << " success!";
     }
   } else {
-    LOG_ERROR << "Delete file " << filename << " failed!";
+    Errif(true, "Delete file failed!");
   }
   OpenFileSystem(response);
 }
@@ -250,7 +253,7 @@ void Http(const HttpRequest &request, HttpResponse *response) {
     } else if (request.GetURL() == "/upload") {  // 上传成功才会到这里
       OpenFileSystem(response);
     } else {
-      LOG_ERROR << "Post request failed!";
+      Errif(true, "Post request failed!");
       response->SetStatusCode(HttpResponse::HttpStatusCode::K400BADREQUEST);
       response->SetStatusMessage("BAD_RESQUEST");
     }
@@ -262,6 +265,7 @@ void Http(const HttpRequest &request, HttpResponse *response) {
 }
 
 void Every() { std::cout << TimeStamp::Now().ToFormattedString() << std::endl; }
+void LogMetrics() { Metrics::LogSnapshot(); }
 std::unique_ptr<AsyncLogging> async_log;
 void AsyncOutput(const char *msg, int len) { async_log->Append(msg, len); }
 void AsyncFlush() { async_log->Flush(); }
@@ -282,7 +286,7 @@ int main(int argc, char *argv[]) {
   } else {
     httpserver->SetHttpResponseCallBack(Http);
   }
-  // httpserver->OnTimerEvery(3.0, Every);
+  httpserver->OnTimerEvery(1.0, LogMetrics);
 
   httpserver->Start();
   return 0;

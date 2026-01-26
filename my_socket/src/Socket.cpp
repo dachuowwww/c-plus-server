@@ -60,16 +60,20 @@ int Socket::Accept() {
         break;
       }
       if (cln_fd == -1 && (errno == EAGAIN || errno == EWOULDBLOCK)) {
+        return -1;
+      }
+      if (cln_fd == -1 && errno == EINTR) {
         continue;
       }
-      LOG_ERROR << "nonblocking socket " << cln_fd << " accept error";
-      break;
+      LOG_ERROR << "nonblocking socket accept error, errno=" << errno;
+      return -1;
     }
   } else {
     // std::cout << "blocking socket accept" << std::endl;
     cln_fd = ::accept(sock_fd_, (sockaddr *)&cln_addr, &addr_size);
     if (cln_fd == -1) {
-      LOG_ERROR << "blocking socket " << cln_fd << " accept error";
+      LOG_ERROR << "blocking socket accept error, errno=" << errno;
+      return -1;
     }
   }
 

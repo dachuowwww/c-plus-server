@@ -26,6 +26,8 @@ src/CMakeFiles/PINE_SHARED.dir/Channel.cpp.o: ../src/include/Channel.h
 src/CMakeFiles/PINE_SHARED.dir/Channel.cpp.o: ../src/include/Connection.h
 src/CMakeFiles/PINE_SHARED.dir/Channel.cpp.o: ../src/include/Error.h
 src/CMakeFiles/PINE_SHARED.dir/Channel.cpp.o: ../src/include/EventLoop.h
+src/CMakeFiles/PINE_SHARED.dir/Channel.cpp.o: ../src/include/LogStream.h
+src/CMakeFiles/PINE_SHARED.dir/Channel.cpp.o: ../src/include/Logger.h
 src/CMakeFiles/PINE_SHARED.dir/Channel.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/Channel.cpp.o: ../src/include/TimeStamp.h
 src/CMakeFiles/PINE_SHARED.dir/Channel.cpp.o: ../src/Channel.cpp
@@ -39,6 +41,7 @@ src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/include/HttpContext.h
 src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/include/LogStream.h
 src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/include/Logger.h
 src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/include/Macro.h
+src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/include/Metrics.h
 src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/include/Socket.h
 src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/include/TimeStamp.h
 src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/Connection.cpp
@@ -46,6 +49,10 @@ src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/Connection.cpp
 src/CMakeFiles/PINE_SHARED.dir/CurrentThread.cpp.o: ../src/include/CurrentThread.h
 src/CMakeFiles/PINE_SHARED.dir/CurrentThread.cpp.o: ../src/CurrentThread.cpp
 
+src/CMakeFiles/PINE_SHARED.dir/Error.cpp.o: ../src/include/Error.h
+src/CMakeFiles/PINE_SHARED.dir/Error.cpp.o: ../src/include/LogStream.h
+src/CMakeFiles/PINE_SHARED.dir/Error.cpp.o: ../src/include/Logger.h
+src/CMakeFiles/PINE_SHARED.dir/Error.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/Error.cpp.o: ../src/Error.cpp
 src/CMakeFiles/PINE_SHARED.dir/Error.cpp.o: ../src/include/Error.h
 
@@ -94,6 +101,7 @@ src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/HttpServer.h
 src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/LogStream.h
 src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/Logger.h
 src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/Macro.h
+src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/Metrics.h
 src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/Server.h
 src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/TimeStamp.h
 src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/HttpServer.cpp
@@ -121,6 +129,13 @@ src/CMakeFiles/PINE_SHARED.dir/Logger.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/Logger.cpp.o: ../src/include/TimeStamp.h
 src/CMakeFiles/PINE_SHARED.dir/Logger.cpp.o: ../src/Logger.cpp
 
+src/CMakeFiles/PINE_SHARED.dir/Metrics.cpp.o: ../src/include/Error.h
+src/CMakeFiles/PINE_SHARED.dir/Metrics.cpp.o: ../src/include/LogStream.h
+src/CMakeFiles/PINE_SHARED.dir/Metrics.cpp.o: ../src/include/Logger.h
+src/CMakeFiles/PINE_SHARED.dir/Metrics.cpp.o: ../src/include/Macro.h
+src/CMakeFiles/PINE_SHARED.dir/Metrics.cpp.o: ../src/include/Metrics.h
+src/CMakeFiles/PINE_SHARED.dir/Metrics.cpp.o: ../src/Metrics.cpp
+
 src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.o: ../src/include/Channel.h
 src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.o: ../src/include/Error.h
 src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.o: ../src/include/Macro.h
@@ -135,6 +150,7 @@ src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/include/EventLoopThreadPool.
 src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/include/LogStream.h
 src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/include/Logger.h
 src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/include/Macro.h
+src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/include/Metrics.h
 src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/include/Server.h
 src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/include/TimeStamp.h
 src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/Server.cpp

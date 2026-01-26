@@ -14,7 +14,12 @@ TimeQueue::TimeQueue(EventLoop *loop) : loop_(loop) {
   timer_channel_->EnableReading();
 }
 
-TimeQueue::~TimeQueue() { close(timerfd_); }
+TimeQueue::~TimeQueue() {
+  if (timer_channel_ && timer_channel_->IfInEpoll()) {
+    timer_channel_->RemoveInEpoll();
+  }
+  close(timerfd_);
+}
 
 void TimeQueue::CreateTimerfd() {
   timerfd_ = timerfd_create(CLOCK_MONOTONIC, TFD_NONBLOCK | TFD_CLOEXEC);  // uint64_t

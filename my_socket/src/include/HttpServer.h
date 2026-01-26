@@ -43,7 +43,7 @@ void HttpServer::FileUpload(const HttpRequest *request) {
 
   size_t fn_index = request->GetBody().find("filename");
   if (fn_index == std::string::npos) {
-    LOG_ERROR << "Upload filename not found";
+    Errif(true, "Upload filename not found");
     return;
   }
   fn_index += std::string("filename=\"").size();

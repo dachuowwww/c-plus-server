@@ -24,8 +24,12 @@ std::string HttpResponse::GetPreBody() {
     response += "Connection:close\r\n";
   } else {
     response += "Connection:keep-alive\r\n";
+    response += "Keep-Alive: timeout=10\r\n";
+  }
+  int body_len = (body_type_ == "FILE_TYPE") ? content_length_ : static_cast<int>(body_.size());
+  if (body_len >= 0) {
     response += "Content-Length: ";
-    response += std::to_string(body_.size());
+    response += std::to_string(body_len);
     response += "\r\n";
   }
   for (auto &[key, value] : header_) {

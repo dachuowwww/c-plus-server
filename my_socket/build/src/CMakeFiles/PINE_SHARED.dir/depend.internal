@@ -27,6 +27,8 @@ src/CMakeFiles/PINE_SHARED.dir/Channel.cpp.o
  ../src/include/Connection.h
  ../src/include/Error.h
  ../src/include/EventLoop.h
+ ../src/include/LogStream.h
+ ../src/include/Logger.h
  ../src/include/Macro.h
  ../src/include/TimeStamp.h
  /home/dachuo/my_socket/src/Channel.cpp
@@ -40,6 +42,7 @@ src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o
  ../src/include/LogStream.h
  ../src/include/Logger.h
  ../src/include/Macro.h
+ ../src/include/Metrics.h
  ../src/include/Socket.h
  ../src/include/TimeStamp.h
  /home/dachuo/my_socket/src/Connection.cpp
@@ -47,6 +50,10 @@ src/CMakeFiles/PINE_SHARED.dir/CurrentThread.cpp.o
  ../src/include/CurrentThread.h
  /home/dachuo/my_socket/src/CurrentThread.cpp
 src/CMakeFiles/PINE_SHARED.dir/Error.cpp.o
+ ../src/include/Error.h
+ ../src/include/LogStream.h
+ ../src/include/Logger.h
+ ../src/include/Macro.h
  /home/dachuo/my_socket/src/Error.cpp
  /home/dachuo/my_socket/src/include/Error.h
 src/CMakeFiles/PINE_SHARED.dir/EventLoop.cpp.o
@@ -95,6 +102,7 @@ src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o
  ../src/include/LogStream.h
  ../src/include/Logger.h
  ../src/include/Macro.h
+ ../src/include/Metrics.h
  ../src/include/Server.h
  ../src/include/TimeStamp.h
  /home/dachuo/my_socket/src/HttpServer.cpp
@@ -121,6 +129,13 @@ src/CMakeFiles/PINE_SHARED.dir/Logger.cpp.o
  ../src/include/Macro.h
  ../src/include/TimeStamp.h
  /home/dachuo/my_socket/src/Logger.cpp
+src/CMakeFiles/PINE_SHARED.dir/Metrics.cpp.o
+ ../src/include/Error.h
+ ../src/include/LogStream.h
+ ../src/include/Logger.h
+ ../src/include/Macro.h
+ ../src/include/Metrics.h
+ /home/dachuo/my_socket/src/Metrics.cpp
 src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.o
  ../src/include/Channel.h
  ../src/include/Error.h
@@ -136,6 +151,7 @@ src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o
  ../src/include/LogStream.h
  ../src/include/Logger.h
  ../src/include/Macro.h
+ ../src/include/Metrics.h
  ../src/include/Server.h
  ../src/include/TimeStamp.h
  /home/dachuo/my_socket/src/Server.cpp

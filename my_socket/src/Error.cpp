@@ -1,10 +1,13 @@
 #include "include/Error.h"
+#include <cerrno>
 #include <cstdio>
-#include <cstdlib>
+#include <cstring>
+#include "Logger.h"
 
 void Errif(bool condition, const char *errmsg) {
   if (condition) {
+    int err = errno;
     perror(errmsg);
-    exit(EXIT_FAILURE);
+    LOG_ERROR << errmsg << " errno=" << err << " msg=" << strerror(err);
   }
 }

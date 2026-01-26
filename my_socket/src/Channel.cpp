@@ -3,6 +3,7 @@
 #include "Connection.h"
 #include "Error.h"
 #include "EventLoop.h"
+#include "Logger.h"
 using std::cout;
 using std::endl;
 using std::function;
@@ -36,7 +37,7 @@ void Channel::RemoveInEpoll() {
     ready_events_ = 0;
     in_epoll_ = false;
   } else {
-    Errif(true, "Channel::RemoveInEpoll error");
+    Errif(true, "Channel::RemoveInEpoll called when channel not in epoll");
   }
 }
 
