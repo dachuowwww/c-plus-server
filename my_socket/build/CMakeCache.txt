@@ -18,7 +18,7 @@
 CLANG_FORMAT_BIN:FILEPATH=/usr/bin/clang-format-10
 
 //Path to a program.
-CLANG_TIDY_BIN:FILEPATH=/usr/bin/clang-tidy-10
+CLANG_TIDY_BIN:FILEPATH=/usr/bin/clang-tidy-22
 
 //Path to a program.
 CMAKE_ADDR2LINE:FILEPATH=/usr/bin/addr2line
@@ -102,8 +102,7 @@ CMAKE_EXE_LINKER_FLAGS_RELEASE:STRING=
 //Flags used by the linker during RELWITHDEBINFO builds.
 CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO:STRING=
 
-//Enable/Disable output of compile commands during generation.
-CMAKE_EXPORT_COMPILE_COMMANDS:BOOL=OFF
+CMAKE_EXPORT_COMPILE_COMMANDS:BOOL=ON
 
 //Install path prefix, prepended onto install directories.
 CMAKE_INSTALL_PREFIX:PATH=/usr/local

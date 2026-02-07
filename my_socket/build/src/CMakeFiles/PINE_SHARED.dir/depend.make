@@ -92,6 +92,7 @@ src/CMakeFiles/PINE_SHARED.dir/HttpResponse.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/HttpResponse.cpp.o: ../src/HttpResponse.cpp
 
 src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/Connection.h
+src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/CoroutineTask.h
 src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/Error.h
 src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/EventLoop.h
 src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/HttpContext.h

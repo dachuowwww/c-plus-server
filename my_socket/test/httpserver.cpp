@@ -24,7 +24,7 @@ void Relocation(HttpResponse *response, const char *location = "/") {
   response->SetClose();                       // 防止上一信息污染重定位
 }
 void FindAllFiles(const std::string &dir, std::vector<std::string> *files) {
-  int count = 0;
+  // int count = 0;
   DIR *dp = nullptr;
   struct dirent *entry = nullptr;
   if ((dp = opendir(dir.c_str())) == nullptr) {
@@ -35,7 +35,7 @@ void FindAllFiles(const std::string &dir, std::vector<std::string> *files) {
     std::string filename = entry->d_name;
     if (filename != "." && filename != "..") {  // string在前会调用重载
       files->push_back(filename);
-      count++;
+      // count++;
     }
   }
   // LOG_INFO << "Find " << count << " files in directory " << dir;
@@ -58,22 +58,6 @@ bool IsFindInDir(const std::string &file, const std::string &dir) {
   closedir(dp);
   return false;
 }
-std::string ReadFile(const std::string &filename) {
-  std::ifstream is(filename.c_str(), std::ifstream::in);
-  if (!is.is_open()) {
-    Errif(true, "ReadFile: open file failed!");
-    return "";
-  }
-  is.seekg(0, std::ifstream::end);
-  int length = static_cast<int>(is.tellg());
-  is.seekg(0, std::ifstream::beg);
-  char *buffer = new char[length];
-  is.read(buffer, length);
-  is.close();
-  std::string content(buffer, length);
-  delete[] buffer;
-  return content;
-}
 
 std::string BuildFileHtml(const std::string &dir) {
   std::vector<std::string> files;
@@ -92,7 +76,7 @@ std::string BuildFileHtml(const std::string &dir) {
   }
 
   std::string tmp = "<!--filelist-->";
-  std::string body = ReadFile("../static/fileserver.html");
+  std::string body = HttpServer::ReadFileCached("../static/fileserver.html");
   body.replace(body.find(tmp), tmp.length(), file);
   return body;
 }
@@ -110,7 +94,7 @@ std::string BuildAnomFileHtml(const std::string &dir) {
   }
 
   std::string tmp = "<!--filelist-->";
-  std::string body = ReadFile("../static/anomfileserver.html");
+  std::string body = HttpServer::ReadFileCached("../static/anomfileserver.html");
   body.replace(body.find(tmp), tmp.length(), file);
   return body;
 }
@@ -148,7 +132,7 @@ void Httpopen(const std::string &filename, HttpResponse *response) {
       if (s == "html") {
         response->SetContentType("text/html; charset=UTF-8");
       }
-      response->SetResponseBody(ReadFile("../files/" + filename));
+      response->SetResponseBody(HttpServer::ReadFileCached("../files/" + filename));
       response->SetStatusCode(HttpResponse::HttpStatusCode::K200K);
       response->SetStatusMessage("OK");
       LOG_INFO << "Open file " << filename << " success!";
@@ -208,7 +192,7 @@ void Http(const HttpRequest &request, HttpResponse *response) {
     const std::string &url = request.GetURL();
     if (url == "/") {
       response->SetContentType("text/html; charset=UTF-8");
-      response->SetResponseBody(ReadFile("../static/index.html"));
+      response->SetResponseBody(HttpServer::ReadFileCached("../static/index.html"));
       response->SetStatusCode(HttpResponse::HttpStatusCode::K200K);
       response->SetStatusMessage("OK");
     } else if (url.substr(0, 5) == "/open") {  // 不包括\0 中文未解码

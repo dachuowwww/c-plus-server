@@ -55,7 +55,7 @@ include CMakeFiles/clang-tidy.dir/progress.make
 
 CMakeFiles/clang-tidy:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Running clang-tidy on source files..."
-	../build_support/run_clang_tidy.py -clang-tidy-binary /usr/bin/clang-tidy-10 -p /home/dachuo/my_socket/build
+	../build_support/run_clang_tidy.py -clang-tidy-binary /usr/bin/clang-tidy-22 -p /home/dachuo/my_socket/build
 
 clang-tidy: CMakeFiles/clang-tidy
 clang-tidy: CMakeFiles/clang-tidy.dir/build.make

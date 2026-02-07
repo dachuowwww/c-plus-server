@@ -32,15 +32,67 @@ Connection::Connection(EventLoop *loop, int cln_fd) : loop_(loop) {
 }
 Connection::~Connection() = default;
 
+Connection::ReadAwaiter Connection::WaitReadable() { return ReadAwaiter(this); }  // 调用返回等待体
+
+// Connection::WriteAwaiter Connection::WaitWritable() { return WriteAwaiter(this); }
+
+// 1不等0等待
+bool Connection::ReadAwaiter::await_ready() const noexcept {
+  return conn_->GetState() != State::Connected || conn_->ReadInputBufferSize() > 0;
+}
+
+void Connection::ReadAwaiter::await_suspend(
+    std::coroutine_handle<> handle) noexcept {
+  Errif(static_cast<bool>(conn_->read_waiter_), "ReadAwaiter already pending");
+  conn_->read_waiter_ = handle;
+}
+
+// bool Connection::WriteAwaiter::await_ready() const noexcept {
+//   if (conn_->GetState() != State::Connected) {
+//     return true;
+//   }
+//   if (conn_->sending_file_) {
+//     return false;
+//   }
+//   return conn_->output_buffer_->ReadableBytes() == 0;
+// }
+
+// void Connection::WriteAwaiter::await_suspend(std::coroutine_handle<> handle) noexcept {
+//   Errif(static_cast<bool>(conn_->write_waiter_), "WriteAwaiter already pending");
+//   conn_->write_waiter_ = handle;
+//   conn_->conn_channel_->EnableWriting();
+// }
+
+void Connection::ResumeReadAwaiter() {
+  if (!read_waiter_) {
+    return;
+  }
+  auto handle = read_waiter_;
+  read_waiter_ = {};
+  handle.resume();
+}
+
+// void Connection::ResumeWriteAwaiter() {
+//   if (!write_waiter_) {
+//     return;
+//   }
+//   auto handle = write_waiter_;
+//   write_waiter_ = {};
+//   handle.resume();
+// }
+
 void Connection::ConnectionEstablished() {
   conn_channel_->Tie(
       shared_from_this());  // 构造函数不能写shared_from_this，因为还没构造完毕。对象内部创建一个指向自己的共享指针 +1
   conn_channel_->EnableReading();
-  connnect_func_(shared_from_this());
+  connnect_func_(shared_from_this());  // 协程
 }
 
 void Connection::ConnectionDestructor() {
   conn_channel_->RemoveInEpoll();
+  SetState(State::Closed);  // 先设置状态，防止协程继续执行读写操作
+  ResumeReadAwaiter();
+  // ResumeWriteAwaiter();
   if (sendfile_fd_ != -1) {
     ::close(sendfile_fd_);
     sendfile_fd_ = -1;
@@ -114,10 +166,16 @@ void Connection::ListenClientMessage() {
     return;
   }
   Read();
+  if (read_waiter_) {  // 唤醒协程
+    ResumeReadAwaiter();
+    return;
+  }
   if (state_ != State::Connected) {
     return;
   }
-  handle_read_func_(shared_from_this());
+  if (handle_read_func_) {  // 非协程
+    handle_read_func_(shared_from_this());
+  }
 }
 
 void Connection::SendClientMessage() {
@@ -125,6 +183,9 @@ void Connection::SendClientMessage() {
     return;
   }
   Write();
+  // if (write_waiter_) {
+  //   ResumeWriteAwaiter();
+  // }
 }
 
 void Connection::Send(const std::string &data) { Send(data.c_str(), data.size()); }
@@ -151,7 +212,7 @@ void Connection::Send(const char *data, int size) {
       LOG_ERROR << "TcpConnection::Send - TcpConnection Send ERROR";
       Metrics::OnWriteError();
       SetState(State::Closed);
-      RemoveConnection(); // 仅一次
+      RemoveConnection();  // 仅一次
       return;
     }
   }
@@ -244,7 +305,7 @@ void Connection::Write() {  // 为未发完的信息服务
       WriteBlocking();
     }
     // output_buffer_->Clear();
-  }else{
+  } else {
     if (sending_file_) {
       SendFileInLoop();
     } else {

@@ -1,6 +1,6 @@
 # CMake minimum version and project settings
 cmake_minimum_required(VERSION 3.10)
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE BOOL "" FORCE) # 强制生成
 set(BUILD_SHARED_LIBS ON)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -75,12 +75,12 @@ if(NOT DEFINED CPPLINT_BIN)
 endif(NOT DEFINED CPPLINT_BIN)
 
 if (NOT DEFINED CLANG_TIDY_BIN)
-    find_program(CLANG_TIDY_BIN NAMES clang-tidy-10 clang-tidy HINTS ${PINE_CLANG_SEARCH_PATH})
+    find_program(CLANG_TIDY_BIN NAMES clang-tidy-22 clang-tidy-10 clang-tidy HINTS ${PINE_CLANG_SEARCH_PATH})
     if(${CLANG_TIDY_BIN} STREQUAL "CLANG_TIDY_BIN-NOTFOUND")
         message(WARNING "Pine/main couldn't find clang_tidy.")
         set(CLANG_TIDY_BIN "")
     else()
-        set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
+        # set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
         message(STATUS "Pine/main found clang_tidy at ${CLANG_TIDY_BIN}")
     endif()
 endif()
