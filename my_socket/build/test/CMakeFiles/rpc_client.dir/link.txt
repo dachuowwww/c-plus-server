@@ -1,0 +1,1 @@
+/usr/bin/c++   -fPIC -Wall -Wextra -std=c++20 -pthread -Wno-unused-parameter -Wno-attributes -DOS_LINUX -g -O0 -ggdb -fsanitize=address -fno-omit-frame-pointer -fno-optimize-sibling-calls   -fPIC CMakeFiles/rpc_client.dir/rpc_client.cpp.o  -o ../bin/rpc_client  -Wl,-rpath,/home/dachuo/my_socket/build/lib ../lib/libPINE_SHARED.so 

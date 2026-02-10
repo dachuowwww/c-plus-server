@@ -4,9 +4,11 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <fstream>
+#include <functional>
 #include <iostream>
 #include <memory>
 #include <string>
+#include <unordered_map>
 #include <vector>
 #include "AsyncLogging.h"
 #include "Connection.h"
@@ -214,7 +216,9 @@ void Http(const HttpRequest &request, HttpResponse *response) {
       response->SetClose();
     }
   } else if (request.GetMethodString() == "POST") {  // post返回的内容需要有body
-    if (request.GetURL() == "/login") {
+    if (request.GetURL() == "/rpc") {
+      HttpServer::HandleRpcRequest(request, response);
+    } else if (request.GetURL() == "/login") {
       const std::string &body = request.GetBody();
       int user_pos = body.find("username=");
       int pass_pos = body.find("password=");

@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../src/include/Macro.h
+
+../src/include/Socket.h
+arpa/inet.h
+-
+Macro.h
+../src/include/Macro.h
+
+/home/dachuo/my_socket/test/rpc_client.cpp
+Socket.h
+/home/dachuo/my_socket/test/Socket.h
+unistd.h
+-
+cerrno
+-
+cstdlib
+-
+cstring
+-
+iostream
+-
+nlohmann/json.hpp
+-
+string
+-
+

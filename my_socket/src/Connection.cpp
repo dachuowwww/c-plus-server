@@ -32,6 +32,8 @@ Connection::Connection(EventLoop *loop, int cln_fd) : loop_(loop) {
 }
 Connection::~Connection() = default;
 
+Connection::ReadAwaiter::ReadAwaiter(Connection *conn) : conn_(conn) {}  // 编译器自动创建
+
 Connection::ReadAwaiter Connection::WaitReadable() { return ReadAwaiter(this); }  // 调用返回等待体
 
 // Connection::WriteAwaiter Connection::WaitWritable() { return WriteAwaiter(this); }
@@ -41,8 +43,7 @@ bool Connection::ReadAwaiter::await_ready() const noexcept {
   return conn_->GetState() != State::Connected || conn_->ReadInputBufferSize() > 0;
 }
 
-void Connection::ReadAwaiter::await_suspend(
-    std::coroutine_handle<> handle) noexcept {
+void Connection::ReadAwaiter::await_suspend(std::coroutine_handle<> handle) noexcept {
   Errif(static_cast<bool>(conn_->read_waiter_), "ReadAwaiter already pending");
   conn_->read_waiter_ = handle;
 }
@@ -166,7 +167,7 @@ void Connection::ListenClientMessage() {
     return;
   }
   Read();
-  if (read_waiter_) {  // 唤醒协程
+  if (read_waiter_ && ReadInputBufferSize() > 0) {  // 唤醒协程
     ResumeReadAwaiter();
     return;
   }

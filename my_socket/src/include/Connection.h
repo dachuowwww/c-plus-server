@@ -25,10 +25,10 @@ class Connection : public std::enable_shared_from_this<Connection> {
 
   class ReadAwaiter {
    public:
-    explicit ReadAwaiter(Connection *conn) : conn_(conn) {}
-    [[nodiscard]] bool await_ready() const noexcept;
+    explicit ReadAwaiter(Connection *conn);
+    bool await_ready() const noexcept;
     void await_suspend(std::coroutine_handle<> handle) noexcept;
-    void await_resume() const noexcept {} 
+    void await_resume() const noexcept {}
 
    private:
     Connection *conn_ = nullptr;

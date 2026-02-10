@@ -1,20 +1,22 @@
 #include "HttpServer.h"
+#include "Connection.h"
+#include "Error.h"
+#include "EventLoop.h"
+#include "HttpContext.h"
+#include "HttpResponse.h"
+#include "Logger.h"
+#include "Macro.h"
+#include "Metrics.h"
+#include "Server.h"
+#include "TimeStamp.h"
 #include <arpa/inet.h>
 #include <algorithm>
 #include <cctype>
 #include <deque>
 #include <fstream>
 #include <iostream>
-#include <mutex>
+#include <nlohmann/json.hpp>  // 引入json库
 #include <unordered_map>
-#include "Connection.h"
-#include "Error.h"
-#include "EventLoop.h"
-#include "HttpContext.h"
-#include "HttpResponse.h"
-#include "Metrics.h"
-#include "Server.h"
-#include "TimeStamp.h"
 
 // namespace {
 // int GetRequestLength(const std::string &data) {
@@ -54,6 +56,54 @@
 //   return static_cast<int>(body_start + content_length);
 // }
 namespace {
+using Json = nlohmann::json;
+using RpcHandler = std::function<Json(const Json &params)>;  // 传入参数和函数结果引用，返回是否成功
+const std::unordered_map<std::string, std::function<Json(const Json &params)>> RpcHandlers = {
+    {"Echo", [](const Json &params) {
+       return Json{{"msg", params.value("msg", "")}};
+     }}};
+// 简单定义一个Echo的RPC接口，参数和结果都是JSON字符串}
+}  // namespace
+void HttpServer::HandleRpcRequest(const HttpRequest &request, HttpResponse *response) {
+  Json req;
+  try {
+    req = Json::parse(request.GetBody());  // 解析
+  } catch (const Json::parse_error &e) {
+    Json resp;
+    resp["id"] = 0;
+    resp["ok"] = false;
+    resp["error"] = std::string("invalid json: ") + e.what();
+    response->SetStatusCode(HttpResponse::HttpStatusCode::K400BADREQUEST);
+    response->SetStatusMessage("BAD_RESQUEST");
+
+    response->SetResponseBody(resp.dump());  // 对象序列化
+    response->SetContentType("application/json; charset=UTF-8");
+    return;
+  }
+  int id = req.value("id", 0);
+  std::string method = req.value("method", "");
+  Json params = req.value("params", Json::object());
+
+  Json resp;
+  resp["id"] = id;
+  auto it = RpcHandlers.find(method);
+  if (it != RpcHandlers.end()) {
+    resp["ok"] = true;
+    resp["result"] = it->second(params);
+    response->SetStatusCode(HttpResponse::HttpStatusCode::K200K);
+    response->SetStatusMessage("OK");
+  } else {
+    resp["ok"] = false;
+    resp["error"] = "unknown method";
+    response->SetStatusCode(HttpResponse::HttpStatusCode::K400BADREQUEST);
+    response->SetStatusMessage("BAD_RESQUEST");
+  }
+
+  response->SetResponseBody(resp.dump());  // 对象序列化
+  response->SetContentType("application/json; charset=UTF-8");
+}
+
+namespace {
 struct CachedFile {
   std::string data;
   size_t size = 0;
@@ -64,7 +114,7 @@ constexpr size_t kFileCacheMaxBytes = 32 * 1024 * 1024;  // 最大缓存总字�
 
 std::mutex g_file_cache_mutex;
 std::unordered_map<std::string, CachedFile> g_file_cache;
-std::deque<std::string> g_file_cache_order;  // 用于记录缓存文件的访问顺序，便于实现LRU淘汰策略
+std::deque<std::string> g_file_cache_order;  // 用于记录缓存文件的访问顺序，便于实现FIFO淘汰策略
 size_t g_file_cache_bytes = 0;               // 记录当前缓存的总字节数，便于判断是否超过限制
 
 void EvictCacheIfNeeded(size_t incoming_size) {
@@ -241,4 +291,28 @@ void HttpServer::OverTime(const std::weak_ptr<Connection> &conn) {
           bind(&HttpServer::OverTime, this, conn));
     }
   }
+}
+
+void HttpServer::FileUpload(const HttpRequest *request) {
+  size_t b_index = request->GetHeader("Content-Type").find("boundary=");
+  std::string boundary = request->GetHeader("Content-Type").substr(b_index + std::string("boundary=").size());
+
+  size_t fn_index = request->GetBody().find("filename");
+  if (fn_index == std::string::npos) {
+    Errif(true, "Upload filename not found");
+    return;
+  }
+  fn_index += std::string("filename=\"").size();
+  size_t fn_end_index = request->GetBody().find("\"\r\n", fn_index);
+  std::string filename = request->GetBody().substr(fn_index, fn_end_index - fn_index);
+
+  size_t f_index = request->GetBody().find("\r\n\r\n");
+  f_index += std::string("\r\n\r\n").size();
+  size_t f_end_index = request->GetBody().find("--" + boundary + "--", f_index);
+  std::string file_data = request->GetBody().substr(f_index, f_end_index - f_index);
+
+  // 保存文件
+  std::ofstream ofs("../files/" + filename, std::ios::out | std::ios::binary);
+  ofs.write(file_data.data(), file_data.size());
+  ofs.close();
 }
