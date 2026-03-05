@@ -1,10 +1,12 @@
 #pragma once
+#include <atomic>
 #include <functional>
 #include <memory>
 #include <mutex>
 #include <string>
 #include <thread>
 #include <unordered_map>
+#include <unordered_set>
 #include "HttpRequest.h"
 
 class Connection;
@@ -26,6 +28,7 @@ class HttpServer {
   void OnHttpReponse(const std::shared_ptr<Connection> &conn);
   void OnTimerEvery(double interval, std::function<void()> &&cb);
   void EnableRpcFlowPool(unsigned int size = std::thread::hardware_concurrency());
+  void DisableRpcFlowPool();
   void Start();
   void OverTime(const std::weak_ptr<Connection> &conn);
 
@@ -38,6 +41,9 @@ class HttpServer {
  private:
   bool auto_shutdown_ = true;
   bool use_rpc_flow_pool_ = true;
+  std::atomic<uint64_t> rpc_token_{1};
+  std::unordered_set<uint64_t> rpc_pending_;
+  std::mutex rpc_pending_mtx_;
   std::unique_ptr<Server> server_;
   std::unique_ptr<EventLoop> loop_;
   std::unique_ptr<ThreadPool> rpc_flow_pool_;

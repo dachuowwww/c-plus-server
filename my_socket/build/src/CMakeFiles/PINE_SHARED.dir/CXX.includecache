@@ -53,6 +53,8 @@ Macro.h
 ../src/include/Macro.h
 
 ../src/include/HttpServer.h
+atomic
+-
 functional
 -
 memory
@@ -64,6 +66,8 @@ string
 thread
 -
 unordered_map
+-
+unordered_set
 -
 HttpRequest.h
 ../src/include/HttpRequest.h
@@ -183,16 +187,4 @@ ThreadPool.h
 /home/dachuo/my_socket/src/ThreadPool.h
 TimeStamp.h
 /home/dachuo/my_socket/src/TimeStamp.h
-
-/home/dachuo/my_socket/src/ThreadPool.cpp
-ThreadPool.h
-/home/dachuo/my_socket/src/ThreadPool.h
-iostream
--
-stdexcept
--
-thread
--
-Error.h
-/home/dachuo/my_socket/src/Error.h
 

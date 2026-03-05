@@ -60,6 +60,7 @@ namespace {
 using Json = nlohmann::json;
 using RpcHandler = std::function<bool(const Json &params, Json *result)>;
 using RpcCode = HttpResponse::RpcCode;
+constexpr int kRpcTimeoutMs = 2000;
 
 Json MakeRespJson(int id, bool ok, HttpResponse::RpcCode code, const std::string &message, const Json &result) {
   Json resp;
@@ -149,6 +150,12 @@ void HttpServer::EnableRpcFlowPool(unsigned int size) {
     size = 1;
   }
   rpc_flow_pool_ = std::make_unique<ThreadPool>(size);
+  use_rpc_flow_pool_ = true;
+}
+
+void HttpServer::DisableRpcFlowPool() {
+  use_rpc_flow_pool_ = false;
+  rpc_flow_pool_.reset();
 }
 
 //////////////////////////////// 文件缓存池
@@ -347,8 +354,34 @@ void HttpServer::HandleRpcRequestInPool(const std::shared_ptr<Connection> &conn,
     return;
   }
 
+  const uint64_t token = rpc_token_.fetch_add(1, std::memory_order_relaxed); // 内存序
+  {
+    std::lock_guard<std::mutex> lock(rpc_pending_mtx_);
+    rpc_pending_.insert(token);
+  }
+  std::weak_ptr<Connection> weak_conn = conn;
+  conn->GetLoop()->RunAfter(static_cast<double>(kRpcTimeoutMs) / 1000.0,
+                            [this, token, id, close, weak_conn]() mutable {
+                              bool should_send = false;
+                              {
+                                std::lock_guard<std::mutex> lock(rpc_pending_mtx_);
+                                should_send = rpc_pending_.erase(token) > 0;
+                              }
+                              if (!should_send) {
+                                return;
+                              }
+                              auto locked = weak_conn.lock(); // 连接关闭了也不发送
+                              if (!locked) {
+                                return;
+                              }
+                              Json resp = MakeRespJson(id, false, RpcCode::KRPCTIMEOUT, "timeout", Json{});
+                              SendRpcRawResponse(locked,
+                                                 BuildRpcHttpResponse(resp, close, HttpResponse::HttpStatusCode::K200K),
+                                                 close);
+                            });
+
   RpcHandler handler = it->second;
-  rpc_flow_pool_->Add([conn, id, close, handler, params = std::move(params)]() mutable {
+  rpc_flow_pool_->Add([this, weak_conn, token, id, close, handler, params = std::move(params)]() mutable {
     Json result = Json::object();
     bool ok = false;
     try {
@@ -359,9 +392,21 @@ void HttpServer::HandleRpcRequestInPool(const std::shared_ptr<Connection> &conn,
     Json resp = ok ? MakeRespJson(id, true, RpcCode::KRPCOK, "OK", result)
                    : MakeRespJson(id, false, RpcCode::KRPCINTERNALERROR, "internal error", Json{});
     std::string wire = BuildRpcHttpResponse(resp, close, HttpResponse::HttpStatusCode::K200K);
-    EventLoop *loop = conn->GetLoop();
+    bool should_send = false;
+    {
+      std::lock_guard<std::mutex> lock(rpc_pending_mtx_);
+      should_send = rpc_pending_.erase(token) > 0;
+    }
+    if (!should_send) {
+      return;
+    }
+    auto locked = weak_conn.lock();
+    if (!locked) {
+      return;
+    }
+    EventLoop *loop = locked->GetLoop();
     loop->QueueOneFunc(
-        [conn, wire = std::move(wire), close]() mutable { SendRpcRawResponse(conn, std::move(wire), close); });
+        [locked, wire = std::move(wire), close]() mutable { SendRpcRawResponse(locked, std::move(wire), close); });
   });
 }
 

@@ -53,6 +53,8 @@ Macro.h
 ../src/include/Macro.h
 
 ../src/include/HttpServer.h
+atomic
+-
 functional
 -
 memory
@@ -64,6 +66,8 @@ string
 thread
 -
 unordered_map
+-
+unordered_set
 -
 HttpRequest.h
 ../src/include/HttpRequest.h

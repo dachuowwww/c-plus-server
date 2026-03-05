@@ -21,6 +21,7 @@ class HttpResponse {
     KRPCMETHODNOTFOUND = 1001,
     KRPCBADJSON = 1002,
     KRPCBADPARAMS = 1003,
+    KRPCTIMEOUT = 1004,
     KRPCINTERNALERROR = 2001
   };
   explicit HttpResponse(bool close);
