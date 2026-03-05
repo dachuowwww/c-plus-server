@@ -56,7 +56,7 @@ void EventLoop::QueueOneFunc(std::function<void()> &&cb) {
   std::lock_guard<std::mutex> lock(mtx_);
   to_do_list_.emplace_back(cb);
 
-  if (!(IsInLoopThread()) | calling_functors_) {
+  if (!(IsInLoopThread()) | calling_functors_) {  // 唤醒队列防止沉睡
     uint64_t write_one_byte = 1;
     ssize_t write_size = write(wakeup_fd_, &write_one_byte, sizeof(write_one_byte));
 

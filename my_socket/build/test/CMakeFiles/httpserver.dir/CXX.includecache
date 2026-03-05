@@ -23,8 +23,6 @@ Macro.h
 ../src/include/Macro.h
 
 ../src/include/Connection.h
-coroutine
--
 functional
 -
 memory
@@ -35,12 +33,6 @@ Macro.h
 ../src/include/Macro.h
 TimeStamp.h
 ../src/include/TimeStamp.h
-
-../src/include/CoroutineTask.h
-coroutine
--
-exception
--
 
 ../src/include/Error.h
 
@@ -67,12 +59,12 @@ memory
 -
 mutex
 -
-unordered_map
--
 string
 -
-CoroutineTask.h
-../src/include/CoroutineTask.h
+thread
+-
+unordered_map
+-
 HttpRequest.h
 ../src/include/HttpRequest.h
 

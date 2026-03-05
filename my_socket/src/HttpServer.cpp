@@ -1,4 +1,12 @@
 #include "HttpServer.h"
+#include <arpa/inet.h>
+#include <algorithm>
+#include <cctype>
+#include <deque>
+#include <fstream>
+#include <iostream>
+#include <nlohmann/json.hpp>  // 引入json库
+#include <unordered_map>
 #include "Connection.h"
 #include "Error.h"
 #include "EventLoop.h"
@@ -8,15 +16,8 @@
 #include "Macro.h"
 #include "Metrics.h"
 #include "Server.h"
+#include "ThreadPool.h"
 #include "TimeStamp.h"
-#include <arpa/inet.h>
-#include <algorithm>
-#include <cctype>
-#include <deque>
-#include <fstream>
-#include <iostream>
-#include <nlohmann/json.hpp>  // 引入json库
-#include <unordered_map>
 
 // namespace {
 // int GetRequestLength(const std::string &data) {
@@ -57,52 +58,100 @@
 // }
 namespace {
 using Json = nlohmann::json;
-using RpcHandler = std::function<Json(const Json &params)>;  // 传入参数和函数结果引用，返回是否成功
-const std::unordered_map<std::string, std::function<Json(const Json &params)>> RpcHandlers = {
-    {"Echo", [](const Json &params) {
-       return Json{{"msg", params.value("msg", "")}};
-     }}};
-// 简单定义一个Echo的RPC接口，参数和结果都是JSON字符串}
-}  // namespace
-void HttpServer::HandleRpcRequest(const HttpRequest &request, HttpResponse *response) {
-  Json req;
-  try {
-    req = Json::parse(request.GetBody());  // 解析
-  } catch (const Json::parse_error &e) {
-    Json resp;
-    resp["id"] = 0;
-    resp["ok"] = false;
-    resp["error"] = std::string("invalid json: ") + e.what();
-    response->SetStatusCode(HttpResponse::HttpStatusCode::K400BADREQUEST);
-    response->SetStatusMessage("BAD_RESQUEST");
+using RpcHandler = std::function<bool(const Json &params, Json *result)>;
+using RpcCode = HttpResponse::RpcCode;
 
-    response->SetResponseBody(resp.dump());  // 对象序列化
-    response->SetContentType("application/json; charset=UTF-8");
-    return;
-  }
-  int id = req.value("id", 0);
-  std::string method = req.value("method", "");
-  Json params = req.value("params", Json::object());
-
+Json MakeRespJson(int id, bool ok, HttpResponse::RpcCode code, const std::string &message, const Json &result) {
   Json resp;
   resp["id"] = id;
-  auto it = RpcHandlers.find(method);
-  if (it != RpcHandlers.end()) {
-    resp["ok"] = true;
-    resp["result"] = it->second(params);
-    response->SetStatusCode(HttpResponse::HttpStatusCode::K200K);
-    response->SetStatusMessage("OK");
-  } else {
-    resp["ok"] = false;
-    resp["error"] = "unknown method";
-    response->SetStatusCode(HttpResponse::HttpStatusCode::K400BADREQUEST);
-    response->SetStatusMessage("BAD_RESQUEST");
-  }
-
-  response->SetResponseBody(resp.dump());  // 对象序列化
-  response->SetContentType("application/json; charset=UTF-8");
+  resp["ok"] = ok;
+  resp["code"] = static_cast<int>(code);
+  resp["message"] = message;
+  resp["result"] = ok ? result : Json(nullptr);
+  return resp;
 }
 
+std::string BuildRpcHttpResponse(const Json &resp, bool close, HttpResponse::HttpStatusCode status) {
+  HttpResponse response(close);
+  response.SetStatusCode(status);
+  response.SetStatusMessage(status == HttpResponse::HttpStatusCode::K400BADREQUEST ? "BAD_RESQUEST" : "OK");
+  response.SetContentType("application/json; charset=UTF-8");
+  response.SetResponseBody(resp.dump());
+  return response.GetResponse();
+}
+
+void SendRpcRawResponse(const std::shared_ptr<Connection> &conn, std::string response, bool close) {
+  if (conn->GetState() != Connection::State::Connected) {
+    return;
+  }
+  conn->Send(response);
+  if (close) {
+    conn->SetState(Connection::State::Closed);
+    conn->RemoveConnection();
+  }
+}
+
+const std::unordered_map<std::string, RpcHandler> rpc_handlers = {{"Echo", [](const Json &params, Json *result) {
+                                                                     *result = params;
+                                                                     return true;
+                                                                   }}};
+}  // namespace
+// void HttpServer::HandleRpcRequest(const HttpRequest &request, HttpResponse *response) {  // rpc没有线程池的话执行此处
+//   Json req;
+//   try {
+//     req = Json::parse(request.GetBody());  // 解析
+//   } catch (const Json::parse_error &) {
+//     Json resp = MakeRespJson(0, false, RpcCode::KRPCBADJSON, "bad json", Json{});
+//     response->SetStatusCode(HttpResponse::HttpStatusCode::K400BADREQUEST);
+//     response->SetStatusMessage("BAD_RESQUEST");
+//     response->SetResponseBody(resp.dump());  // 对象序列化
+//     response->SetContentType("application/json; charset=UTF-8");
+//     return;
+//   }
+
+//   Json resp;
+//   if (!req.contains("id") || !req["id"].is_number_integer()) {
+//     resp = MakeRespJson(0, false, RpcCode::KRPCBADPARAMS, "bad params", Json{});
+//   } else if (!req.contains("method") || !req["method"].is_string() || !req.contains("params") ||
+//              !req["params"].is_object()) {
+//     resp = MakeRespJson(req.value("id", 0), false, RpcCode::KRPCBADPARAMS, "bad params", Json{});
+//   } else {
+//     int id = req.value("id", 0);
+//     std::string method = req.value("method", "");
+//     Json params = req.value("params", Json::object());
+
+//     Json result = Json::object();
+//     auto it = rpc_handlers.find(method);
+//     if (it == rpc_handlers.end()) {
+//       resp = MakeRespJson(id, false, RpcCode::KRPCMETHODNOTFOUND, "method not found", Json{});
+//     } else {
+//       bool ok = false;
+//       try {
+//         ok = it->second(params, &result);
+//       } catch (...) {
+//         ok = false;
+//       }
+//       if (ok) {
+//         resp = MakeRespJson(id, true, RpcCode::KRPCOK, "OK", result);
+//       } else {
+//         resp = MakeRespJson(id, false, RpcCode::KRPCINTERNALERROR, "internal error", Json{});
+//       }
+//     }
+//   }
+
+//   response->SetStatusCode(HttpResponse::HttpStatusCode::K200K);
+//   response->SetStatusMessage("OK");
+//   response->SetResponseBody(resp.dump());  // 对象序列化
+//   response->SetContentType("application/json; charset=UTF-8");
+// }
+void HttpServer::EnableRpcFlowPool(unsigned int size) {
+  if (size == 0) {
+    size = 1;
+  }
+  rpc_flow_pool_ = std::make_unique<ThreadPool>(size);
+}
+
+//////////////////////////////// 文件缓存池
 namespace {
 struct CachedFile {
   std::string data;
@@ -172,27 +221,19 @@ std::string HttpServer::ReadFileCached(const std::string &filename) {  // 简单
 
   return content;
 }
-
+/////////////////////////////////
 HttpServer::HttpServer(const char *ip, uint16_t port) {
   loop_ = std::make_unique<EventLoop>();
   server_ = std::make_unique<Server>(loop_.get(), ip, port);
   server_->OnConnect([this](const std::shared_ptr<Connection> &conn) { OnConnnectCallback(conn); });
+  if (use_rpc_flow_pool_) {
+    EnableRpcFlowPool();
+  }
   LOG_INFO << "HttpServer Listening on [ " << ip << ":" << port << " ]";
 }
 HttpServer::~HttpServer() = default;
 
 void HttpServer::Start() { loop_->Loop(); }
-
-coro::DetachedTask HttpServer::HandleHttpSession(
-    std::shared_ptr<Connection> conn) {  // 这里不能用const引用，因为co_await会导致函数挂起，期间conn可能被修改
-  while (conn->GetState() == Connection::State::Connected) {
-    co_await conn->WaitReadable();
-    if (conn->GetState() != Connection::State::Connected) {
-      co_return;
-    }
-    OnHttpRequest(conn);
-  }
-}
 
 void HttpServer::OnConnnectCallback(const std::shared_ptr<Connection> &conn) {
   int clnt_fd = conn->GetFd();
@@ -207,9 +248,6 @@ void HttpServer::OnConnnectCallback(const std::shared_ptr<Connection> &conn) {
   if (auto_shutdown_) {
     loop_->RunAfter(AUTOCLOSETIMEOUT, bind(&HttpServer::OverTime, this,
                                            std::weak_ptr<Connection>(conn)));  // 开启其他线程Loop会造成线程冲突
-  }
-  if (use_coroutine_) {
-    HandleHttpSession(conn);
   }
 }
 
@@ -242,6 +280,10 @@ void HttpServer::OnHttpReponse(const std::shared_ptr<Connection> &conn) {
   HttpRequest const *request = conn->GetContext()->GetHttpRequest();
   bool close = request->GetHeader("Connection") == "Close" ||
                (request->GetVersionString() == "Http1.0" && request->GetHeader("Connection") != "Keep-Alive");
+  if (use_rpc_flow_pool_ && rpc_flow_pool_ && request->GetURL() == "/rpc") {
+    HandleRpcRequestInPool(conn, *request, close);
+    return;  // 有流程池需要自己决定响应报文和时间
+  }
   if (request->GetHeader("Content-Type").find("multipart/form-data") != std::string::npos) {  // 处理文件上传
     FileUpload(request);
   }
@@ -263,17 +305,64 @@ void HttpServer::OnHttpReponse(const std::shared_ptr<Connection> &conn) {
 }
 
 void HttpServer::SetMessageCallBack(std::function<void(const std::shared_ptr<Connection> &conn)> &&cb) {
-  use_coroutine_ = false;
   server_->OnMessage(std::move(cb));
 }
 
 void HttpServer::SetHttpResponseCallBack(std::function<void(const HttpRequest &request, HttpResponse *response)> &&cb) {
   http_call_back_ = std::move(cb);
-  if (!use_coroutine_) {
-    server_->OnMessage([this](const std::shared_ptr<Connection> &conn) {
-      OnHttpRequest(conn);
-    });  // 成员变量函数必须明确对象(无关是否需要本对象元素，类就要明确this)}
+  server_->OnMessage([this](const std::shared_ptr<Connection> &conn) {
+    OnHttpRequest(conn);
+  });  // 成员变量函数必须明确对象(无关是否需要本对象元素，类就要明确this)}
+}
+
+void HttpServer::HandleRpcRequestInPool(const std::shared_ptr<Connection> &conn, const HttpRequest &request,
+                                        bool close) {
+  Json req;
+  try {
+    req = Json::parse(request.GetBody());
+  } catch (const Json::parse_error &) {
+    Json resp = MakeRespJson(0, false, RpcCode::KRPCBADJSON, "bad json", Json{});
+    SendRpcRawResponse(conn, BuildRpcHttpResponse(resp, close, HttpResponse::HttpStatusCode::K400BADREQUEST), close);
+    return;
   }
+
+  if (!req.contains("id") || !req["id"].is_number_integer()) {
+    Json resp = MakeRespJson(0, false, RpcCode::KRPCBADPARAMS, "bad params", Json{});
+    SendRpcRawResponse(conn, BuildRpcHttpResponse(resp, close, HttpResponse::HttpStatusCode::K200K), close);
+    return;
+  }
+  if (!req.contains("method") || !req["method"].is_string() || !req.contains("params") || !req["params"].is_object()) {
+    Json resp = MakeRespJson(req.value("id", 0), false, RpcCode::KRPCBADPARAMS, "bad params", Json{});
+    SendRpcRawResponse(conn, BuildRpcHttpResponse(resp, close, HttpResponse::HttpStatusCode::K200K), close);
+    return;
+  }
+
+  int id = req["id"].get<int>();
+  std::string method = req["method"].get<std::string>();
+  Json params = req["params"];
+  auto it = rpc_handlers.find(method);
+  if (it == rpc_handlers.end()) {
+    Json resp = MakeRespJson(id, false, RpcCode::KRPCMETHODNOTFOUND, "method not found", Json{});
+    SendRpcRawResponse(conn, BuildRpcHttpResponse(resp, close, HttpResponse::HttpStatusCode::K200K), close);
+    return;
+  }
+
+  RpcHandler handler = it->second;
+  rpc_flow_pool_->Add([conn, id, close, handler, params = std::move(params)]() mutable {
+    Json result = Json::object();
+    bool ok = false;
+    try {
+      ok = handler(params, &result);
+    } catch (...) {
+      ok = false;
+    }
+    Json resp = ok ? MakeRespJson(id, true, RpcCode::KRPCOK, "OK", result)
+                   : MakeRespJson(id, false, RpcCode::KRPCINTERNALERROR, "internal error", Json{});
+    std::string wire = BuildRpcHttpResponse(resp, close, HttpResponse::HttpStatusCode::K200K);
+    EventLoop *loop = conn->GetLoop();
+    loop->QueueOneFunc(
+        [conn, wire = std::move(wire), close]() mutable { SendRpcRawResponse(conn, std::move(wire), close); });
+  });
 }
 
 void HttpServer::OnTimerEvery(double interval, std::function<void()> &&cb) { loop_->RunEvery(interval, std::move(cb)); }

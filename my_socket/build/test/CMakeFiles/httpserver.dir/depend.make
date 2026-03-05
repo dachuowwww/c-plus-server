@@ -3,7 +3,6 @@
 
 test/CMakeFiles/httpserver.dir/httpserver.cpp.o: ../src/include/AsyncLogging.h
 test/CMakeFiles/httpserver.dir/httpserver.cpp.o: ../src/include/Connection.h
-test/CMakeFiles/httpserver.dir/httpserver.cpp.o: ../src/include/CoroutineTask.h
 test/CMakeFiles/httpserver.dir/httpserver.cpp.o: ../src/include/Error.h
 test/CMakeFiles/httpserver.dir/httpserver.cpp.o: ../src/include/HttpRequest.h
 test/CMakeFiles/httpserver.dir/httpserver.cpp.o: ../src/include/HttpResponse.h

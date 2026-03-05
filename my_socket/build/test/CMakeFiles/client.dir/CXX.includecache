@@ -7,8 +7,6 @@
 #IncludeRegexTransform: 
 
 ../src/include/Connection.h
-coroutine
--
 functional
 -
 memory

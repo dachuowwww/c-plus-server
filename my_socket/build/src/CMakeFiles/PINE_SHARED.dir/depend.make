@@ -92,7 +92,6 @@ src/CMakeFiles/PINE_SHARED.dir/HttpResponse.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/HttpResponse.cpp.o: ../src/HttpResponse.cpp
 
 src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/Connection.h
-src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/CoroutineTask.h
 src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/Error.h
 src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/EventLoop.h
 src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/HttpContext.h
@@ -104,6 +103,7 @@ src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/Logger.h
 src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/Metrics.h
 src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/Server.h
+src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/ThreadPool.h
 src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/TimeStamp.h
 src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/HttpServer.cpp
 

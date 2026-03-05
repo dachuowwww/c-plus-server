@@ -32,68 +32,16 @@ Connection::Connection(EventLoop *loop, int cln_fd) : loop_(loop) {
 }
 Connection::~Connection() = default;
 
-Connection::ReadAwaiter::ReadAwaiter(Connection *conn) : conn_(conn) {}  // 编译器自动创建
-
-Connection::ReadAwaiter Connection::WaitReadable() { return ReadAwaiter(this); }  // 调用返回等待体
-
-// Connection::WriteAwaiter Connection::WaitWritable() { return WriteAwaiter(this); }
-
-// 1不等0等待
-bool Connection::ReadAwaiter::await_ready() const noexcept {
-  return conn_->GetState() != State::Connected || conn_->ReadInputBufferSize() > 0;
-}
-
-void Connection::ReadAwaiter::await_suspend(std::coroutine_handle<> handle) noexcept {
-  Errif(static_cast<bool>(conn_->read_waiter_), "ReadAwaiter already pending");
-  conn_->read_waiter_ = handle;
-}
-
-// bool Connection::WriteAwaiter::await_ready() const noexcept {
-//   if (conn_->GetState() != State::Connected) {
-//     return true;
-//   }
-//   if (conn_->sending_file_) {
-//     return false;
-//   }
-//   return conn_->output_buffer_->ReadableBytes() == 0;
-// }
-
-// void Connection::WriteAwaiter::await_suspend(std::coroutine_handle<> handle) noexcept {
-//   Errif(static_cast<bool>(conn_->write_waiter_), "WriteAwaiter already pending");
-//   conn_->write_waiter_ = handle;
-//   conn_->conn_channel_->EnableWriting();
-// }
-
-void Connection::ResumeReadAwaiter() {
-  if (!read_waiter_) {
-    return;
-  }
-  auto handle = read_waiter_;
-  read_waiter_ = {};
-  handle.resume();
-}
-
-// void Connection::ResumeWriteAwaiter() {
-//   if (!write_waiter_) {
-//     return;
-//   }
-//   auto handle = write_waiter_;
-//   write_waiter_ = {};
-//   handle.resume();
-// }
-
 void Connection::ConnectionEstablished() {
   conn_channel_->Tie(
       shared_from_this());  // 构造函数不能写shared_from_this，因为还没构造完毕。对象内部创建一个指向自己的共享指针 +1
   conn_channel_->EnableReading();
-  connnect_func_(shared_from_this());  // 协程
+  connnect_func_(shared_from_this());
 }
 
 void Connection::ConnectionDestructor() {
   conn_channel_->RemoveInEpoll();
-  SetState(State::Closed);  // 先设置状态，防止协程继续执行读写操作
-  ResumeReadAwaiter();
-  // ResumeWriteAwaiter();
+  SetState(State::Closed);
   if (sendfile_fd_ != -1) {
     ::close(sendfile_fd_);
     sendfile_fd_ = -1;
@@ -167,14 +115,10 @@ void Connection::ListenClientMessage() {
     return;
   }
   Read();
-  if (read_waiter_ && ReadInputBufferSize() > 0) {  // 唤醒协程
-    ResumeReadAwaiter();
-    return;
-  }
   if (state_ != State::Connected) {
     return;
   }
-  if (handle_read_func_) {  // 非协程
+  if (handle_read_func_) {
     handle_read_func_(shared_from_this());
   }
 }

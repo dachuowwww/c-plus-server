@@ -16,6 +16,13 @@ class HttpResponse {
     K404NOTFOUND = 404,
     K500INTERNALSERVERERROR = 500
   };  // 浏览器常用状态码
+  enum RpcCode {
+    KRPCOK = 0,
+    KRPCMETHODNOTFOUND = 1001,
+    KRPCBADJSON = 1002,
+    KRPCBADPARAMS = 1003,
+    KRPCINTERNALERROR = 2001
+  };
   explicit HttpResponse(bool close);
   ~HttpResponse() = default;
   void SetStatusCode(HttpResponse::HttpStatusCode code);

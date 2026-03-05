@@ -1,5 +1,4 @@
 #pragma once
-#include <coroutine>
 #include <functional>
 // #include <cstdint>
 #include <memory>
@@ -23,28 +22,6 @@ class Connection : public std::enable_shared_from_this<Connection> {
     Failed,
   };
 
-  class ReadAwaiter {
-   public:
-    explicit ReadAwaiter(Connection *conn);
-    bool await_ready() const noexcept;
-    void await_suspend(std::coroutine_handle<> handle) noexcept;
-    void await_resume() const noexcept {}
-
-   private:
-    Connection *conn_ = nullptr;
-  };
-
-  // class WriteAwaiter {
-  //  public:
-  //   explicit WriteAwaiter(Connection *conn) : conn_(conn) {}
-  //   bool await_ready() const noexcept;
-  //   void await_suspend(std::coroutine_handle<> handle) noexcept;
-  //   void await_resume() const noexcept {}
-
-  //  private:
-  //   Connection *conn_ = nullptr;
-  // };
-
   Connection(EventLoop *loop, int cln_fd);
   ~Connection();
   void SetRemoveConnection(std::function<void(const std::shared_ptr<Connection> &conn)> &&cb);
@@ -61,9 +38,6 @@ class Connection : public std::enable_shared_from_this<Connection> {
   [[nodiscard]] State GetState() const;
   [[nodiscard]] EventLoop *GetLoop() const;
   [[nodiscard]] HttpContext *GetContext() const;
-  ReadAwaiter WaitReadable();
-  // WriteAwaiter WaitWritable();
-
   // void EnableReading();
   void ConnectionEstablished();
   void ConnectionDestructor();
@@ -112,8 +86,6 @@ class Connection : public std::enable_shared_from_this<Connection> {
   void ReadNonBlocking();
   void WriteNonBlocking();
   void SendFileInLoop();
-  void ResumeReadAwaiter();
-  // void ResumeWriteAwaiter();
   // void MaybeClose();
 
   // bool close_after_write_ = false;
@@ -121,8 +93,5 @@ class Connection : public std::enable_shared_from_this<Connection> {
   int sendfile_fd_ = -1;
   off_t sendfile_offset_ = 0;
   size_t sendfile_remaining_ = 0;
-  std::coroutine_handle<> read_waiter_{};
-  // std::coroutine_handle<> write_waiter_{};
-
   DISALLOW_COPY_AND_ASSIGN(Connection);
 };
