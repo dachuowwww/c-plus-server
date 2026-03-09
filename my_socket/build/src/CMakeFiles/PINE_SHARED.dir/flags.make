@@ -6,5 +6,5 @@ CXX_FLAGS =  -fPIC -Wall -Wextra -std=c++20 -pthread -Wno-unused-parameter -Wno-
 
 CXX_DEFINES = -DPINE_SHARED_EXPORTS
 
-CXX_INCLUDES = -I/home/dachuo/my_socket/src/include 
+CXX_INCLUDES = -I/home/dachuo/my_socket/src/include -I/home/dachuo/my_socket/build/src 
 

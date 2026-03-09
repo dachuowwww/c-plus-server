@@ -665,6 +665,33 @@ Poller.cpp.s:
 	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.s
 .PHONY : Poller.cpp.s
 
+RpcProto.o: RpcProto.cpp.o
+
+.PHONY : RpcProto.o
+
+# target to build an object file
+RpcProto.cpp.o:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/RpcProto.cpp.o
+.PHONY : RpcProto.cpp.o
+
+RpcProto.i: RpcProto.cpp.i
+
+.PHONY : RpcProto.i
+
+# target to preprocess a source file
+RpcProto.cpp.i:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/RpcProto.cpp.i
+.PHONY : RpcProto.cpp.i
+
+RpcProto.s: RpcProto.cpp.s
+
+.PHONY : RpcProto.s
+
+# target to generate assembly for a file
+RpcProto.cpp.s:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/RpcProto.cpp.s
+.PHONY : RpcProto.cpp.s
+
 Server.o: Server.cpp.o
 
 .PHONY : Server.o
@@ -827,6 +854,33 @@ Timer.cpp.s:
 	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/Timer.cpp.s
 .PHONY : Timer.cpp.s
 
+rpc.pb.o: rpc.pb.cc.o
+
+.PHONY : rpc.pb.o
+
+# target to build an object file
+rpc.pb.cc.o:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/rpc.pb.cc.o
+.PHONY : rpc.pb.cc.o
+
+rpc.pb.i: rpc.pb.cc.i
+
+.PHONY : rpc.pb.i
+
+# target to preprocess a source file
+rpc.pb.cc.i:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/rpc.pb.cc.i
+.PHONY : rpc.pb.cc.i
+
+rpc.pb.s: rpc.pb.cc.s
+
+.PHONY : rpc.pb.s
+
+# target to generate assembly for a file
+rpc.pb.cc.s:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/rpc.pb.cc.s
+.PHONY : rpc.pb.cc.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -896,6 +950,9 @@ help:
 	@echo "... Poller.o"
 	@echo "... Poller.i"
 	@echo "... Poller.s"
+	@echo "... RpcProto.o"
+	@echo "... RpcProto.i"
+	@echo "... RpcProto.s"
 	@echo "... Server.o"
 	@echo "... Server.i"
 	@echo "... Server.s"
@@ -914,6 +971,9 @@ help:
 	@echo "... Timer.o"
 	@echo "... Timer.i"
 	@echo "... Timer.s"
+	@echo "... rpc.pb.o"
+	@echo "... rpc.pb.i"
+	@echo "... rpc.pb.s"
 .PHONY : help
 
 

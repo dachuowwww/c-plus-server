@@ -103,10 +103,12 @@ src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o
  ../src/include/Logger.h
  ../src/include/Macro.h
  ../src/include/Metrics.h
+ ../src/include/RpcProto.h
  ../src/include/Server.h
  ../src/include/ThreadPool.h
  ../src/include/TimeStamp.h
  /home/dachuo/my_socket/src/HttpServer.cpp
+ src/rpc.pb.h
 src/CMakeFiles/PINE_SHARED.dir/Latch.cpp.o
  ../src/include/Latch.h
  ../src/include/Macro.h
@@ -143,6 +145,10 @@ src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.o
  ../src/include/Macro.h
  ../src/include/Poller.h
  /home/dachuo/my_socket/src/Poller.cpp
+src/CMakeFiles/PINE_SHARED.dir/RpcProto.cpp.o
+ ../src/include/RpcProto.h
+ /home/dachuo/my_socket/src/RpcProto.cpp
+ src/rpc.pb.h
 src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o
  ../src/include/Acceptor.h
  ../src/include/Connection.h
@@ -186,3 +192,6 @@ src/CMakeFiles/PINE_SHARED.dir/Timer.cpp.o
  ../src/include/TimeStamp.h
  ../src/include/Timer.h
  /home/dachuo/my_socket/src/Timer.cpp
+src/CMakeFiles/PINE_SHARED.dir/rpc.pb.cc.o
+ /home/dachuo/my_socket/build/src/rpc.pb.cc
+ /home/dachuo/my_socket/build/src/rpc.pb.h

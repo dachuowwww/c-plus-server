@@ -21,12 +21,16 @@ file(REMOVE_RECURSE
   "CMakeFiles/PINE_SHARED.dir/Logger.cpp.o"
   "CMakeFiles/PINE_SHARED.dir/Metrics.cpp.o"
   "CMakeFiles/PINE_SHARED.dir/Poller.cpp.o"
+  "CMakeFiles/PINE_SHARED.dir/RpcProto.cpp.o"
   "CMakeFiles/PINE_SHARED.dir/Server.cpp.o"
   "CMakeFiles/PINE_SHARED.dir/Socket.cpp.o"
   "CMakeFiles/PINE_SHARED.dir/ThreadPool.cpp.o"
   "CMakeFiles/PINE_SHARED.dir/TimeQueue.cpp.o"
   "CMakeFiles/PINE_SHARED.dir/TimeStamp.cpp.o"
   "CMakeFiles/PINE_SHARED.dir/Timer.cpp.o"
+  "CMakeFiles/PINE_SHARED.dir/rpc.pb.cc.o"
+  "rpc.pb.cc"
+  "rpc.pb.h"
 )
 
 # Per-language clean rules from dependency scanning.

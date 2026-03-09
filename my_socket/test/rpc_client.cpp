@@ -3,10 +3,11 @@
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
-#include <nlohmann/json.hpp>  // 引入json库
 #include <string>
-
+// #include <nlohmann/json.hpp>  // 引入json库
+#include "RpcProto.h"
 #include "Socket.h"
+#include "rpc.pb.h"
 
 namespace {
 bool SendAll(int fd, const std::string &data) {
@@ -41,15 +42,32 @@ int main(int argc, char *argv[]) {
     msg = argv[3];
   }
 
-  nlohmann::json request_json;
-  request_json["id"] = 1;
-  request_json["method"] = "Echo";
-  request_json["params"] = {{"msg", msg}};
-  std::string body = request_json.dump();
+  // nlohmann::json request_json;
+  // request_json["id"] = 1;
+  // request_json["method"] = "Echo";
+  // request_json["params"] = {{"msg", msg}};
+  // std::string body = request_json.dump();
+  my_socket_rpc::EchoRequest echo_req;
+  echo_req.set_msg(msg);
+  std::string echo_result;
+  if (!rpcproto::EncodeEchoRequest(echo_req, &echo_result)) {
+    std::cerr << "encode echo request failed" << std::endl;
+    return 1;
+  }
+  my_socket_rpc::RpcRequest rpc_req;
+  rpc_req.set_id(1);
+  rpc_req.set_method("Echo");
+  rpc_req.set_params(echo_result);
+  std::string body;
+  if (!rpcproto::EncodeRpcRequest(rpc_req, &body)) {
+    std::cerr << "encode rpc request failed" << std::endl;
+    return 1;
+  }
   std::string request;
   request += "POST /rpc HTTP/1.1\r\n";
   request += "Host: " + ip + ":" + std::to_string(port) + "\r\n";
-  request += "Content-Type: application/json\r\n";
+  request += "Content-Type: application/x-protobuf\r\n";
+  // request += "Content-Type: application/json\r\n";
   request += "Content-Length: " + std::to_string(body.size()) + "\r\n";
   request += "Connection: close\r\n";
   request += "\r\n";
@@ -81,5 +99,23 @@ int main(int argc, char *argv[]) {
   }
 
   std::cout << response << std::endl;
+  size_t header_end = response.find("\r\n\r\n");
+  if (header_end == std::string::npos) {
+    return 0;
+  }
+  std::string body_resp = response.substr(header_end + 4);
+  my_socket_rpc::RpcResponse rpc_resp;
+  if (!rpc_resp.ParseFromString(body_resp)) {
+    std::cerr << "decode rpc response failed" << std::endl;
+    return 0;
+  }
+  std::cout << "rpc id=" << rpc_resp.id() << " ok=" << rpc_resp.ok() << " code=" << rpc_resp.code()
+            << " message=" << rpc_resp.message() << std::endl;
+  if (rpc_resp.ok()) {
+    my_socket_rpc::EchoResponse echo_resp;
+    if (rpcproto::DecodeEchoResponse(rpc_resp.params(), &echo_resp)) {
+      std::cout << "echo msg=" << echo_resp.msg() << std::endl;
+    }
+  }
   return 0;
 }

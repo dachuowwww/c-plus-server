@@ -80,6 +80,7 @@ http_context_EXTERNAL_OBJECTS =
 bin/http_context: test/CMakeFiles/http_context.dir/http_context.cpp.o
 bin/http_context: test/CMakeFiles/http_context.dir/build.make
 bin/http_context: lib/libPINE_SHARED.so
+bin/http_context: /usr/lib/x86_64-linux-gnu/libprotobuf.so
 bin/http_context: test/CMakeFiles/http_context.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable ../bin/http_context"
 	cd /home/dachuo/my_socket/build/test && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/http_context.dir/link.txt --verbose=$(VERBOSE)

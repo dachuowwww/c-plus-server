@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package my_socket_rpc;
+
+message RpcRequest { // rpc结构
+  int32 id = 1;
+  string method = 2;
+  bytes params = 3;
+}
+
+message RpcResponse {
+  int32 id = 1;
+  bool ok = 2;
+  int32 code = 3;
+  string message = 4;
+  bytes params = 5;
+}
+
+message EchoRequest { // 方法参数
+  string msg = 1;
+}
+
+message EchoResponse {
+  string msg = 1;
+}

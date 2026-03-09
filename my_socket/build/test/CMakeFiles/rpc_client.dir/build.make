@@ -80,6 +80,7 @@ rpc_client_EXTERNAL_OBJECTS =
 bin/rpc_client: test/CMakeFiles/rpc_client.dir/rpc_client.cpp.o
 bin/rpc_client: test/CMakeFiles/rpc_client.dir/build.make
 bin/rpc_client: lib/libPINE_SHARED.so
+bin/rpc_client: /usr/lib/x86_64-linux-gnu/libprotobuf.so
 bin/rpc_client: test/CMakeFiles/rpc_client.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable ../bin/rpc_client"
 	cd /home/dachuo/my_socket/build/test && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/rpc_client.dir/link.txt --verbose=$(VERBOSE)

@@ -102,10 +102,12 @@ src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/LogStream.h
 src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/Logger.h
 src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/Metrics.h
+src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/RpcProto.h
 src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/Server.h
 src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/ThreadPool.h
 src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/TimeStamp.h
 src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/HttpServer.cpp
+src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: src/rpc.pb.h
 
 src/CMakeFiles/PINE_SHARED.dir/Latch.cpp.o: ../src/include/Latch.h
 src/CMakeFiles/PINE_SHARED.dir/Latch.cpp.o: ../src/include/Macro.h
@@ -142,6 +144,10 @@ src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.o: ../src/include/Error.h
 src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.o: ../src/include/Poller.h
 src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.o: ../src/Poller.cpp
+
+src/CMakeFiles/PINE_SHARED.dir/RpcProto.cpp.o: ../src/include/RpcProto.h
+src/CMakeFiles/PINE_SHARED.dir/RpcProto.cpp.o: ../src/RpcProto.cpp
+src/CMakeFiles/PINE_SHARED.dir/RpcProto.cpp.o: src/rpc.pb.h
 
 src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/include/Acceptor.h
 src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/include/Connection.h
@@ -185,4 +191,7 @@ src/CMakeFiles/PINE_SHARED.dir/Timer.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/Timer.cpp.o: ../src/include/TimeStamp.h
 src/CMakeFiles/PINE_SHARED.dir/Timer.cpp.o: ../src/include/Timer.h
 src/CMakeFiles/PINE_SHARED.dir/Timer.cpp.o: ../src/Timer.cpp
+
+src/CMakeFiles/PINE_SHARED.dir/rpc.pb.cc.o: src/rpc.pb.cc
+src/CMakeFiles/PINE_SHARED.dir/rpc.pb.cc.o: src/rpc.pb.h
 

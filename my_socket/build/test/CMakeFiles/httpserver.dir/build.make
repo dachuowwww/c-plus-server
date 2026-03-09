@@ -80,6 +80,7 @@ httpserver_EXTERNAL_OBJECTS =
 bin/httpserver: test/CMakeFiles/httpserver.dir/httpserver.cpp.o
 bin/httpserver: test/CMakeFiles/httpserver.dir/build.make
 bin/httpserver: lib/libPINE_SHARED.so
+bin/httpserver: /usr/lib/x86_64-linux-gnu/libprotobuf.so
 bin/httpserver: test/CMakeFiles/httpserver.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable ../bin/httpserver"
 	cd /home/dachuo/my_socket/build/test && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/httpserver.dir/link.txt --verbose=$(VERBOSE)

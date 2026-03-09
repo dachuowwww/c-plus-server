@@ -5,8 +5,8 @@
 #include <deque>
 #include <fstream>
 #include <iostream>
-#include <nlohmann/json.hpp>  // 引入json库
 #include <unordered_map>
+// #include <nlohmann/json.hpp>  // JSON版本暂时注释
 #include "Connection.h"
 #include "Error.h"
 #include "EventLoop.h"
@@ -15,9 +15,11 @@
 #include "Logger.h"
 #include "Macro.h"
 #include "Metrics.h"
+#include "RpcProto.h"
 #include "Server.h"
 #include "ThreadPool.h"
 #include "TimeStamp.h"
+#include "rpc.pb.h"
 
 // namespace {
 // int GetRequestLength(const std::string &data) {
@@ -57,27 +59,42 @@
 //   return static_cast<int>(body_start + content_length);
 // }
 namespace {
-using Json = nlohmann::json;
-using RpcHandler = std::function<bool(const Json &params, Json *result)>;
+// JSON 版本暂时保留在注释中，当前使用 protobuf。
+// using Json = nlohmann::json;
+// using RpcHandler = std::function<bool(const Json &params, Json *result)>;
+using RpcHandler = std::function<bool(const std::string &payload, std::string *out_payload)>;
 using RpcCode = HttpResponse::RpcCode;
 constexpr int kRpcTimeoutMs = 2000;
+// Json MakeRespJson(int id, bool ok, HttpResponse::RpcCode code, const std::string &message, const Json &result) {
+//   Json resp;
+//   resp["id"] = id;
+//   resp["ok"] = ok;
+//   resp["code"] = static_cast<int>(code);
+//   resp["message"] = message;
+//   resp["result"] = ok ? result : Json(nullptr);
 
-Json MakeRespJson(int id, bool ok, HttpResponse::RpcCode code, const std::string &message, const Json &result) {
-  Json resp;
-  resp["id"] = id;
-  resp["ok"] = ok;
-  resp["code"] = static_cast<int>(code);
-  resp["message"] = message;
-  resp["result"] = ok ? result : Json(nullptr);
+my_socket_rpc::RpcResponse MakeRespProto(int id, bool ok, RpcCode code, const std::string &message,
+                                         const std::string &params) {
+  my_socket_rpc::RpcResponse resp;
+  resp.set_id(id);
+  resp.set_ok(ok);
+  resp.set_code(static_cast<int>(code));
+  resp.set_message(message);
+  if (ok) {
+    resp.set_params(params);  // 参数
+  }
   return resp;
 }
 
-std::string BuildRpcHttpResponse(const Json &resp, bool close, HttpResponse::HttpStatusCode status) {
+// std::string BuildRpcHttpResponse(const Json &resp, bool close, HttpResponse::HttpStatusCode status) {
+std::string BuildRpcHttpResponse(const std::string &body, bool close, HttpResponse::HttpStatusCode status) {
   HttpResponse response(close);
   response.SetStatusCode(status);
   response.SetStatusMessage(status == HttpResponse::HttpStatusCode::K400BADREQUEST ? "BAD_RESQUEST" : "OK");
-  response.SetContentType("application/json; charset=UTF-8");
-  response.SetResponseBody(resp.dump());
+  // response.SetContentType("application/json; charset=UTF-8");
+  // response.SetResponseBody(resp.dump());
+  response.SetContentType("application/x-protobuf");
+  response.SetResponseBody(std::string(body));
   return response.GetResponse();
 }
 
@@ -92,10 +109,22 @@ void SendRpcRawResponse(const std::shared_ptr<Connection> &conn, std::string res
   }
 }
 
-const std::unordered_map<std::string, RpcHandler> rpc_handlers = {{"Echo", [](const Json &params, Json *result) {
-                                                                     *result = params;
-                                                                     return true;
-                                                                   }}};
+// const std::unordered_map<std::string, RpcHandler> rpc_handlers = {{"Echo", [](const Json &params, Json *result) {
+//                                                                      *result = params;
+//                                                                      return true;
+//                                                                    }}};
+const std::unordered_map<std::string, RpcHandler> rpc_handlers = {
+    {"Echo",
+     [](const std::string &in_params, std::string *out_results) {
+       my_socket_rpc::EchoRequest req;
+       if (!rpcproto::DecodeEchoRequest(in_params, &req)) {
+         return false;
+       }
+       my_socket_rpc::EchoResponse resp;
+       resp.set_msg(req.msg()); // 只取protobuf中的信息部分
+       return rpcproto::EncodeEchoResponse(resp, out_results);
+     }},
+};
 }  // namespace
 // void HttpServer::HandleRpcRequest(const HttpRequest &request, HttpResponse *response) {  // rpc没有线程池的话执行此处
 //   Json req;
@@ -324,74 +353,113 @@ void HttpServer::SetHttpResponseCallBack(std::function<void(const HttpRequest &r
 
 void HttpServer::HandleRpcRequestInPool(const std::shared_ptr<Connection> &conn, const HttpRequest &request,
                                         bool close) {
-  Json req;
-  try {
-    req = Json::parse(request.GetBody());
-  } catch (const Json::parse_error &) {
-    Json resp = MakeRespJson(0, false, RpcCode::KRPCBADJSON, "bad json", Json{});
-    SendRpcRawResponse(conn, BuildRpcHttpResponse(resp, close, HttpResponse::HttpStatusCode::K400BADREQUEST), close);
+  //                                         Json req;
+  // try {
+  //   req = Json::parse(request.GetBody());
+  // } catch (const Json::parse_error &) {
+  //   Json resp = MakeRespJson(0, false, RpcCode::KRPCBADJSON, "bad json", Json{});
+  //   SendRpcRawResponse(conn, BuildRpcHttpResponse(resp, close, HttpResponse::HttpStatusCode::K400BADREQUEST), close);
+  my_socket_rpc::RpcRequest req;
+  if (!rpcproto::DecodeRpcRequest(request.GetBody(), &req)) {  // 判断合不合法
+    auto resp = MakeRespProto(0, false, RpcCode::KRPCBADJSON, "bad protobuf", "");
+    std::string wire;
+    if (rpcproto::EncodeRpcResponse(resp, &wire)) {
+      SendRpcRawResponse(conn, BuildRpcHttpResponse(wire, close, HttpResponse::HttpStatusCode::K400BADREQUEST), close);
+    }
     return;
   }
 
-  if (!req.contains("id") || !req["id"].is_number_integer()) {
-    Json resp = MakeRespJson(0, false, RpcCode::KRPCBADPARAMS, "bad params", Json{});
-    SendRpcRawResponse(conn, BuildRpcHttpResponse(resp, close, HttpResponse::HttpStatusCode::K200K), close);
+  // if (!req.contains("id") || !req["id"].is_number_integer()) {
+  //   Json resp = MakeRespJson(0, false, RpcCode::KRPCBADPARAMS, "bad params", Json{});
+  //   SendRpcRawResponse(conn, BuildRpcHttpResponse(resp, close, HttpResponse::HttpStatusCode::K200K), close);
+  if (req.method().empty()) {
+    auto resp = MakeRespProto(req.id(), false, RpcCode::KRPCBADPARAMS, "bad params", "");
+    std::string wire;
+    if (rpcproto::EncodeRpcResponse(resp, &wire)) {
+      SendRpcRawResponse(conn, BuildRpcHttpResponse(wire, close, HttpResponse::HttpStatusCode::K200K), close);
+    }
     return;
   }
-  if (!req.contains("method") || !req["method"].is_string() || !req.contains("params") || !req["params"].is_object()) {
-    Json resp = MakeRespJson(req.value("id", 0), false, RpcCode::KRPCBADPARAMS, "bad params", Json{});
-    SendRpcRawResponse(conn, BuildRpcHttpResponse(resp, close, HttpResponse::HttpStatusCode::K200K), close);
-    return;
-  }
+  // if (!req.contains("method") || !req["method"].is_string() || !req.contains("params") || !req["params"].is_object())
+  // {
+  //     Json resp = MakeRespJson(req.value("id", 0), false, RpcCode::KRPCBADPARAMS, "bad params", Json{});
+  //     SendRpcRawResponse(conn, BuildRpcHttpResponse(resp, close, HttpResponse::HttpStatusCode::K200K), close);
+  //     return;
+  //   }
 
-  int id = req["id"].get<int>();
-  std::string method = req["method"].get<std::string>();
-  Json params = req["params"];
+  //   int id = req["id"].get<int>();
+  //   std::string method = req["method"].get<std::string>();
+  //   Json params = req["params"];
+  const int id = req.id();
+  const std::string method = req.method();
+  const std::string in_params = req.params();
   auto it = rpc_handlers.find(method);
   if (it == rpc_handlers.end()) {
-    Json resp = MakeRespJson(id, false, RpcCode::KRPCMETHODNOTFOUND, "method not found", Json{});
-    SendRpcRawResponse(conn, BuildRpcHttpResponse(resp, close, HttpResponse::HttpStatusCode::K200K), close);
+    //  Json resp = MakeRespJson(id, false, RpcCode::KRPCMETHODNOTFOUND, "method not found", Json{});
+    // SendRpcRawResponse(conn, BuildRpcHttpResponse(resp, close, HttpResponse::HttpStatusCode::K200K), close);
+    auto resp = MakeRespProto(id, false, RpcCode::KRPCMETHODNOTFOUND, "method not found", "");
+    std::string wire;
+    if (rpcproto::EncodeRpcResponse(resp, &wire)) {
+      SendRpcRawResponse(conn, BuildRpcHttpResponse(wire, close, HttpResponse::HttpStatusCode::K200K), close);
+    }
     return;
   }
 
-  const uint64_t token = rpc_token_.fetch_add(1, std::memory_order_relaxed); // 内存序
+  const uint64_t token = rpc_token_.fetch_add(1, std::memory_order_relaxed);  // 内存序
   {
     std::lock_guard<std::mutex> lock(rpc_pending_mtx_);
     rpc_pending_.insert(token);
   }
   std::weak_ptr<Connection> weak_conn = conn;
-  conn->GetLoop()->RunAfter(static_cast<double>(kRpcTimeoutMs) / 1000.0,
-                            [this, token, id, close, weak_conn]() mutable {
-                              bool should_send = false;
-                              {
-                                std::lock_guard<std::mutex> lock(rpc_pending_mtx_);
-                                should_send = rpc_pending_.erase(token) > 0;
-                              }
-                              if (!should_send) {
-                                return;
-                              }
-                              auto locked = weak_conn.lock(); // 连接关闭了也不发送
-                              if (!locked) {
-                                return;
-                              }
-                              Json resp = MakeRespJson(id, false, RpcCode::KRPCTIMEOUT, "timeout", Json{});
-                              SendRpcRawResponse(locked,
-                                                 BuildRpcHttpResponse(resp, close, HttpResponse::HttpStatusCode::K200K),
-                                                 close);
-                            });
+  conn->GetLoop()->RunAfter(
+      static_cast<double>(kRpcTimeoutMs) / 1000.0,  // 超时不发送
+      [this, token, id, close, weak_conn]() mutable {
+        bool should_send = false;
+        {
+          std::lock_guard<std::mutex> lock(rpc_pending_mtx_);
+          should_send = rpc_pending_.erase(token) > 0;
+        }
+        if (!should_send) {
+          return;
+        }
+        auto locked = weak_conn.lock();  // 连接关闭了也不发送
+        if (!locked) {
+          return;
+        }
+        // Json resp = MakeRespJson(id, false, RpcCode::KRPCTIMEOUT, "timeout", Json{});
+        // SendRpcRawResponse(locked,
+        //                    BuildRpcHttpResponse(resp, close, HttpResponse::HttpStatusCode::K200K),
+        //                    close);
+        auto resp = MakeRespProto(id, false, RpcCode::KRPCTIMEOUT, "timeout", "");
+        std::string wire;
+        if (!rpcproto::EncodeRpcResponse(resp, &wire)) {
+          return;
+        }
+        SendRpcRawResponse(locked, BuildRpcHttpResponse(wire, close, HttpResponse::HttpStatusCode::K200K), close);
+      });
 
   RpcHandler handler = it->second;
-  rpc_flow_pool_->Add([this, weak_conn, token, id, close, handler, params = std::move(params)]() mutable {
-    Json result = Json::object();
+  // rpc_flow_pool_->Add([this, weak_conn, token, id, close, handler, params = std::move(params)]() mutable {
+  //   Json result = Json::object();
+  rpc_flow_pool_->Add([this, weak_conn, token, id, close, handler, in_params]() mutable {
+    std::string out_results;
     bool ok = false;
     try {
-      ok = handler(params, &result);
+      // ok = handler(params, &result);
+      ok = handler(in_params, &out_results);
     } catch (...) {
       ok = false;
     }
-    Json resp = ok ? MakeRespJson(id, true, RpcCode::KRPCOK, "OK", result)
-                   : MakeRespJson(id, false, RpcCode::KRPCINTERNALERROR, "internal error", Json{});
-    std::string wire = BuildRpcHttpResponse(resp, close, HttpResponse::HttpStatusCode::K200K);
+    // Json resp = ok ? MakeRespJson(id, true, RpcCode::KRPCOK, "OK", result)
+    //                : MakeRespJson(id, false, RpcCode::KRPCINTERNALERROR, "internal error", Json{});
+    // std::string wire = BuildRpcHttpResponse(resp, close, HttpResponse::HttpStatusCode::K200K);
+    auto resp = ok ? MakeRespProto(id, true, RpcCode::KRPCOK, "OK", out_results)
+                   : MakeRespProto(id, false, RpcCode::KRPCINTERNALERROR, "internal error", "");
+    std::string resp_bytes;
+    if (!rpcproto::EncodeRpcResponse(resp, &resp_bytes)) {
+      return;
+    }
+    std::string wire = BuildRpcHttpResponse(resp_bytes, close, HttpResponse::HttpStatusCode::K200K);
     bool should_send = false;
     {
       std::lock_guard<std::mutex> lock(rpc_pending_mtx_);

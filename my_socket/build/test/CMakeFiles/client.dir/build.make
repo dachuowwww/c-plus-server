@@ -80,6 +80,7 @@ client_EXTERNAL_OBJECTS =
 bin/client: test/CMakeFiles/client.dir/client.cpp.o
 bin/client: test/CMakeFiles/client.dir/build.make
 bin/client: lib/libPINE_SHARED.so
+bin/client: /usr/lib/x86_64-linux-gnu/libprotobuf.so
 bin/client: test/CMakeFiles/client.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable ../bin/client"
 	cd /home/dachuo/my_socket/build/test && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/client.dir/link.txt --verbose=$(VERBOSE)
