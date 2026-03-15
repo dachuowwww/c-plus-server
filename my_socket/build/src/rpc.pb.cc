@@ -116,6 +116,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::my_socket_rpc::RpcRequest, id_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::my_socket_rpc::RpcRequest, method_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::my_socket_rpc::RpcRequest, params_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::my_socket_rpc::RpcRequest, serializer_type_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::my_socket_rpc::RpcResponse, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -126,6 +127,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::my_socket_rpc::RpcResponse, code_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::my_socket_rpc::RpcResponse, message_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::my_socket_rpc::RpcResponse, params_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::my_socket_rpc::RpcResponse, serializer_type_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::my_socket_rpc::EchoRequest, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -141,9 +143,9 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::my_socket_rpc::RpcRequest)},
-  { 8, -1, sizeof(::my_socket_rpc::RpcResponse)},
-  { 18, -1, sizeof(::my_socket_rpc::EchoRequest)},
-  { 24, -1, sizeof(::my_socket_rpc::EchoResponse)},
+  { 9, -1, sizeof(::my_socket_rpc::RpcResponse)},
+  { 20, -1, sizeof(::my_socket_rpc::EchoRequest)},
+  { 26, -1, sizeof(::my_socket_rpc::EchoResponse)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -174,15 +176,17 @@ void protobuf_RegisterTypes(const ::std::string&) {
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-      "\n\trpc.proto\022\rmy_socket_rpc\"8\n\nRpcRequest"
+      "\n\trpc.proto\022\rmy_socket_rpc\"Q\n\nRpcRequest"
       "\022\n\n\002id\030\001 \001(\005\022\016\n\006method\030\002 \001(\t\022\016\n\006params\030\003"
-      " \001(\014\"T\n\013RpcResponse\022\n\n\002id\030\001 \001(\005\022\n\n\002ok\030\002 "
-      "\001(\010\022\014\n\004code\030\003 \001(\005\022\017\n\007message\030\004 \001(\t\022\016\n\006pa"
-      "rams\030\005 \001(\014\"\032\n\013EchoRequest\022\013\n\003msg\030\001 \001(\t\"\033"
-      "\n\014EchoResponse\022\013\n\003msg\030\001 \001(\tb\006proto3"
+      " \001(\014\022\027\n\017serializer_type\030\004 \001(\t\"m\n\013RpcResp"
+      "onse\022\n\n\002id\030\001 \001(\005\022\n\n\002ok\030\002 \001(\010\022\014\n\004code\030\003 \001"
+      "(\005\022\017\n\007message\030\004 \001(\t\022\016\n\006params\030\005 \001(\014\022\027\n\017s"
+      "erializer_type\030\006 \001(\t\"\032\n\013EchoRequest\022\013\n\003m"
+      "sg\030\001 \001(\t\"\033\n\014EchoResponse\022\013\n\003msg\030\001 \001(\tb\006p"
+      "roto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 235);
+      descriptor, 285);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "rpc.proto", &protobuf_RegisterTypes);
 }
@@ -208,6 +212,7 @@ void RpcRequest::InitAsDefaultInstance() {
 const int RpcRequest::kIdFieldNumber;
 const int RpcRequest::kMethodFieldNumber;
 const int RpcRequest::kParamsFieldNumber;
+const int RpcRequest::kSerializerTypeFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 RpcRequest::RpcRequest()
@@ -229,6 +234,10 @@ RpcRequest::RpcRequest(const RpcRequest& from)
   if (from.params().size() > 0) {
     params_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.params_);
   }
+  serializer_type_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.serializer_type().size() > 0) {
+    serializer_type_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.serializer_type_);
+  }
   id_ = from.id_;
   // @@protoc_insertion_point(copy_constructor:my_socket_rpc.RpcRequest)
 }
@@ -236,6 +245,7 @@ RpcRequest::RpcRequest(const RpcRequest& from)
 void RpcRequest::SharedCtor() {
   method_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   params_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  serializer_type_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   id_ = 0;
 }
 
@@ -247,6 +257,7 @@ RpcRequest::~RpcRequest() {
 void RpcRequest::SharedDtor() {
   method_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   params_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  serializer_type_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 void RpcRequest::SetCachedSize(int size) const {
@@ -271,6 +282,7 @@ void RpcRequest::Clear() {
 
   method_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   params_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  serializer_type_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   id_ = 0;
   _internal_metadata_.Clear();
 }
@@ -327,6 +339,22 @@ bool RpcRequest::MergePartialFromCodedStream(
         break;
       }
 
+      // string serializer_type = 4;
+      case 4: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(34u /* 34 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_serializer_type()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->serializer_type().data(), static_cast<int>(this->serializer_type().length()),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "my_socket_rpc.RpcRequest.serializer_type"));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
       default: {
       handle_unusual:
         if (tag == 0) {
@@ -374,6 +402,16 @@ void RpcRequest::SerializeWithCachedSizes(
       3, this->params(), output);
   }
 
+  // string serializer_type = 4;
+  if (this->serializer_type().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->serializer_type().data(), static_cast<int>(this->serializer_type().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "my_socket_rpc.RpcRequest.serializer_type");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      4, this->serializer_type(), output);
+  }
+
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
@@ -411,6 +449,17 @@ void RpcRequest::SerializeWithCachedSizes(
         3, this->params(), target);
   }
 
+  // string serializer_type = 4;
+  if (this->serializer_type().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->serializer_type().data(), static_cast<int>(this->serializer_type().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "my_socket_rpc.RpcRequest.serializer_type");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        4, this->serializer_type(), target);
+  }
+
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
@@ -440,6 +489,13 @@ size_t RpcRequest::ByteSizeLong() const {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::BytesSize(
         this->params());
+  }
+
+  // string serializer_type = 4;
+  if (this->serializer_type().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->serializer_type());
   }
 
   // int32 id = 1;
@@ -484,6 +540,10 @@ void RpcRequest::MergeFrom(const RpcRequest& from) {
 
     params_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.params_);
   }
+  if (from.serializer_type().size() > 0) {
+
+    serializer_type_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.serializer_type_);
+  }
   if (from.id() != 0) {
     set_id(from.id());
   }
@@ -517,6 +577,8 @@ void RpcRequest::InternalSwap(RpcRequest* other) {
     GetArenaNoVirtual());
   params_.Swap(&other->params_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
+  serializer_type_.Swap(&other->serializer_type_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
   swap(id_, other->id_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
@@ -537,6 +599,7 @@ const int RpcResponse::kOkFieldNumber;
 const int RpcResponse::kCodeFieldNumber;
 const int RpcResponse::kMessageFieldNumber;
 const int RpcResponse::kParamsFieldNumber;
+const int RpcResponse::kSerializerTypeFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 RpcResponse::RpcResponse()
@@ -558,6 +621,10 @@ RpcResponse::RpcResponse(const RpcResponse& from)
   if (from.params().size() > 0) {
     params_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.params_);
   }
+  serializer_type_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.serializer_type().size() > 0) {
+    serializer_type_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.serializer_type_);
+  }
   ::memcpy(&id_, &from.id_,
     static_cast<size_t>(reinterpret_cast<char*>(&code_) -
     reinterpret_cast<char*>(&id_)) + sizeof(code_));
@@ -567,6 +634,7 @@ RpcResponse::RpcResponse(const RpcResponse& from)
 void RpcResponse::SharedCtor() {
   message_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   params_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  serializer_type_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&id_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&code_) -
       reinterpret_cast<char*>(&id_)) + sizeof(code_));
@@ -580,6 +648,7 @@ RpcResponse::~RpcResponse() {
 void RpcResponse::SharedDtor() {
   message_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   params_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  serializer_type_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 void RpcResponse::SetCachedSize(int size) const {
@@ -604,6 +673,7 @@ void RpcResponse::Clear() {
 
   message_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   params_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  serializer_type_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&id_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&code_) -
       reinterpret_cast<char*>(&id_)) + sizeof(code_));
@@ -690,6 +760,22 @@ bool RpcResponse::MergePartialFromCodedStream(
         break;
       }
 
+      // string serializer_type = 6;
+      case 6: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(50u /* 50 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_serializer_type()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->serializer_type().data(), static_cast<int>(this->serializer_type().length()),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "my_socket_rpc.RpcResponse.serializer_type"));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
       default: {
       handle_unusual:
         if (tag == 0) {
@@ -747,6 +833,16 @@ void RpcResponse::SerializeWithCachedSizes(
       5, this->params(), output);
   }
 
+  // string serializer_type = 6;
+  if (this->serializer_type().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->serializer_type().data(), static_cast<int>(this->serializer_type().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "my_socket_rpc.RpcResponse.serializer_type");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      6, this->serializer_type(), output);
+  }
+
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
@@ -794,6 +890,17 @@ void RpcResponse::SerializeWithCachedSizes(
         5, this->params(), target);
   }
 
+  // string serializer_type = 6;
+  if (this->serializer_type().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->serializer_type().data(), static_cast<int>(this->serializer_type().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "my_socket_rpc.RpcResponse.serializer_type");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        6, this->serializer_type(), target);
+  }
+
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
@@ -823,6 +930,13 @@ size_t RpcResponse::ByteSizeLong() const {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::BytesSize(
         this->params());
+  }
+
+  // string serializer_type = 6;
+  if (this->serializer_type().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->serializer_type());
   }
 
   // int32 id = 1;
@@ -879,6 +993,10 @@ void RpcResponse::MergeFrom(const RpcResponse& from) {
 
     params_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.params_);
   }
+  if (from.serializer_type().size() > 0) {
+
+    serializer_type_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.serializer_type_);
+  }
   if (from.id() != 0) {
     set_id(from.id());
   }
@@ -917,6 +1035,8 @@ void RpcResponse::InternalSwap(RpcResponse* other) {
   message_.Swap(&other->message_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
   params_.Swap(&other->params_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  serializer_type_.Swap(&other->serializer_type_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
   swap(id_, other->id_);
   swap(ok_, other->ok_);

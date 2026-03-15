@@ -6,6 +6,7 @@ message RpcRequest { // rpc结构
   int32 id = 1;
   string method = 2;
   bytes params = 3;
+  string serializer_type = 4; // rpc内容格式
 }
 
 message RpcResponse {
@@ -14,6 +15,7 @@ message RpcResponse {
   int32 code = 3;
   string message = 4;
   bytes params = 5;
+  string serializer_type = 6;
 }
 
 message EchoRequest { // 方法参数

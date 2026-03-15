@@ -4,7 +4,7 @@
 #include <cstring>
 #include <iostream>
 #include <string>
-// #include <nlohmann/json.hpp>  // 引入json库
+#include <nlohmann/json.hpp>
 #include "RpcProto.h"
 #include "Socket.h"
 #include "rpc.pb.h"
@@ -31,6 +31,7 @@ int main(int argc, char *argv[]) {
   std::string ip = "127.0.0.1";
   int port = 80;
   std::string msg = "hi";
+  std::string serializer = "protobuf";
 
   if (argc >= 2) {
     ip = argv[1];
@@ -41,24 +42,38 @@ int main(int argc, char *argv[]) {
   if (argc >= 4) {
     msg = argv[3];
   }
+  if (argc >= 5) {
+    serializer = argv[4];
+  }
 
   // nlohmann::json request_json;
   // request_json["id"] = 1;
   // request_json["method"] = "Echo";
   // request_json["params"] = {{"msg", msg}};
   // std::string body = request_json.dump();
-  my_socket_rpc::EchoRequest echo_req;
-  echo_req.set_msg(msg);
   std::string echo_result;
-  if (!rpcproto::EncodeEchoRequest(echo_req, &echo_result)) {
-    std::cerr << "encode echo request failed" << std::endl;
+  if (serializer == "protobuf") {
+    my_socket_rpc::EchoRequest echo_req;  // 对象
+    echo_req.set_msg(msg);
+    if (!rpcproto::EncodeEchoRequest(echo_req, &echo_result)) {
+      std::cerr << "encode echo request failed" << std::endl;
+      return 1;
+    }
+  } else if (serializer == "json") {
+    nlohmann::json j;
+    j["msg"] = msg;
+    echo_result = j.dump();
+  } else {
+    std::cerr << "unsupported serializer: " << serializer << std::endl;
     return 1;
   }
   my_socket_rpc::RpcRequest rpc_req;
   rpc_req.set_id(1);
   rpc_req.set_method("Echo");
   rpc_req.set_params(echo_result);
+  rpc_req.set_serializer_type(serializer);
   std::string body;
+  // RPC 协议消息格式用protobuf编码，HTTP协议消息格式用字符串拼接
   if (!rpcproto::EncodeRpcRequest(rpc_req, &body)) {
     std::cerr << "encode rpc request failed" << std::endl;
     return 1;
@@ -99,7 +114,7 @@ int main(int argc, char *argv[]) {
   }
 
   std::cout << response << std::endl;
-  size_t header_end = response.find("\r\n\r\n");
+  size_t header_end = response.find("\r\n\r\n");  // 看消息体
   if (header_end == std::string::npos) {
     return 0;
   }
@@ -110,11 +125,20 @@ int main(int argc, char *argv[]) {
     return 0;
   }
   std::cout << "rpc id=" << rpc_resp.id() << " ok=" << rpc_resp.ok() << " code=" << rpc_resp.code()
-            << " message=" << rpc_resp.message() << std::endl;
+            << " message=" << rpc_resp.message() << " serializer=" << rpc_resp.serializer_type() << std::endl;
   if (rpc_resp.ok()) {
-    my_socket_rpc::EchoResponse echo_resp;
-    if (rpcproto::DecodeEchoResponse(rpc_resp.params(), &echo_resp)) {
-      std::cout << "echo msg=" << echo_resp.msg() << std::endl;
+    if (rpc_resp.serializer_type() == "protobuf") {
+      my_socket_rpc::EchoResponse echo_resp;
+      if (rpcproto::DecodeEchoResponse(rpc_resp.params(), &echo_resp)) {
+        std::cout << "echo msg=" << echo_resp.msg() << std::endl;
+      }
+    } else if (rpc_resp.serializer_type() == "json") {
+      try {
+        nlohmann::json j = nlohmann::json::parse(rpc_resp.params());
+        std::cout << "echo msg=" << j.value("msg", "") << std::endl;
+      } catch (...) {
+        std::cerr << "decode json response failed" << std::endl;
+      }
     }
   }
   return 0;

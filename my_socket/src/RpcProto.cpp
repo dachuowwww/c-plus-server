@@ -50,4 +50,4 @@ bool DecodeEchoResponse(const std::string &data, my_socket_rpc::EchoResponse *ou
   }
   return out->ParseFromString(data);
 }
-}
+}  // namespace rpcproto

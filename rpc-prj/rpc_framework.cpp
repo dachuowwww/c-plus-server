@@ -3,7 +3,7 @@
 #include <cstring>
 
 // MessageCodec 实现
-std::string MessageCodec::Encode(const std::string& message) {
+std::string MessageCodec::Encode(const std::string& message) { // 后面的消息体有多长。
     uint32_t length = htonl(static_cast<uint32_t>(message.size()));
     std::string encoded;
     encoded.append(reinterpret_cast<const char*>(&length), kHeaderSize);
@@ -11,7 +11,7 @@ std::string MessageCodec::Encode(const std::string& message) {
     return encoded;
 }
 
-std::vector<std::string> MessageCodec::Decode(std::string& buffer) {
+std::vector<std::string> MessageCodec::Decode(std::string& buffer) { // 可能接受多条
     std::vector<std::string> messages;
     
     while (buffer.size() >= kHeaderSize) {
@@ -60,7 +60,7 @@ void RpcServer::HandleConnection(std::shared_ptr<Connection> conn) {
     std::cout << "RPC client connected, fd: " << conn->GetFd() << std::endl;
 }
 
-void RpcServer::HandleMessage(std::shared_ptr<Connection> conn, const std::string& message) {
+void RpcServer::HandleMessage(std::shared_ptr<Connection> conn, const std::string& message) {  // 连接socket，消息内容read_buffer
     try {
         std::cout << "Server: Received raw message: " << message << std::endl;
         
@@ -309,7 +309,7 @@ void RpcClient::HandleConnection(std::shared_ptr<Connection> conn) {
     std::cout << "Connected to RPC server, fd: " << conn->GetFd() << std::endl;
 }
 
-void RpcClient::HandleMessage(std::shared_ptr<Connection> /* conn */, const std::string& message) {
+void RpcClient::HandleMessage(std::shared_ptr<Connection> /* conn */, const std::string& message) { // 根据表格找到对应的promise，设置值 
     try {
         // 解码消息
         std::string buffer = message;

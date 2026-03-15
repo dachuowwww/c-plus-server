@@ -103,7 +103,11 @@ src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o
  ../src/include/Logger.h
  ../src/include/Macro.h
  ../src/include/Metrics.h
+ ../src/include/RpcEchoSerializers.h
+ ../src/include/RpcEchoTypes.h
+ ../src/include/RpcJsonSerializer.h
  ../src/include/RpcProto.h
+ ../src/include/RpcSerialization.h
  ../src/include/Server.h
  ../src/include/ThreadPool.h
  ../src/include/TimeStamp.h
@@ -145,6 +149,16 @@ src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.o
  ../src/include/Macro.h
  ../src/include/Poller.h
  /home/dachuo/my_socket/src/Poller.cpp
+src/CMakeFiles/PINE_SHARED.dir/RpcEchoSerializers.cpp.o
+ ../src/include/RpcEchoSerializers.h
+ ../src/include/RpcEchoTypes.h
+ ../src/include/RpcSerialization.h
+ /home/dachuo/my_socket/src/RpcEchoSerializers.cpp
+ src/rpc.pb.h
+src/CMakeFiles/PINE_SHARED.dir/RpcEchoTypes.cpp.o
+ ../src/include/RpcEchoTypes.h
+ ../src/include/RpcSerialization.h
+ /home/dachuo/my_socket/src/RpcEchoTypes.cpp
 src/CMakeFiles/PINE_SHARED.dir/RpcProto.cpp.o
  ../src/include/RpcProto.h
  /home/dachuo/my_socket/src/RpcProto.cpp

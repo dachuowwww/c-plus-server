@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-namespace my_socket_rpc { // 仅前置声明，避免引入过多依赖
+namespace my_socket_rpc {  // 仅前置声明，避免引入过多依赖
 class RpcRequest;
 class RpcResponse;
 class EchoRequest;

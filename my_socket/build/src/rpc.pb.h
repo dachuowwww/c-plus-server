@@ -186,6 +186,20 @@ class RpcRequest : public ::google::protobuf::Message /* @@protoc_insertion_poin
   ::std::string* release_params();
   void set_allocated_params(::std::string* params);
 
+  // string serializer_type = 4;
+  void clear_serializer_type();
+  static const int kSerializerTypeFieldNumber = 4;
+  const ::std::string& serializer_type() const;
+  void set_serializer_type(const ::std::string& value);
+  #if LANG_CXX11
+  void set_serializer_type(::std::string&& value);
+  #endif
+  void set_serializer_type(const char* value);
+  void set_serializer_type(const char* value, size_t size);
+  ::std::string* mutable_serializer_type();
+  ::std::string* release_serializer_type();
+  void set_allocated_serializer_type(::std::string* serializer_type);
+
   // int32 id = 1;
   void clear_id();
   static const int kIdFieldNumber = 1;
@@ -198,6 +212,7 @@ class RpcRequest : public ::google::protobuf::Message /* @@protoc_insertion_poin
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::ArenaStringPtr method_;
   ::google::protobuf::internal::ArenaStringPtr params_;
+  ::google::protobuf::internal::ArenaStringPtr serializer_type_;
   ::google::protobuf::int32 id_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_rpc_2eproto::TableStruct;
@@ -319,6 +334,20 @@ class RpcResponse : public ::google::protobuf::Message /* @@protoc_insertion_poi
   ::std::string* release_params();
   void set_allocated_params(::std::string* params);
 
+  // string serializer_type = 6;
+  void clear_serializer_type();
+  static const int kSerializerTypeFieldNumber = 6;
+  const ::std::string& serializer_type() const;
+  void set_serializer_type(const ::std::string& value);
+  #if LANG_CXX11
+  void set_serializer_type(::std::string&& value);
+  #endif
+  void set_serializer_type(const char* value);
+  void set_serializer_type(const char* value, size_t size);
+  ::std::string* mutable_serializer_type();
+  ::std::string* release_serializer_type();
+  void set_allocated_serializer_type(::std::string* serializer_type);
+
   // int32 id = 1;
   void clear_id();
   static const int kIdFieldNumber = 1;
@@ -343,6 +372,7 @@ class RpcResponse : public ::google::protobuf::Message /* @@protoc_insertion_poi
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::ArenaStringPtr message_;
   ::google::protobuf::internal::ArenaStringPtr params_;
+  ::google::protobuf::internal::ArenaStringPtr serializer_type_;
   ::google::protobuf::int32 id_;
   bool ok_;
   ::google::protobuf::int32 code_;
@@ -702,6 +732,59 @@ inline void RpcRequest::set_allocated_params(::std::string* params) {
   // @@protoc_insertion_point(field_set_allocated:my_socket_rpc.RpcRequest.params)
 }
 
+// string serializer_type = 4;
+inline void RpcRequest::clear_serializer_type() {
+  serializer_type_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& RpcRequest::serializer_type() const {
+  // @@protoc_insertion_point(field_get:my_socket_rpc.RpcRequest.serializer_type)
+  return serializer_type_.GetNoArena();
+}
+inline void RpcRequest::set_serializer_type(const ::std::string& value) {
+  
+  serializer_type_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:my_socket_rpc.RpcRequest.serializer_type)
+}
+#if LANG_CXX11
+inline void RpcRequest::set_serializer_type(::std::string&& value) {
+  
+  serializer_type_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:my_socket_rpc.RpcRequest.serializer_type)
+}
+#endif
+inline void RpcRequest::set_serializer_type(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  serializer_type_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:my_socket_rpc.RpcRequest.serializer_type)
+}
+inline void RpcRequest::set_serializer_type(const char* value, size_t size) {
+  
+  serializer_type_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:my_socket_rpc.RpcRequest.serializer_type)
+}
+inline ::std::string* RpcRequest::mutable_serializer_type() {
+  
+  // @@protoc_insertion_point(field_mutable:my_socket_rpc.RpcRequest.serializer_type)
+  return serializer_type_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* RpcRequest::release_serializer_type() {
+  // @@protoc_insertion_point(field_release:my_socket_rpc.RpcRequest.serializer_type)
+  
+  return serializer_type_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void RpcRequest::set_allocated_serializer_type(::std::string* serializer_type) {
+  if (serializer_type != NULL) {
+    
+  } else {
+    
+  }
+  serializer_type_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), serializer_type);
+  // @@protoc_insertion_point(field_set_allocated:my_socket_rpc.RpcRequest.serializer_type)
+}
+
 // -------------------------------------------------------------------
 
 // RpcResponse
@@ -852,6 +935,59 @@ inline void RpcResponse::set_allocated_params(::std::string* params) {
   }
   params_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), params);
   // @@protoc_insertion_point(field_set_allocated:my_socket_rpc.RpcResponse.params)
+}
+
+// string serializer_type = 6;
+inline void RpcResponse::clear_serializer_type() {
+  serializer_type_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& RpcResponse::serializer_type() const {
+  // @@protoc_insertion_point(field_get:my_socket_rpc.RpcResponse.serializer_type)
+  return serializer_type_.GetNoArena();
+}
+inline void RpcResponse::set_serializer_type(const ::std::string& value) {
+  
+  serializer_type_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:my_socket_rpc.RpcResponse.serializer_type)
+}
+#if LANG_CXX11
+inline void RpcResponse::set_serializer_type(::std::string&& value) {
+  
+  serializer_type_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:my_socket_rpc.RpcResponse.serializer_type)
+}
+#endif
+inline void RpcResponse::set_serializer_type(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  serializer_type_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:my_socket_rpc.RpcResponse.serializer_type)
+}
+inline void RpcResponse::set_serializer_type(const char* value, size_t size) {
+  
+  serializer_type_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:my_socket_rpc.RpcResponse.serializer_type)
+}
+inline ::std::string* RpcResponse::mutable_serializer_type() {
+  
+  // @@protoc_insertion_point(field_mutable:my_socket_rpc.RpcResponse.serializer_type)
+  return serializer_type_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* RpcResponse::release_serializer_type() {
+  // @@protoc_insertion_point(field_release:my_socket_rpc.RpcResponse.serializer_type)
+  
+  return serializer_type_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void RpcResponse::set_allocated_serializer_type(::std::string* serializer_type) {
+  if (serializer_type != NULL) {
+    
+  } else {
+    
+  }
+  serializer_type_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), serializer_type);
+  // @@protoc_insertion_point(field_set_allocated:my_socket_rpc.RpcResponse.serializer_type)
 }
 
 // -------------------------------------------------------------------

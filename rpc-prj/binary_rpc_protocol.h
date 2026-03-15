@@ -1,5 +1,10 @@
 #pragma once
-
+#ifdef OS_LINUX
+#include <arpa/inet.h>
+#endif
+#ifdef OS_MACOS
+#include <winsock2.h>
+#endif
 #include <string>
 #include <vector>
 #include <cstdint>

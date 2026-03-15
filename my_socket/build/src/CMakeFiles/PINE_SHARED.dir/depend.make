@@ -102,7 +102,11 @@ src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/LogStream.h
 src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/Logger.h
 src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/Metrics.h
+src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/RpcEchoSerializers.h
+src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/RpcEchoTypes.h
+src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/RpcJsonSerializer.h
 src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/RpcProto.h
+src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/RpcSerialization.h
 src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/Server.h
 src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/ThreadPool.h
 src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o: ../src/include/TimeStamp.h
@@ -144,6 +148,16 @@ src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.o: ../src/include/Error.h
 src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.o: ../src/include/Poller.h
 src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.o: ../src/Poller.cpp
+
+src/CMakeFiles/PINE_SHARED.dir/RpcEchoSerializers.cpp.o: ../src/include/RpcEchoSerializers.h
+src/CMakeFiles/PINE_SHARED.dir/RpcEchoSerializers.cpp.o: ../src/include/RpcEchoTypes.h
+src/CMakeFiles/PINE_SHARED.dir/RpcEchoSerializers.cpp.o: ../src/include/RpcSerialization.h
+src/CMakeFiles/PINE_SHARED.dir/RpcEchoSerializers.cpp.o: ../src/RpcEchoSerializers.cpp
+src/CMakeFiles/PINE_SHARED.dir/RpcEchoSerializers.cpp.o: src/rpc.pb.h
+
+src/CMakeFiles/PINE_SHARED.dir/RpcEchoTypes.cpp.o: ../src/include/RpcEchoTypes.h
+src/CMakeFiles/PINE_SHARED.dir/RpcEchoTypes.cpp.o: ../src/include/RpcSerialization.h
+src/CMakeFiles/PINE_SHARED.dir/RpcEchoTypes.cpp.o: ../src/RpcEchoTypes.cpp
 
 src/CMakeFiles/PINE_SHARED.dir/RpcProto.cpp.o: ../src/include/RpcProto.h
 src/CMakeFiles/PINE_SHARED.dir/RpcProto.cpp.o: ../src/RpcProto.cpp

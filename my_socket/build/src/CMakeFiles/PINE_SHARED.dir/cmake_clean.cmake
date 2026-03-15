@@ -21,6 +21,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/PINE_SHARED.dir/Logger.cpp.o"
   "CMakeFiles/PINE_SHARED.dir/Metrics.cpp.o"
   "CMakeFiles/PINE_SHARED.dir/Poller.cpp.o"
+  "CMakeFiles/PINE_SHARED.dir/RpcEchoSerializers.cpp.o"
+  "CMakeFiles/PINE_SHARED.dir/RpcEchoTypes.cpp.o"
   "CMakeFiles/PINE_SHARED.dir/RpcProto.cpp.o"
   "CMakeFiles/PINE_SHARED.dir/Server.cpp.o"
   "CMakeFiles/PINE_SHARED.dir/Socket.cpp.o"

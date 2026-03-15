@@ -665,6 +665,60 @@ Poller.cpp.s:
 	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.s
 .PHONY : Poller.cpp.s
 
+RpcEchoSerializers.o: RpcEchoSerializers.cpp.o
+
+.PHONY : RpcEchoSerializers.o
+
+# target to build an object file
+RpcEchoSerializers.cpp.o:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/RpcEchoSerializers.cpp.o
+.PHONY : RpcEchoSerializers.cpp.o
+
+RpcEchoSerializers.i: RpcEchoSerializers.cpp.i
+
+.PHONY : RpcEchoSerializers.i
+
+# target to preprocess a source file
+RpcEchoSerializers.cpp.i:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/RpcEchoSerializers.cpp.i
+.PHONY : RpcEchoSerializers.cpp.i
+
+RpcEchoSerializers.s: RpcEchoSerializers.cpp.s
+
+.PHONY : RpcEchoSerializers.s
+
+# target to generate assembly for a file
+RpcEchoSerializers.cpp.s:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/RpcEchoSerializers.cpp.s
+.PHONY : RpcEchoSerializers.cpp.s
+
+RpcEchoTypes.o: RpcEchoTypes.cpp.o
+
+.PHONY : RpcEchoTypes.o
+
+# target to build an object file
+RpcEchoTypes.cpp.o:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/RpcEchoTypes.cpp.o
+.PHONY : RpcEchoTypes.cpp.o
+
+RpcEchoTypes.i: RpcEchoTypes.cpp.i
+
+.PHONY : RpcEchoTypes.i
+
+# target to preprocess a source file
+RpcEchoTypes.cpp.i:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/RpcEchoTypes.cpp.i
+.PHONY : RpcEchoTypes.cpp.i
+
+RpcEchoTypes.s: RpcEchoTypes.cpp.s
+
+.PHONY : RpcEchoTypes.s
+
+# target to generate assembly for a file
+RpcEchoTypes.cpp.s:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/RpcEchoTypes.cpp.s
+.PHONY : RpcEchoTypes.cpp.s
+
 RpcProto.o: RpcProto.cpp.o
 
 .PHONY : RpcProto.o
@@ -950,6 +1004,12 @@ help:
 	@echo "... Poller.o"
 	@echo "... Poller.i"
 	@echo "... Poller.s"
+	@echo "... RpcEchoSerializers.o"
+	@echo "... RpcEchoSerializers.i"
+	@echo "... RpcEchoSerializers.s"
+	@echo "... RpcEchoTypes.o"
+	@echo "... RpcEchoTypes.i"
+	@echo "... RpcEchoTypes.s"
 	@echo "... RpcProto.o"
 	@echo "... RpcProto.i"
 	@echo "... RpcProto.s"
