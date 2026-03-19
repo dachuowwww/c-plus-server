@@ -1,0 +1,41 @@
+20260317 23:05:11.548982  14775 INFO    HttpServer Listening on [ 0.0.0.0:80 ]-/home/dachuo/my_socket/src/HttpServer.cpp:395
+20260317 23:05:15.401105  14775 INFO    HttpServer::OnNewConnection : Add connection [ fd#34 ] from 127.0.0.1:59405-/home/dachuo/my_socket/src/HttpServer.cpp:408
+20260317 23:05:15.401623  14775 INFO    HttpServer::OnNewConnection : Add connection [ fd#35 ] from 127.0.0.1:59406-/home/dachuo/my_socket/src/HttpServer.cpp:408
+20260317 23:05:15.402036  14777 INFO    /, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:433
+20260317 23:05:15.640831  14777 INFO    /favicon.ico, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:433
+20260317 23:05:20.177155  14775 INFO    HttpServer::OnNewConnection : Add connection [ fd#36 ] from 127.0.0.1:59416-/home/dachuo/my_socket/src/HttpServer.cpp:408
+20260317 23:05:20.178348  14778 INFO    /login, request successfully. Method:POST-/home/dachuo/my_socket/src/HttpServer.cpp:433
+20260317 23:05:20.178469  14778 INFO    New login request user=xkx-/home/dachuo/my_socket/test/httpserver.cpp:278
+20260317 23:05:20.220901  14778 INFO    xkx login failed!-/home/dachuo/my_socket/test/httpserver.cpp:284
+20260317 23:05:20.225859  14779 INFO    /, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:433
+20260317 23:05:20.346571  14779 INFO    /favicon.ico, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:433
+20260317 23:05:26.212489  14775 INFO    HttpServer::OnNewConnection : Add connection [ fd#37 ] from 127.0.0.1:59422-/home/dachuo/my_socket/src/HttpServer.cpp:408
+20260317 23:05:26.212804  14775 INFO    HttpServer::OnNewConnection : Add connection [ fd#38 ] from 127.0.0.1:59423-/home/dachuo/my_socket/src/HttpServer.cpp:408
+20260317 23:05:26.217512  14780 INFO    /login, request successfully. Method:POST-/home/dachuo/my_socket/src/HttpServer.cpp:433
+20260317 23:05:26.217595  14780 INFO    New login request user=xkx-/home/dachuo/my_socket/test/httpserver.cpp:278
+20260317 23:05:26.229634  14780 INFO    xkx login success!-/home/dachuo/my_socket/test/httpserver.cpp:281
+20260317 23:05:26.509616  14780 INFO    /favicon.ico, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:433
+20260317 23:05:30.237268  14775 INFO    HttpServer::OnNewConnection : Add connection [ fd#39 ] from 127.0.0.1:59435-/home/dachuo/my_socket/src/HttpServer.cpp:408
+20260317 23:05:30.238490  14781 INFO    /open/(17).png, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:433
+20260317 23:05:30.260727  14781 INFO    Open file (17).png success!-/home/dachuo/my_socket/test/httpserver.cpp:186
+20260317 23:05:30.425144  14781 INFO    /favicon.ico, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:433
+20260317 23:05:31.221518  14778 ERROR   Channel::RemoveInEpoll called when channel not in epoll errno=0 msg=Success-/home/dachuo/my_socket/src/Error.cpp:11
+20260317 23:05:31.347612  14779 ERROR   Channel::RemoveInEpoll called when channel not in epoll errno=11 msg=Resource temporarily unavailable-/home/dachuo/my_socket/src/Error.cpp:11
+20260317 23:05:31.632159  14775 INFO    HttpServer::OnNewConnection : Add connection [ fd#40 ] from 127.0.0.1:59436-/home/dachuo/my_socket/src/HttpServer.cpp:408
+20260317 23:05:38.064209  14782 INFO    /login, request successfully. Method:POST-/home/dachuo/my_socket/src/HttpServer.cpp:433
+20260317 23:05:38.064314  14782 INFO    New login request user=xkx-/home/dachuo/my_socket/test/httpserver.cpp:278
+20260317 23:05:38.074915  14782 INFO    xkx login success!-/home/dachuo/my_socket/test/httpserver.cpp:281
+20260317 23:05:38.546199  14782 INFO    /favicon.ico, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:433
+20260317 23:05:40.035076  14775 INFO    HttpServer::OnNewConnection : Add connection [ fd#41 ] from 127.0.0.1:59440-/home/dachuo/my_socket/src/HttpServer.cpp:408
+20260317 23:05:40.036594  14783 INFO    /open/117168586377184961.png, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:433
+20260317 23:05:40.046983  14783 INFO    Open file 117168586377184961.png success!-/home/dachuo/my_socket/test/httpserver.cpp:186
+20260317 23:05:40.185360  14783 INFO    /favicon.ico, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:433
+20260317 23:05:41.425804  14781 ERROR   Channel::RemoveInEpoll called when channel not in epoll errno=11 msg=Resource temporarily unavailable-/home/dachuo/my_socket/src/Error.cpp:11
+20260317 23:05:42.199651  14775 INFO    HttpServer::OnNewConnection : Add connection [ fd#42 ] from 127.0.0.1:59442-/home/dachuo/my_socket/src/HttpServer.cpp:408
+20260317 23:05:44.702336  14784 INFO    /login, request successfully. Method:POST-/home/dachuo/my_socket/src/HttpServer.cpp:433
+20260317 23:05:44.702479  14784 INFO    New login request user=xkx-/home/dachuo/my_socket/test/httpserver.cpp:278
+20260317 23:05:44.710806  14784 INFO    xkx login success!-/home/dachuo/my_socket/test/httpserver.cpp:281
+20260317 23:05:45.013062  14784 INFO    /favicon.ico, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:433
+20260317 23:05:49.546800  14782 ERROR   Channel::RemoveInEpoll called when channel not in epoll errno=11 msg=Resource temporarily unavailable-/home/dachuo/my_socket/src/Error.cpp:11
+20260317 23:05:51.186623  14783 ERROR   Channel::RemoveInEpoll called when channel not in epoll errno=11 msg=Resource temporarily unavailable-/home/dachuo/my_socket/src/Error.cpp:11
+20260317 23:05:56.014345  14784 ERROR   Channel::RemoveInEpoll called when channel not in epoll errno=11 msg=Resource temporarily unavailable-/home/dachuo/my_socket/src/Error.cpp:11

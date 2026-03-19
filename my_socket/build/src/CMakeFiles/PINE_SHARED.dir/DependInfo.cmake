@@ -33,6 +33,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/dachuo/my_socket/src/TimeQueue.cpp" "/home/dachuo/my_socket/build/src/CMakeFiles/PINE_SHARED.dir/TimeQueue.cpp.o"
   "/home/dachuo/my_socket/src/TimeStamp.cpp" "/home/dachuo/my_socket/build/src/CMakeFiles/PINE_SHARED.dir/TimeStamp.cpp.o"
   "/home/dachuo/my_socket/src/Timer.cpp" "/home/dachuo/my_socket/build/src/CMakeFiles/PINE_SHARED.dir/Timer.cpp.o"
+  "/home/dachuo/my_socket/src/UserRepository.cpp" "/home/dachuo/my_socket/build/src/CMakeFiles/PINE_SHARED.dir/UserRepository.cpp.o"
   "/home/dachuo/my_socket/build/src/rpc.pb.cc" "/home/dachuo/my_socket/build/src/CMakeFiles/PINE_SHARED.dir/rpc.pb.cc.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")

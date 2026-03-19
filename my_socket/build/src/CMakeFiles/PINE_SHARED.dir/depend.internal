@@ -42,7 +42,6 @@ src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o
  ../src/include/LogStream.h
  ../src/include/Logger.h
  ../src/include/Macro.h
- ../src/include/Metrics.h
  ../src/include/Socket.h
  ../src/include/TimeStamp.h
  /home/dachuo/my_socket/src/Connection.cpp
@@ -102,7 +101,6 @@ src/CMakeFiles/PINE_SHARED.dir/HttpServer.cpp.o
  ../src/include/LogStream.h
  ../src/include/Logger.h
  ../src/include/Macro.h
- ../src/include/Metrics.h
  ../src/include/RpcEchoSerializers.h
  ../src/include/RpcEchoTypes.h
  ../src/include/RpcJsonSerializer.h
@@ -172,7 +170,6 @@ src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o
  ../src/include/LogStream.h
  ../src/include/Logger.h
  ../src/include/Macro.h
- ../src/include/Metrics.h
  ../src/include/Server.h
  ../src/include/TimeStamp.h
  /home/dachuo/my_socket/src/Server.cpp
@@ -206,6 +203,9 @@ src/CMakeFiles/PINE_SHARED.dir/Timer.cpp.o
  ../src/include/TimeStamp.h
  ../src/include/Timer.h
  /home/dachuo/my_socket/src/Timer.cpp
+src/CMakeFiles/PINE_SHARED.dir/UserRepository.cpp.o
+ ../src/include/UserRepository.h
+ /home/dachuo/my_socket/src/UserRepository.cpp
 src/CMakeFiles/PINE_SHARED.dir/rpc.pb.cc.o
  /home/dachuo/my_socket/build/src/rpc.pb.cc
  /home/dachuo/my_socket/build/src/rpc.pb.h

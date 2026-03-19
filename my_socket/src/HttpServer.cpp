@@ -14,7 +14,7 @@
 #include "HttpResponse.h"
 #include "Logger.h"
 #include "Macro.h"
-#include "Metrics.h"
+// #include "Metrics.h"
 #include "RpcEchoSerializers.h"
 #include "RpcEchoTypes.h"
 #include "RpcJsonSerializer.h"
@@ -420,10 +420,10 @@ void HttpServer::OnHttpRequest(const std::shared_ptr<Connection> &conn) {
     return;
   }
   HttpContext *context = conn->GetContext();
-  Metrics::OnRequest();
+  // Metrics::OnRequest();
 
   if (!context->ParaseRequest(conn->RetriveInputBuffer().c_str(), size)) {
-    Metrics::OnParseError();
+    // Metrics::OnParseError();
     conn->Send("HTTP/1.1 400 Bad Request\r\n\r\n");
     conn->SetState(Connection::State::Closed);
     if (conn->IsInEpoll()) {

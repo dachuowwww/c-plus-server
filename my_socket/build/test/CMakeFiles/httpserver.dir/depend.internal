@@ -11,6 +11,6 @@ test/CMakeFiles/httpserver.dir/httpserver.cpp.o
  ../src/include/LogStream.h
  ../src/include/Logger.h
  ../src/include/Macro.h
- ../src/include/Metrics.h
  ../src/include/TimeStamp.h
+ ../src/include/UserRepository.h
  /home/dachuo/my_socket/test/httpserver.cpp

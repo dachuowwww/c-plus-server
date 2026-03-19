@@ -3,6 +3,8 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <cstdlib>
+#include <exception>
 #include <fstream>
 #include <functional>
 #include <iostream>
@@ -15,8 +17,52 @@
 #include "HttpRequest.h"
 #include "HttpResponse.h"
 #include "Logger.h"
-#include "Metrics.h"
+// #include "Metrics.h"
 #include "TimeStamp.h"
+#include "UserRepository.h"
+
+// std::string GetEnvOrDefault(const char *name, const char *default_value) { // 合法检查
+//   const char *value = std::getenv(name);
+//   if (value == nullptr || value[0] == '\0') {
+//     return default_value;
+//   }
+//   return value;
+// }
+
+// int GetEnvPortOrDefault(const char *name, int default_port) {
+//   const char *value = std::getenv(name);
+//   if (value == nullptr || value[0] == '\0') {
+//     return default_port;
+//   }
+
+//   char *end = nullptr;
+//   long parsed = std::strtol(value, &end, 10);
+//   if (end == value || *end != '\0' || parsed <= 0 || parsed > 65535) {
+//     return default_port;
+//   }
+//   return static_cast<int>(parsed);
+// }
+
+const UserRepository &GetUserRepository() {
+  static const UserRepository repository("127.0.0.1", 3306, "netdisk_app", "123456", "netdisk");
+  return repository;
+}
+
+bool ParseFormField(const std::string &body, const std::string &key, std::string *value) {
+  const std::string field = key + "=";
+  const size_t begin = body.find(field);
+  if (begin == std::string::npos) {
+    return false;
+  }
+
+  const size_t value_begin = begin + field.size();
+  size_t value_end = body.find('&', value_begin);
+  if (value_end == std::string::npos) {
+    value_end = body.size();
+  }
+  *value = body.substr(value_begin, value_end - value_begin);
+  return true;
+}
 
 void Relocation(HttpResponse *response, const char *location = "/") {
   response->SetContentType("text/html; charset=UTF-8");
@@ -221,22 +267,25 @@ void Http(const HttpRequest &request, HttpResponse *response) {
     // } else
     if (request.GetURL() == "/login") {
       const std::string &body = request.GetBody();
-      int user_pos = body.find("username=");
-      int pass_pos = body.find("password=");
+      std::string username;
+      std::string password;
+      if (!ParseFormField(body, "username", &username) || !ParseFormField(body, "password", &password)) {
+        LOG_WARN << "Login request body parse failed";
+        Relocation(response);
+        return;
+      }
 
-      user_pos += 9;
-      pass_pos += 9;
-
-      int and_pos = body.find('&', user_pos);
-      int end_pos = body.length();
-      std::string username = body.substr(user_pos, and_pos - user_pos);
-      std::string password = body.substr(pass_pos, end_pos - pass_pos);
-      LOG_INFO << "New message from POST client " << username << " : " << password;
-      if (username == "xkx" && password == "pig") {
-        LOG_INFO << username << " login success! ";
-        OpenFileSystem(response);
-      } else {
-        LOG_INFO << username << " login failed! ";
+      LOG_INFO << "New login request user=" << username;
+      try {
+        if (GetUserRepository().VerifyPlainPassword(username, password)) {
+          LOG_INFO << username << " login success!";
+          OpenFileSystem(response);
+        } else {
+          LOG_INFO << username << " login failed!";
+          Relocation(response);
+        }
+      } catch (const std::exception &e) {
+        LOG_ERROR << "MySQL login verify failed, user=" << username << ", error=" << e.what();
         Relocation(response);
       }
     } else if (request.GetURL() == "/upload") {  // 上传成功才会到这里
@@ -254,7 +303,7 @@ void Http(const HttpRequest &request, HttpResponse *response) {
 }
 
 void Every() { std::cout << TimeStamp::Now().ToFormattedString() << std::endl; }
-void LogMetrics() { Metrics::LogSnapshot(); }
+// void LogMetrics() { Metrics::LogSnapshot(); }
 std::unique_ptr<AsyncLogging> async_log;
 void AsyncOutput(const char *msg, int len) { async_log->Append(msg, len); }
 void AsyncFlush() { async_log->Flush(); }
@@ -275,7 +324,7 @@ int main(int argc, char *argv[]) {
   } else {
     httpserver->SetHttpResponseCallBack(Http);
   }
-  httpserver->OnTimerEvery(1.0, LogMetrics);
+  // httpserver->OnTimerEvery(1.0, LogMetrics);
 
   httpserver->Start();
   return 0;

@@ -9,7 +9,7 @@
 #include "EventLoop.h"
 #include "HttpContext.h"
 #include "Logger.h"
-#include "Metrics.h"
+// #include "Metrics.h"
 #include "Socket.h"
 using std::cout;
 using std::endl;
@@ -145,17 +145,17 @@ void Connection::Send(const char *data, int size) {
     if (send_size >= 0) {
       remaining -= send_size;
       if (send_size > 0) {
-        Metrics::AddWriteBytes(static_cast<uint64_t>(send_size));
+        // Metrics::AddWriteBytes(static_cast<uint64_t>(send_size));
         UpdateTimeStamp();  // 写更新时间戳
       }
     } else if (send_size == -1 && ((errno == EAGAIN) || (errno == EWOULDBLOCK))) {
       cout << "buffer full, wait for writing" << endl;
-      Metrics::OnWriteEagain();
+      // Metrics::OnWriteEagain();
       send_size = 0;
     } else {
       cout << "other write error" << endl;
       LOG_ERROR << "TcpConnection::Send - TcpConnection Send ERROR";
-      Metrics::OnWriteError();
+      // Metrics::OnWriteError();
       SetState(State::Closed);
       RemoveConnection();  // 仅一次
       return;
@@ -185,16 +185,16 @@ void Connection::SendFile(int fd, int size) {
   if (bytes_write >= 0) {
     if (bytes_write > 0) {
       sendfile_remaining_ -= bytes_write;
-      Metrics::AddSendfileBytes(static_cast<uint64_t>(bytes_write));
+      // Metrics::AddSendfileBytes(static_cast<uint64_t>(bytes_write));
       UpdateTimeStamp();  // 写更新时间戳
     }
   } else if (bytes_write == -1 && ((errno == EAGAIN) || (errno == EWOULDBLOCK))) {
     cout << "buffer full, wait for writing" << endl;
-    Metrics::OnSendfileEagain();
+    // Metrics::OnSendfileEagain();
   } else {
     cout << "other write error" << endl;
     LOG_ERROR << "TcpConnection::Send - TcpConnection Send ERROR";
-    Metrics::OnSendfileError();
+    // Metrics::OnSendfileError();
     SetState(State::Closed);
     RemoveConnection();
     return;
@@ -267,7 +267,7 @@ void Connection::ReadNonBlocking() {
     ssize_t bytes_read = read(conn_socket_->GetFd(), buf, sizeof(buf));
     if (bytes_read > 0) {
       input_buffer_->Append(buf, bytes_read);
-      Metrics::AddReadBytes(static_cast<uint64_t>(bytes_read));
+      // Metrics::AddReadBytes(static_cast<uint64_t>(bytes_read));
       UpdateTimeStamp();
       continue;
     }
@@ -278,7 +278,7 @@ void Connection::ReadNonBlocking() {
     if (bytes_read == -1 &&
         ((errno == EAGAIN) || (errno == EWOULDBLOCK))) {  // 非阻塞IO，这个条件表示数据全部读取完毕；读到 EAGAIN
                                                           // 时立即返回，再由事件机制在下一次有新数据到来时重新触发。
-      Metrics::OnReadEagain();
+      // Metrics::OnReadEagain();
       // cout << "finish reading once, errno: " << errno << endl;
       break;
     }
@@ -289,7 +289,7 @@ void Connection::ReadNonBlocking() {
       break;
     }
     LOG_ERROR << "other read error";
-    Metrics::OnReadError();
+    // Metrics::OnReadError();
     SetState(State::Closed);
     RemoveConnection();
     break;
@@ -303,7 +303,7 @@ void Connection::ReadBlocking() {
   int had_read = read(conn_socket_->GetFd(), buf, sizeof(buf));
   if (had_read > 0) {
     input_buffer_->Append(buf, had_read);
-    Metrics::AddReadBytes(static_cast<uint64_t>(had_read));
+    // Metrics::AddReadBytes(static_cast<uint64_t>(had_read));
     UpdateTimeStamp();
     // input_buffer_->Append("\0");
   } else if (had_read == 0) {  // EOF，对方断开连接
@@ -314,7 +314,7 @@ void Connection::ReadBlocking() {
     }
   } else {
     LOG_ERROR << "blocking read error";
-    Metrics::OnReadError();
+    // Metrics::OnReadError();
     SetState(State::Closed);
     if (remove_) {
       RemoveConnection();
@@ -332,15 +332,15 @@ void Connection::WriteNonBlocking() {  // 无需循环，一次写入
   bytes_written = write(fd, output_buffer_->Peek(), bytes_to_write);
   if (bytes_written > 0) {
     output_buffer_->Retreive(static_cast<int>(bytes_written));
-    Metrics::AddWriteBytes(static_cast<uint64_t>(bytes_written));
+    // Metrics::AddWriteBytes(static_cast<uint64_t>(bytes_written));
     UpdateTimeStamp();
   } else if (bytes_written == -1 &&
              ((errno == EAGAIN) || (errno == EWOULDBLOCK))) {  // 非阻塞IO，这个条件表示缓冲区已满，需要等待
     cout << "buffer full, wait for writing" << endl;
-    Metrics::OnWriteEagain();
+    // Metrics::OnWriteEagain();
   } else {
     LOG_ERROR << "other write error";
-    Metrics::OnWriteError();
+    // Metrics::OnWriteError();
     SetState(State::Closed);
     RemoveConnection();
   }
@@ -355,7 +355,7 @@ void Connection::WriteBlocking() {
       // std::cout << "write " << n << " bytes , content: " << output_buffer_->GetData() << std::endl;
       bytes_to_write -= had_write;
       output_buffer_->Retreive(static_cast<int>(had_write));
-      Metrics::AddWriteBytes(static_cast<uint64_t>(had_write));
+      // Metrics::AddWriteBytes(static_cast<uint64_t>(had_write));
       UpdateTimeStamp();
       if (bytes_to_write == 0) {
         break;
@@ -365,7 +365,7 @@ void Connection::WriteBlocking() {
       continue;
     } else {
       LOG_ERROR << "other write error";
-      Metrics::OnWriteError();
+      // Metrics::OnWriteError();
       SetState(State::Closed);
       if (remove_) {
         RemoveConnection();
@@ -433,14 +433,14 @@ void Connection::SendFileInLoop() {
     int bytes_write = sendfile(GetFd(), sendfile_fd_, &sendfile_offset_, sendfile_remaining_);  // off已经改变偏移量
     if (bytes_write > 0) {
       sendfile_remaining_ -= bytes_write;
-      Metrics::AddSendfileBytes(static_cast<uint64_t>(bytes_write));
+      // Metrics::AddSendfileBytes(static_cast<uint64_t>(bytes_write));
       UpdateTimeStamp();
     } else if (bytes_write == -1 && (errno == EINTR || errno == EAGAIN || errno == EWOULDBLOCK)) {
-      Metrics::OnSendfileEagain();
+      // Metrics::OnSendfileEagain();
       conn_channel_->EnableWriting();
     }
     LOG_ERROR << "Connection::SendFile - sendfile error, errno=" << errno;
-    Metrics::OnSendfileError();
+    // Metrics::OnSendfileError();
     if (sendfile_fd_ != -1) {
       ::close(sendfile_fd_);
       sendfile_fd_ = -1;

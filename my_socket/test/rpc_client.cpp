@@ -8,9 +8,9 @@
 #include <exception>
 #include <future>
 #include <iostream>
+#include <nlohmann/json.hpp>
 #include <string>
 #include <thread>
-#include <nlohmann/json.hpp>
 #include "RpcProto.h"
 #include "Socket.h"
 #include "rpc.pb.h"
@@ -58,7 +58,8 @@ bool BuildEchoPayload(const std::string &serializer, const std::string &msg, std
   return false;
 }
 
-RpcCallResult SendOneRpc(const std::string &ip, int port, int req_id, const std::string &msg, const std::string &serializer) { // 协程函数实际等待操作
+RpcCallResult SendOneRpc(const std::string &ip, int port, int req_id, const std::string &msg,
+                         const std::string &serializer) {  // 协程函数实际等待操作
   RpcCallResult result;
   result.req_id = req_id;
 
@@ -152,8 +153,8 @@ RpcCallResult SendOneRpc(const std::string &ip, int port, int req_id, const std:
 }
 
 template <typename T>
-struct FutureAwaiter { // 协程等待体
-  std::shared_future<T> future; // 用列表初始化传入worker
+struct FutureAwaiter {           // 协程等待体
+  std::shared_future<T> future;  // 用列表初始化传入worker
 
   [[nodiscard]] bool await_ready() const {
     return future.wait_for(std::chrono::seconds(0)) == std::future_status::ready;
@@ -170,16 +171,18 @@ struct FutureAwaiter { // 协程等待体
 };
 
 template <typename T>
-class CoroutineTask { // 协程体
+class CoroutineTask {  // 协程体
  public:
   struct promise_type {
     std::promise<T> promise;
 
     CoroutineTask get_return_object() { return CoroutineTask(promise.get_future()); }
-    std::suspend_never initial_suspend() noexcept { return {}; } // 直接开始协程函数体
-    std::suspend_never final_suspend() noexcept { return {}; }  // 自动结束
-    void return_value(T value) { promise.set_value(std::move(value)); } // 协程函数体通过co_return返回结果
-    void unhandled_exception() { promise.set_exception(std::current_exception()); } // 把异常塞进 promise，对应的 future 在 .get() 时会重新抛出。
+    std::suspend_never initial_suspend() noexcept { return {}; }         // 直接开始协程函数体
+    std::suspend_never final_suspend() noexcept { return {}; }           // 自动结束
+    void return_value(T value) { promise.set_value(std::move(value)); }  // 协程函数体通过co_return返回结果
+    void unhandled_exception() {
+      promise.set_exception(std::current_exception());
+    }  // 把异常塞进 promise，对应的 future 在 .get() 时会重新抛出。
   };
 
   explicit CoroutineTask(std::future<T> &&future) : future_(std::move(future)) {}
@@ -192,12 +195,13 @@ class CoroutineTask { // 协程体
   std::future<T> future_;
 };
 
-CoroutineTask<RpcCallResult> SendOneRpcByCoroutine(const std::string &ip, int port, int req_id, const std::string &msg, // 协程函数
+CoroutineTask<RpcCallResult> SendOneRpcByCoroutine(const std::string &ip, int port, int req_id,
+                                                   const std::string &msg,  // 协程函数
                                                    const std::string &serializer) {
-  std::shared_future<RpcCallResult> worker = 
-      std::async(std::launch::async, // 单开线程 返回future，协程等待这个future完成
+  std::shared_future<RpcCallResult> worker =
+      std::async(std::launch::async,  // 单开线程 返回future，协程等待这个future完成
                  [ip, port, req_id, msg, serializer]() { return SendOneRpc(ip, port, req_id, msg, serializer); })
-          .share(); // 转成 shared_future 以支持在 FutureAwaiter 中复制和移动
+          .share();  // 转成 shared_future 以支持在 FutureAwaiter 中复制和移动
   RpcCallResult result = co_await FutureAwaiter<RpcCallResult>{worker};
   co_return result;
 }
@@ -279,12 +283,11 @@ int main(int argc, char *argv[]) {
         has_progress = true;
       }
     }
-    if (!has_progress) { // 没结果则等待
+    if (!has_progress) {  // 没结果则等待
       std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }
   }
 
- 
   // std::string msg = "hi";
   // if (argc >= 4) {
   //   msg = argv[3];

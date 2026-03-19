@@ -1,4 +1,27 @@
 find_package(Protobuf REQUIRED)
+find_package(mysql-concpp QUIET)
+
+if(NOT TARGET mysql::concpp)
+    find_path(MYSQLCPPCONN_INCLUDE_DIR
+        NAMES mysql_driver.h
+        PATH_SUFFIXES mysql-cppconn jdbc
+    )
+    find_library(MYSQLCPPCONN_LIBRARY NAMES mysqlcppconn)
+
+    if(NOT MYSQLCPPCONN_INCLUDE_DIR OR NOT MYSQLCPPCONN_LIBRARY)
+        message(FATAL_ERROR
+            "MySQL Connector/C++ not found. Install mysql-concpp (preferred) or libmysqlcppconn-dev, "
+            "or set mysql-concpp_DIR / CMAKE_PREFIX_PATH."
+        )
+    endif()
+
+    add_library(mysql::concpp UNKNOWN IMPORTED) # 外部库
+    set_target_properties(mysql::concpp PROPERTIES
+        IMPORTED_LOCATION "${MYSQLCPPCONN_LIBRARY}" # 库文件路径
+        INTERFACE_INCLUDE_DIRECTORIES "${MYSQLCPPCONN_INCLUDE_DIR}" # 头文件目录,PINE_SHARED获得头文件搜索路径
+    )
+endif()
+
 protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS ${PROJECT_SOURCE_DIR}/proto/rpc.proto) # 生成可执行文件
 set_source_files_properties(${PROTO_SRCS} PROPERTIES SKIP_CLANG_TIDY ON)
 file(GLOB_RECURSE PINE_SOURCES ${PROJECT_SOURCE_DIR}/src/*.cpp)
@@ -14,4 +37,9 @@ ${PINE_SRC_INCLUDE_DIR}
 )
 
 target_include_directories(PINE_SHARED PUBLIC ${Protobuf_INCLUDE_DIRS})
-target_link_libraries(PINE_SHARED PUBLIC ${Protobuf_LIBRARIES})
+target_link_libraries(PINE_SHARED
+PUBLIC
+${Protobuf_LIBRARIES}
+PRIVATE
+mysql::concpp
+)

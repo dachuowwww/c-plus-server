@@ -908,6 +908,33 @@ Timer.cpp.s:
 	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/Timer.cpp.s
 .PHONY : Timer.cpp.s
 
+UserRepository.o: UserRepository.cpp.o
+
+.PHONY : UserRepository.o
+
+# target to build an object file
+UserRepository.cpp.o:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/UserRepository.cpp.o
+.PHONY : UserRepository.cpp.o
+
+UserRepository.i: UserRepository.cpp.i
+
+.PHONY : UserRepository.i
+
+# target to preprocess a source file
+UserRepository.cpp.i:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/UserRepository.cpp.i
+.PHONY : UserRepository.cpp.i
+
+UserRepository.s: UserRepository.cpp.s
+
+.PHONY : UserRepository.s
+
+# target to generate assembly for a file
+UserRepository.cpp.s:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/UserRepository.cpp.s
+.PHONY : UserRepository.cpp.s
+
 rpc.pb.o: rpc.pb.cc.o
 
 .PHONY : rpc.pb.o
@@ -1031,6 +1058,9 @@ help:
 	@echo "... Timer.o"
 	@echo "... Timer.i"
 	@echo "... Timer.s"
+	@echo "... UserRepository.o"
+	@echo "... UserRepository.i"
+	@echo "... UserRepository.s"
 	@echo "... rpc.pb.o"
 	@echo "... rpc.pb.i"
 	@echo "... rpc.pb.s"
