@@ -141,11 +141,21 @@ src/CMakeFiles/PINE_SHARED.dir/Metrics.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/Metrics.cpp.o: ../src/include/Metrics.h
 src/CMakeFiles/PINE_SHARED.dir/Metrics.cpp.o: ../src/Metrics.cpp
 
+src/CMakeFiles/PINE_SHARED.dir/PageCacheService.cpp.o: ../src/include/Macro.h
+src/CMakeFiles/PINE_SHARED.dir/PageCacheService.cpp.o: ../src/include/PageCacheService.h
+src/CMakeFiles/PINE_SHARED.dir/PageCacheService.cpp.o: ../src/include/RedisClient.h
+src/CMakeFiles/PINE_SHARED.dir/PageCacheService.cpp.o: ../src/include/WarmupWorker.h
+src/CMakeFiles/PINE_SHARED.dir/PageCacheService.cpp.o: ../src/PageCacheService.cpp
+
 src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.o: ../src/include/Channel.h
 src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.o: ../src/include/Error.h
 src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.o: ../src/include/Poller.h
 src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.o: ../src/Poller.cpp
+
+src/CMakeFiles/PINE_SHARED.dir/RedisClient.cpp.o: ../src/include/Macro.h
+src/CMakeFiles/PINE_SHARED.dir/RedisClient.cpp.o: ../src/include/RedisClient.h
+src/CMakeFiles/PINE_SHARED.dir/RedisClient.cpp.o: ../src/RedisClient.cpp
 
 src/CMakeFiles/PINE_SHARED.dir/RpcEchoSerializers.cpp.o: ../src/include/RpcEchoSerializers.h
 src/CMakeFiles/PINE_SHARED.dir/RpcEchoSerializers.cpp.o: ../src/include/RpcEchoTypes.h
@@ -203,8 +213,14 @@ src/CMakeFiles/PINE_SHARED.dir/Timer.cpp.o: ../src/include/TimeStamp.h
 src/CMakeFiles/PINE_SHARED.dir/Timer.cpp.o: ../src/include/Timer.h
 src/CMakeFiles/PINE_SHARED.dir/Timer.cpp.o: ../src/Timer.cpp
 
+src/CMakeFiles/PINE_SHARED.dir/UserRepository.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/UserRepository.cpp.o: ../src/include/UserRepository.h
 src/CMakeFiles/PINE_SHARED.dir/UserRepository.cpp.o: ../src/UserRepository.cpp
+
+src/CMakeFiles/PINE_SHARED.dir/WarmupWorker.cpp.o: ../src/include/Macro.h
+src/CMakeFiles/PINE_SHARED.dir/WarmupWorker.cpp.o: ../src/include/RedisClient.h
+src/CMakeFiles/PINE_SHARED.dir/WarmupWorker.cpp.o: ../src/include/WarmupWorker.h
+src/CMakeFiles/PINE_SHARED.dir/WarmupWorker.cpp.o: ../src/WarmupWorker.cpp
 
 src/CMakeFiles/PINE_SHARED.dir/rpc.pb.cc.o: src/rpc.pb.cc
 src/CMakeFiles/PINE_SHARED.dir/rpc.pb.cc.o: src/rpc.pb.h

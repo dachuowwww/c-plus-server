@@ -141,12 +141,22 @@ src/CMakeFiles/PINE_SHARED.dir/Metrics.cpp.o
  ../src/include/Macro.h
  ../src/include/Metrics.h
  /home/dachuo/my_socket/src/Metrics.cpp
+src/CMakeFiles/PINE_SHARED.dir/PageCacheService.cpp.o
+ ../src/include/Macro.h
+ ../src/include/PageCacheService.h
+ ../src/include/RedisClient.h
+ ../src/include/WarmupWorker.h
+ /home/dachuo/my_socket/src/PageCacheService.cpp
 src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.o
  ../src/include/Channel.h
  ../src/include/Error.h
  ../src/include/Macro.h
  ../src/include/Poller.h
  /home/dachuo/my_socket/src/Poller.cpp
+src/CMakeFiles/PINE_SHARED.dir/RedisClient.cpp.o
+ ../src/include/Macro.h
+ ../src/include/RedisClient.h
+ /home/dachuo/my_socket/src/RedisClient.cpp
 src/CMakeFiles/PINE_SHARED.dir/RpcEchoSerializers.cpp.o
  ../src/include/RpcEchoSerializers.h
  ../src/include/RpcEchoTypes.h
@@ -204,8 +214,14 @@ src/CMakeFiles/PINE_SHARED.dir/Timer.cpp.o
  ../src/include/Timer.h
  /home/dachuo/my_socket/src/Timer.cpp
 src/CMakeFiles/PINE_SHARED.dir/UserRepository.cpp.o
+ ../src/include/Macro.h
  ../src/include/UserRepository.h
  /home/dachuo/my_socket/src/UserRepository.cpp
+src/CMakeFiles/PINE_SHARED.dir/WarmupWorker.cpp.o
+ ../src/include/Macro.h
+ ../src/include/RedisClient.h
+ ../src/include/WarmupWorker.h
+ /home/dachuo/my_socket/src/WarmupWorker.cpp
 src/CMakeFiles/PINE_SHARED.dir/rpc.pb.cc.o
  /home/dachuo/my_socket/build/src/rpc.pb.cc
  /home/dachuo/my_socket/build/src/rpc.pb.h

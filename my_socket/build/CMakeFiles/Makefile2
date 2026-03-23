@@ -107,10 +107,7 @@ test/preinstall:
 
 # Recursive "clean" directory target.
 test/clean: test/CMakeFiles/rpc_client.dir/clean
-test/clean: test/CMakeFiles/multiple_client.dir/clean
 test/clean: test/CMakeFiles/httpserver.dir/clean
-test/clean: test/CMakeFiles/http_context.dir/clean
-test/clean: test/CMakeFiles/client.dir/clean
 test/clean: test/CMakeFiles/check-tests.dir/clean
 test/clean: test/CMakeFiles/build-tests.dir/clean
 
@@ -123,7 +120,7 @@ test/clean: test/CMakeFiles/build-tests.dir/clean
 CMakeFiles/clang-tidy.dir/all:
 	$(MAKE) -f CMakeFiles/clang-tidy.dir/build.make CMakeFiles/clang-tidy.dir/depend
 	$(MAKE) -f CMakeFiles/clang-tidy.dir/build.make CMakeFiles/clang-tidy.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num=35 "Built target clang-tidy"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num=38 "Built target clang-tidy"
 .PHONY : CMakeFiles/clang-tidy.dir/all
 
 # Build rule for subdir invocation for target.
@@ -177,7 +174,7 @@ CMakeFiles/cpplint.dir/clean:
 CMakeFiles/check-format.dir/all:
 	$(MAKE) -f CMakeFiles/check-format.dir/build.make CMakeFiles/check-format.dir/depend
 	$(MAKE) -f CMakeFiles/check-format.dir/build.make CMakeFiles/check-format.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num=34 "Built target check-format"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num=37 "Built target check-format"
 .PHONY : CMakeFiles/check-format.dir/all
 
 # Build rule for subdir invocation for target.
@@ -204,7 +201,7 @@ CMakeFiles/check-format.dir/clean:
 CMakeFiles/format.dir/all:
 	$(MAKE) -f CMakeFiles/format.dir/build.make CMakeFiles/format.dir/depend
 	$(MAKE) -f CMakeFiles/format.dir/build.make CMakeFiles/format.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num=38 "Built target format"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num=39 "Built target format"
 .PHONY : CMakeFiles/format.dir/all
 
 # Build rule for subdir invocation for target.
@@ -231,12 +228,12 @@ CMakeFiles/format.dir/clean:
 src/CMakeFiles/PINE_SHARED.dir/all:
 	$(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/depend
 	$(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33 "Built target PINE_SHARED"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36 "Built target PINE_SHARED"
 .PHONY : src/CMakeFiles/PINE_SHARED.dir/all
 
 # Build rule for subdir invocation for target.
 src/CMakeFiles/PINE_SHARED.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/dachuo/my_socket/build/CMakeFiles 33
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/dachuo/my_socket/build/CMakeFiles 36
 	$(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/PINE_SHARED.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/dachuo/my_socket/build/CMakeFiles 0
 .PHONY : src/CMakeFiles/PINE_SHARED.dir/rule
@@ -258,12 +255,12 @@ src/CMakeFiles/PINE_SHARED.dir/clean:
 test/CMakeFiles/rpc_client.dir/all: src/CMakeFiles/PINE_SHARED.dir/all
 	$(MAKE) -f test/CMakeFiles/rpc_client.dir/build.make test/CMakeFiles/rpc_client.dir/depend
 	$(MAKE) -f test/CMakeFiles/rpc_client.dir/build.make test/CMakeFiles/rpc_client.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num=45,46 "Built target rpc_client"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num=42,43 "Built target rpc_client"
 .PHONY : test/CMakeFiles/rpc_client.dir/all
 
 # Build rule for subdir invocation for target.
 test/CMakeFiles/rpc_client.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/dachuo/my_socket/build/CMakeFiles 35
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/dachuo/my_socket/build/CMakeFiles 38
 	$(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/rpc_client.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/dachuo/my_socket/build/CMakeFiles 0
 .PHONY : test/CMakeFiles/rpc_client.dir/rule
@@ -279,45 +276,18 @@ test/CMakeFiles/rpc_client.dir/clean:
 .PHONY : test/CMakeFiles/rpc_client.dir/clean
 
 #=============================================================================
-# Target rules for target test/CMakeFiles/multiple_client.dir
-
-# All Build rule for target.
-test/CMakeFiles/multiple_client.dir/all: src/CMakeFiles/PINE_SHARED.dir/all
-	$(MAKE) -f test/CMakeFiles/multiple_client.dir/build.make test/CMakeFiles/multiple_client.dir/depend
-	$(MAKE) -f test/CMakeFiles/multiple_client.dir/build.make test/CMakeFiles/multiple_client.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num=43,44 "Built target multiple_client"
-.PHONY : test/CMakeFiles/multiple_client.dir/all
-
-# Build rule for subdir invocation for target.
-test/CMakeFiles/multiple_client.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/dachuo/my_socket/build/CMakeFiles 35
-	$(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/multiple_client.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/dachuo/my_socket/build/CMakeFiles 0
-.PHONY : test/CMakeFiles/multiple_client.dir/rule
-
-# Convenience name for target.
-multiple_client: test/CMakeFiles/multiple_client.dir/rule
-
-.PHONY : multiple_client
-
-# clean rule for target.
-test/CMakeFiles/multiple_client.dir/clean:
-	$(MAKE) -f test/CMakeFiles/multiple_client.dir/build.make test/CMakeFiles/multiple_client.dir/clean
-.PHONY : test/CMakeFiles/multiple_client.dir/clean
-
-#=============================================================================
 # Target rules for target test/CMakeFiles/httpserver.dir
 
 # All Build rule for target.
 test/CMakeFiles/httpserver.dir/all: src/CMakeFiles/PINE_SHARED.dir/all
 	$(MAKE) -f test/CMakeFiles/httpserver.dir/build.make test/CMakeFiles/httpserver.dir/depend
 	$(MAKE) -f test/CMakeFiles/httpserver.dir/build.make test/CMakeFiles/httpserver.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num=41,42 "Built target httpserver"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num=40,41 "Built target httpserver"
 .PHONY : test/CMakeFiles/httpserver.dir/all
 
 # Build rule for subdir invocation for target.
 test/CMakeFiles/httpserver.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/dachuo/my_socket/build/CMakeFiles 35
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/dachuo/my_socket/build/CMakeFiles 38
 	$(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/httpserver.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/dachuo/my_socket/build/CMakeFiles 0
 .PHONY : test/CMakeFiles/httpserver.dir/rule
@@ -333,68 +303,11 @@ test/CMakeFiles/httpserver.dir/clean:
 .PHONY : test/CMakeFiles/httpserver.dir/clean
 
 #=============================================================================
-# Target rules for target test/CMakeFiles/http_context.dir
-
-# All Build rule for target.
-test/CMakeFiles/http_context.dir/all: src/CMakeFiles/PINE_SHARED.dir/all
-	$(MAKE) -f test/CMakeFiles/http_context.dir/build.make test/CMakeFiles/http_context.dir/depend
-	$(MAKE) -f test/CMakeFiles/http_context.dir/build.make test/CMakeFiles/http_context.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num=39,40 "Built target http_context"
-.PHONY : test/CMakeFiles/http_context.dir/all
-
-# Build rule for subdir invocation for target.
-test/CMakeFiles/http_context.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/dachuo/my_socket/build/CMakeFiles 35
-	$(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/http_context.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/dachuo/my_socket/build/CMakeFiles 0
-.PHONY : test/CMakeFiles/http_context.dir/rule
-
-# Convenience name for target.
-http_context: test/CMakeFiles/http_context.dir/rule
-
-.PHONY : http_context
-
-# clean rule for target.
-test/CMakeFiles/http_context.dir/clean:
-	$(MAKE) -f test/CMakeFiles/http_context.dir/build.make test/CMakeFiles/http_context.dir/clean
-.PHONY : test/CMakeFiles/http_context.dir/clean
-
-#=============================================================================
-# Target rules for target test/CMakeFiles/client.dir
-
-# All Build rule for target.
-test/CMakeFiles/client.dir/all: src/CMakeFiles/PINE_SHARED.dir/all
-	$(MAKE) -f test/CMakeFiles/client.dir/build.make test/CMakeFiles/client.dir/depend
-	$(MAKE) -f test/CMakeFiles/client.dir/build.make test/CMakeFiles/client.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num=36,37 "Built target client"
-.PHONY : test/CMakeFiles/client.dir/all
-
-# Build rule for subdir invocation for target.
-test/CMakeFiles/client.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/dachuo/my_socket/build/CMakeFiles 35
-	$(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/client.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/dachuo/my_socket/build/CMakeFiles 0
-.PHONY : test/CMakeFiles/client.dir/rule
-
-# Convenience name for target.
-client: test/CMakeFiles/client.dir/rule
-
-.PHONY : client
-
-# clean rule for target.
-test/CMakeFiles/client.dir/clean:
-	$(MAKE) -f test/CMakeFiles/client.dir/build.make test/CMakeFiles/client.dir/clean
-.PHONY : test/CMakeFiles/client.dir/clean
-
-#=============================================================================
 # Target rules for target test/CMakeFiles/check-tests.dir
 
 # All Build rule for target.
 test/CMakeFiles/check-tests.dir/all: test/CMakeFiles/rpc_client.dir/all
-test/CMakeFiles/check-tests.dir/all: test/CMakeFiles/multiple_client.dir/all
 test/CMakeFiles/check-tests.dir/all: test/CMakeFiles/httpserver.dir/all
-test/CMakeFiles/check-tests.dir/all: test/CMakeFiles/http_context.dir/all
-test/CMakeFiles/check-tests.dir/all: test/CMakeFiles/client.dir/all
 	$(MAKE) -f test/CMakeFiles/check-tests.dir/build.make test/CMakeFiles/check-tests.dir/depend
 	$(MAKE) -f test/CMakeFiles/check-tests.dir/build.make test/CMakeFiles/check-tests.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num= "Built target check-tests"
@@ -402,7 +315,7 @@ test/CMakeFiles/check-tests.dir/all: test/CMakeFiles/client.dir/all
 
 # Build rule for subdir invocation for target.
 test/CMakeFiles/check-tests.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/dachuo/my_socket/build/CMakeFiles 43
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/dachuo/my_socket/build/CMakeFiles 40
 	$(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/check-tests.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/dachuo/my_socket/build/CMakeFiles 0
 .PHONY : test/CMakeFiles/check-tests.dir/rule
@@ -422,10 +335,7 @@ test/CMakeFiles/check-tests.dir/clean:
 
 # All Build rule for target.
 test/CMakeFiles/build-tests.dir/all: test/CMakeFiles/rpc_client.dir/all
-test/CMakeFiles/build-tests.dir/all: test/CMakeFiles/multiple_client.dir/all
 test/CMakeFiles/build-tests.dir/all: test/CMakeFiles/httpserver.dir/all
-test/CMakeFiles/build-tests.dir/all: test/CMakeFiles/http_context.dir/all
-test/CMakeFiles/build-tests.dir/all: test/CMakeFiles/client.dir/all
 	$(MAKE) -f test/CMakeFiles/build-tests.dir/build.make test/CMakeFiles/build-tests.dir/depend
 	$(MAKE) -f test/CMakeFiles/build-tests.dir/build.make test/CMakeFiles/build-tests.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dachuo/my_socket/build/CMakeFiles --progress-num= "Built target build-tests"
@@ -433,7 +343,7 @@ test/CMakeFiles/build-tests.dir/all: test/CMakeFiles/client.dir/all
 
 # Build rule for subdir invocation for target.
 test/CMakeFiles/build-tests.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/dachuo/my_socket/build/CMakeFiles 43
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/dachuo/my_socket/build/CMakeFiles 40
 	$(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/build-tests.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/dachuo/my_socket/build/CMakeFiles 0
 .PHONY : test/CMakeFiles/build-tests.dir/rule

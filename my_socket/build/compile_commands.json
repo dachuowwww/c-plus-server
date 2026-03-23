@@ -96,8 +96,18 @@
 },
 {
   "directory": "/home/dachuo/my_socket/build/src",
+  "command": "/usr/bin/c++  -DPINE_SHARED_EXPORTS -I/home/dachuo/my_socket/src/include -I/home/dachuo/my_socket/build/src   -fPIC -Wall -Wextra -std=c++20 -pthread -Wno-unused-parameter -Wno-attributes -DOS_LINUX -g -O0 -ggdb -fsanitize=address -fno-omit-frame-pointer -fno-optimize-sibling-calls -fPIC   -std=gnu++2a -o CMakeFiles/PINE_SHARED.dir/PageCacheService.cpp.o -c /home/dachuo/my_socket/src/PageCacheService.cpp",
+  "file": "/home/dachuo/my_socket/src/PageCacheService.cpp"
+},
+{
+  "directory": "/home/dachuo/my_socket/build/src",
   "command": "/usr/bin/c++  -DPINE_SHARED_EXPORTS -I/home/dachuo/my_socket/src/include -I/home/dachuo/my_socket/build/src   -fPIC -Wall -Wextra -std=c++20 -pthread -Wno-unused-parameter -Wno-attributes -DOS_LINUX -g -O0 -ggdb -fsanitize=address -fno-omit-frame-pointer -fno-optimize-sibling-calls -fPIC   -std=gnu++2a -o CMakeFiles/PINE_SHARED.dir/Poller.cpp.o -c /home/dachuo/my_socket/src/Poller.cpp",
   "file": "/home/dachuo/my_socket/src/Poller.cpp"
+},
+{
+  "directory": "/home/dachuo/my_socket/build/src",
+  "command": "/usr/bin/c++  -DPINE_SHARED_EXPORTS -I/home/dachuo/my_socket/src/include -I/home/dachuo/my_socket/build/src   -fPIC -Wall -Wextra -std=c++20 -pthread -Wno-unused-parameter -Wno-attributes -DOS_LINUX -g -O0 -ggdb -fsanitize=address -fno-omit-frame-pointer -fno-optimize-sibling-calls -fPIC   -std=gnu++2a -o CMakeFiles/PINE_SHARED.dir/RedisClient.cpp.o -c /home/dachuo/my_socket/src/RedisClient.cpp",
+  "file": "/home/dachuo/my_socket/src/RedisClient.cpp"
 },
 {
   "directory": "/home/dachuo/my_socket/build/src",
@@ -151,6 +161,11 @@
 },
 {
   "directory": "/home/dachuo/my_socket/build/src",
+  "command": "/usr/bin/c++  -DPINE_SHARED_EXPORTS -I/home/dachuo/my_socket/src/include -I/home/dachuo/my_socket/build/src   -fPIC -Wall -Wextra -std=c++20 -pthread -Wno-unused-parameter -Wno-attributes -DOS_LINUX -g -O0 -ggdb -fsanitize=address -fno-omit-frame-pointer -fno-optimize-sibling-calls -fPIC   -std=gnu++2a -o CMakeFiles/PINE_SHARED.dir/WarmupWorker.cpp.o -c /home/dachuo/my_socket/src/WarmupWorker.cpp",
+  "file": "/home/dachuo/my_socket/src/WarmupWorker.cpp"
+},
+{
+  "directory": "/home/dachuo/my_socket/build/src",
   "command": "/usr/bin/c++  -DPINE_SHARED_EXPORTS -I/home/dachuo/my_socket/src/include -I/home/dachuo/my_socket/build/src   -fPIC -Wall -Wextra -std=c++20 -pthread -Wno-unused-parameter -Wno-attributes -DOS_LINUX -g -O0 -ggdb -fsanitize=address -fno-omit-frame-pointer -fno-optimize-sibling-calls -fPIC   -std=gnu++2a -o CMakeFiles/PINE_SHARED.dir/rpc.pb.cc.o -c /home/dachuo/my_socket/build/src/rpc.pb.cc",
   "file": "/home/dachuo/my_socket/build/src/rpc.pb.cc"
 },
@@ -161,22 +176,7 @@
 },
 {
   "directory": "/home/dachuo/my_socket/build/test",
-  "command": "/usr/bin/c++   -I/home/dachuo/my_socket/src/include -I/home/dachuo/my_socket/build/src   -fPIC -Wall -Wextra -std=c++20 -pthread -Wno-unused-parameter -Wno-attributes -DOS_LINUX -g -O0 -ggdb -fsanitize=address -fno-omit-frame-pointer -fno-optimize-sibling-calls   -std=gnu++2a -o CMakeFiles/multiple_client.dir/multiple_client.cpp.o -c /home/dachuo/my_socket/test/multiple_client.cpp",
-  "file": "/home/dachuo/my_socket/test/multiple_client.cpp"
-},
-{
-  "directory": "/home/dachuo/my_socket/build/test",
   "command": "/usr/bin/c++   -I/home/dachuo/my_socket/src/include -I/home/dachuo/my_socket/build/src   -fPIC -Wall -Wextra -std=c++20 -pthread -Wno-unused-parameter -Wno-attributes -DOS_LINUX -g -O0 -ggdb -fsanitize=address -fno-omit-frame-pointer -fno-optimize-sibling-calls   -std=gnu++2a -o CMakeFiles/httpserver.dir/httpserver.cpp.o -c /home/dachuo/my_socket/test/httpserver.cpp",
   "file": "/home/dachuo/my_socket/test/httpserver.cpp"
-},
-{
-  "directory": "/home/dachuo/my_socket/build/test",
-  "command": "/usr/bin/c++   -I/home/dachuo/my_socket/src/include -I/home/dachuo/my_socket/build/src   -fPIC -Wall -Wextra -std=c++20 -pthread -Wno-unused-parameter -Wno-attributes -DOS_LINUX -g -O0 -ggdb -fsanitize=address -fno-omit-frame-pointer -fno-optimize-sibling-calls   -std=gnu++2a -o CMakeFiles/http_context.dir/http_context.cpp.o -c /home/dachuo/my_socket/test/http_context.cpp",
-  "file": "/home/dachuo/my_socket/test/http_context.cpp"
-},
-{
-  "directory": "/home/dachuo/my_socket/build/test",
-  "command": "/usr/bin/c++   -I/home/dachuo/my_socket/src/include -I/home/dachuo/my_socket/build/src   -fPIC -Wall -Wextra -std=c++20 -pthread -Wno-unused-parameter -Wno-attributes -DOS_LINUX -g -O0 -ggdb -fsanitize=address -fno-omit-frame-pointer -fno-optimize-sibling-calls   -std=gnu++2a -o CMakeFiles/client.dir/client.cpp.o -c /home/dachuo/my_socket/test/client.cpp",
-  "file": "/home/dachuo/my_socket/test/client.cpp"
 }
 ]

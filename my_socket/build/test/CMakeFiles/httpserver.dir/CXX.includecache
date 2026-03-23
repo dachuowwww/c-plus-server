@@ -96,9 +96,31 @@ Macro.h
 
 ../src/include/Macro.h
 
+../src/include/PageCacheService.h
+functional
+-
+string
+-
+RedisClient.h
+../src/include/RedisClient.h
+Macro.h
+../src/include/Macro.h
+
+../src/include/RedisClient.h
+hiredis/hiredis.h
+-
+memory
+-
+string
+-
+vector
+-
+Macro.h
+../src/include/Macro.h
+
 ../src/include/TimeStamp.h
 Macro.h
--
+../src/include/Macro.h
 sys/time.h
 -
 cstdint
@@ -107,8 +129,30 @@ string
 -
 
 ../src/include/UserRepository.h
+Macro.h
+../src/include/Macro.h
 string
 -
+
+../src/include/WarmupWorker.h
+atomic
+-
+functional
+-
+mutex
+-
+string
+-
+thread
+-
+unordered_map
+-
+vector
+-
+RedisClient.h
+../src/include/RedisClient.h
+Macro.h
+../src/include/Macro.h
 
 /home/dachuo/my_socket/test/httpserver.cpp
 HttpServer.h
@@ -149,8 +193,12 @@ HttpResponse.h
 /home/dachuo/my_socket/test/HttpResponse.h
 Logger.h
 /home/dachuo/my_socket/test/Logger.h
+PageCacheService.h
+/home/dachuo/my_socket/test/PageCacheService.h
 TimeStamp.h
 /home/dachuo/my_socket/test/TimeStamp.h
 UserRepository.h
 /home/dachuo/my_socket/test/UserRepository.h
+WarmupWorker.h
+/home/dachuo/my_socket/test/WarmupWorker.h
 

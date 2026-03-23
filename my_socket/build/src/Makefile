@@ -638,6 +638,33 @@ Metrics.cpp.s:
 	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/Metrics.cpp.s
 .PHONY : Metrics.cpp.s
 
+PageCacheService.o: PageCacheService.cpp.o
+
+.PHONY : PageCacheService.o
+
+# target to build an object file
+PageCacheService.cpp.o:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/PageCacheService.cpp.o
+.PHONY : PageCacheService.cpp.o
+
+PageCacheService.i: PageCacheService.cpp.i
+
+.PHONY : PageCacheService.i
+
+# target to preprocess a source file
+PageCacheService.cpp.i:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/PageCacheService.cpp.i
+.PHONY : PageCacheService.cpp.i
+
+PageCacheService.s: PageCacheService.cpp.s
+
+.PHONY : PageCacheService.s
+
+# target to generate assembly for a file
+PageCacheService.cpp.s:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/PageCacheService.cpp.s
+.PHONY : PageCacheService.cpp.s
+
 Poller.o: Poller.cpp.o
 
 .PHONY : Poller.o
@@ -664,6 +691,33 @@ Poller.s: Poller.cpp.s
 Poller.cpp.s:
 	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/Poller.cpp.s
 .PHONY : Poller.cpp.s
+
+RedisClient.o: RedisClient.cpp.o
+
+.PHONY : RedisClient.o
+
+# target to build an object file
+RedisClient.cpp.o:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/RedisClient.cpp.o
+.PHONY : RedisClient.cpp.o
+
+RedisClient.i: RedisClient.cpp.i
+
+.PHONY : RedisClient.i
+
+# target to preprocess a source file
+RedisClient.cpp.i:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/RedisClient.cpp.i
+.PHONY : RedisClient.cpp.i
+
+RedisClient.s: RedisClient.cpp.s
+
+.PHONY : RedisClient.s
+
+# target to generate assembly for a file
+RedisClient.cpp.s:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/RedisClient.cpp.s
+.PHONY : RedisClient.cpp.s
 
 RpcEchoSerializers.o: RpcEchoSerializers.cpp.o
 
@@ -935,6 +989,33 @@ UserRepository.cpp.s:
 	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/UserRepository.cpp.s
 .PHONY : UserRepository.cpp.s
 
+WarmupWorker.o: WarmupWorker.cpp.o
+
+.PHONY : WarmupWorker.o
+
+# target to build an object file
+WarmupWorker.cpp.o:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/WarmupWorker.cpp.o
+.PHONY : WarmupWorker.cpp.o
+
+WarmupWorker.i: WarmupWorker.cpp.i
+
+.PHONY : WarmupWorker.i
+
+# target to preprocess a source file
+WarmupWorker.cpp.i:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/WarmupWorker.cpp.i
+.PHONY : WarmupWorker.cpp.i
+
+WarmupWorker.s: WarmupWorker.cpp.s
+
+.PHONY : WarmupWorker.s
+
+# target to generate assembly for a file
+WarmupWorker.cpp.s:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/WarmupWorker.cpp.s
+.PHONY : WarmupWorker.cpp.s
+
 rpc.pb.o: rpc.pb.cc.o
 
 .PHONY : rpc.pb.o
@@ -1028,9 +1109,15 @@ help:
 	@echo "... Metrics.o"
 	@echo "... Metrics.i"
 	@echo "... Metrics.s"
+	@echo "... PageCacheService.o"
+	@echo "... PageCacheService.i"
+	@echo "... PageCacheService.s"
 	@echo "... Poller.o"
 	@echo "... Poller.i"
 	@echo "... Poller.s"
+	@echo "... RedisClient.o"
+	@echo "... RedisClient.i"
+	@echo "... RedisClient.s"
 	@echo "... RpcEchoSerializers.o"
 	@echo "... RpcEchoSerializers.i"
 	@echo "... RpcEchoSerializers.s"
@@ -1061,6 +1148,9 @@ help:
 	@echo "... UserRepository.o"
 	@echo "... UserRepository.i"
 	@echo "... UserRepository.s"
+	@echo "... WarmupWorker.o"
+	@echo "... WarmupWorker.i"
+	@echo "... WarmupWorker.s"
 	@echo "... rpc.pb.o"
 	@echo "... rpc.pb.i"
 	@echo "... rpc.pb.s"

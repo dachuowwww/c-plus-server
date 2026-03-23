@@ -1,8 +1,8 @@
 #pragma once
-#include <Macro.h>
-#include <TimeStamp.h>
 #include <functional>
 #include <string>
+#include "Macro.h"
+#include "TimeStamp.h"
 
 class Timer {
  public:

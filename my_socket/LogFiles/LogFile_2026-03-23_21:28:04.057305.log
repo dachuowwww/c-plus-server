@@ -1,0 +1,46 @@
+20260323 21:28:04.050448  24784 INFO    HttpServer Listening on [ 0.0.0.0:80 ]-/home/dachuo/my_socket/src/HttpServer.cpp:413
+20260323 21:28:06.777814  24784 INFO    HttpServer::OnNewConnection : Add connection [ fd#33 ] from 127.0.0.1:58530-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260323 21:28:06.778100  24784 INFO    HttpServer::OnNewConnection : Add connection [ fd#34 ] from 127.0.0.1:58531-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260323 21:28:06.779300  24786 INFO    /, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 21:28:06.929132  24786 INFO    /favicon.ico, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 21:28:10.974169  24784 INFO    HttpServer::OnNewConnection : Add connection [ fd#33 ] from 127.0.0.1:58534-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260323 21:28:10.976339  24787 INFO    /login, request successfully. Method:POST-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 21:28:10.976448  24787 INFO    New login request user=xkx-/home/dachuo/my_socket/test/httpserver.cpp:295
+20260323 21:28:11.038960  24787 INFO    xkx login failed!-/home/dachuo/my_socket/test/httpserver.cpp:301
+20260323 21:28:11.044319  24788 INFO    /, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 21:28:11.147230  24788 INFO    /favicon.ico, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 21:28:18.043410  24784 INFO    HttpServer::OnNewConnection : Add connection [ fd#33 ] from 127.0.0.1:58538-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260323 21:28:18.043590  24784 INFO    HttpServer::OnNewConnection : Add connection [ fd#34 ] from 127.0.0.1:58539-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260323 21:28:18.045522  24789 INFO    /login, request successfully. Method:POST-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 21:28:18.045609  24789 INFO    New login request user=xkx-/home/dachuo/my_socket/test/httpserver.cpp:295
+20260323 21:28:18.068409  24789 INFO    xkx login success!-/home/dachuo/my_socket/test/httpserver.cpp:298
+20260323 21:28:18.259724  24789 INFO    /favicon.ico, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 21:28:32.754345  24784 INFO    HttpServer::OnNewConnection : Add connection [ fd#33 ] from 127.0.0.1:58557-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260323 21:28:32.871694  24784 INFO    HttpServer::OnNewConnection : Add connection [ fd#34 ] from 127.0.0.1:58558-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260323 21:28:32.873177  24791 INFO    /open/117168586377184961.png, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 21:28:32.873694  24791 ERROR   Open directory failed! errno=2 msg=No such file or directory-/home/dachuo/my_socket/src/Error.cpp:11
+20260323 21:28:32.873771  24791 ERROR   Open file failed! errno=2 msg=No such file or directory-/home/dachuo/my_socket/src/Error.cpp:11
+20260323 21:28:32.880122  24792 INFO    /, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 21:28:33.003060  24792 INFO    /favicon.ico, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 21:28:41.248039  24784 INFO    HttpServer::OnNewConnection : Add connection [ fd#33 ] from 127.0.0.1:58568-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260323 21:28:41.248310  24793 INFO    /query.php, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 21:29:00.235416  24784 INFO    HttpServer::OnNewConnection : Add connection [ fd#33 ] from 127.0.0.1:58573-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260323 21:29:00.359082  24784 INFO    HttpServer::OnNewConnection : Add connection [ fd#34 ] from 127.0.0.1:58574-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260323 21:29:00.364700  24786 INFO    /anom, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 21:29:00.504520  24786 INFO    /favicon.ico, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 21:29:01.633804  24784 INFO    HttpServer::OnNewConnection : Add connection [ fd#33 ] from 127.0.0.1:58580-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260323 21:29:01.634817  24787 INFO    /open/kitty.jpg, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 21:29:01.635202  24787 ERROR   Open directory failed! errno=2 msg=No such file or directory-/home/dachuo/my_socket/src/Error.cpp:11
+20260323 21:29:01.635250  24787 ERROR   Open file failed! errno=2 msg=No such file or directory-/home/dachuo/my_socket/src/Error.cpp:11
+20260323 21:29:01.640676  24788 INFO    /, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 21:29:01.756069  24788 INFO    /favicon.ico, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 21:30:43.775444  24784 INFO    HttpServer::OnNewConnection : Add connection [ fd#33 ] from 127.0.0.1:58625-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260323 21:30:43.865249  24784 INFO    HttpServer::OnNewConnection : Add connection [ fd#34 ] from 127.0.0.1:58626-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260323 21:30:43.874651  24789 INFO    /anom, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 21:30:44.065352  24789 INFO    /favicon.ico, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 21:30:45.149454  24784 INFO    HttpServer::OnNewConnection : Add connection [ fd#33 ] from 127.0.0.1:58640-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260323 21:30:45.150699  24790 INFO    /open/select.html, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 21:30:45.151283  24790 ERROR   Open directory failed! errno=2 msg=No such file or directory-/home/dachuo/my_socket/src/Error.cpp:11
+20260323 21:30:45.151336  24790 ERROR   Open file failed! errno=2 msg=No such file or directory-/home/dachuo/my_socket/src/Error.cpp:11
+20260323 21:30:45.156521  24791 INFO    /, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 21:30:45.297471  24791 INFO    /favicon.ico, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451

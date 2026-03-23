@@ -1,11 +1,11 @@
 #include "UserRepository.h"
-#include <memory>
-#include <utility>
 #include <cppconn/exception.h>           // SQL 异常类
 #include <cppconn/prepared_statement.h>  // 预处理语句类,写sql语句
 #include <cppconn/resultset.h>           // 结果集类
 #include <mysql_connection.h>            // 数据库连接
 #include <mysql_driver.h>                // MySQL 驱动对象
+#include <memory>
+#include <utility>
 
 UserRepository::UserRepository(std::string host, int port, std::string user, std::string password, std::string database)
     : url_("tcp://" + std::move(host) + ":" + std::to_string(port)),

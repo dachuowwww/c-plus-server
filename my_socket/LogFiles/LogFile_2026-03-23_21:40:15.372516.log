@@ -1,0 +1,24 @@
+20260323 21:40:15.365527  27431 INFO    HttpServer Listening on [ 0.0.0.0:80 ]-/home/dachuo/my_socket/src/HttpServer.cpp:413
+20260323 21:40:17.913152  27431 INFO    HttpServer::OnNewConnection : Add connection [ fd#34 ] from 127.0.0.1:59447-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260323 21:40:17.913441  27431 INFO    HttpServer::OnNewConnection : Add connection [ fd#35 ] from 127.0.0.1:59448-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260323 21:40:17.914107  27433 INFO    /, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 21:40:18.190954  27433 INFO    /favicon.ico, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 21:40:19.161224  27431 INFO    HttpServer::OnNewConnection : Add connection [ fd#34 ] from 127.0.0.1:59464-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260323 21:40:19.163008  27434 INFO    /anom, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 21:40:19.363593  27434 INFO    /favicon.ico, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 21:40:20.444844  27431 INFO    HttpServer::OnNewConnection : Add connection [ fd#35 ] from 127.0.0.1:59470-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260323 21:40:20.450005  27435 INFO    /open/(3).png, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 21:40:20.469468  27435 INFO    Open file (3).png success!-/home/dachuo/my_socket/test/httpserver.cpp:199
+20260323 21:40:20.616972  27435 INFO    /favicon.ico, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 21:40:21.647394  27431 INFO    HttpServer::OnNewConnection : Add connection [ fd#34 ] from 127.0.0.1:59478-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260323 21:40:21.648451  27436 INFO    /anom, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 21:40:21.767612  27436 INFO    /favicon.ico, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 21:40:22.672338  27431 INFO    HttpServer::OnNewConnection : Add connection [ fd#35 ] from 127.0.0.1:59481-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260323 21:40:22.673620  27437 INFO    /open/(1).png, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 21:40:22.695775  27437 INFO    Open file (1).png success!-/home/dachuo/my_socket/test/httpserver.cpp:199
+20260323 21:40:22.873901  27437 INFO    /favicon.ico, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 21:40:23.761835  27431 INFO    HttpServer::OnNewConnection : Add connection [ fd#34 ] from 127.0.0.1:59487-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260323 21:40:23.763139  27438 INFO    /anom, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 21:40:23.880258  27438 INFO    /favicon.ico, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 21:40:24.251698  27431 INFO    HttpServer::OnNewConnection : Add connection [ fd#35 ] from 127.0.0.1:59490-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260323 21:40:24.257852  27439 INFO    /, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451

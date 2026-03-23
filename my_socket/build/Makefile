@@ -189,19 +189,6 @@ rpc_client/fast:
 .PHONY : rpc_client/fast
 
 #=============================================================================
-# Target rules for targets named multiple_client
-
-# Build rule for target.
-multiple_client: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 multiple_client
-.PHONY : multiple_client
-
-# fast build rule for target.
-multiple_client/fast:
-	$(MAKE) -f test/CMakeFiles/multiple_client.dir/build.make test/CMakeFiles/multiple_client.dir/build
-.PHONY : multiple_client/fast
-
-#=============================================================================
 # Target rules for targets named httpserver
 
 # Build rule for target.
@@ -213,32 +200,6 @@ httpserver: cmake_check_build_system
 httpserver/fast:
 	$(MAKE) -f test/CMakeFiles/httpserver.dir/build.make test/CMakeFiles/httpserver.dir/build
 .PHONY : httpserver/fast
-
-#=============================================================================
-# Target rules for targets named http_context
-
-# Build rule for target.
-http_context: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 http_context
-.PHONY : http_context
-
-# fast build rule for target.
-http_context/fast:
-	$(MAKE) -f test/CMakeFiles/http_context.dir/build.make test/CMakeFiles/http_context.dir/build
-.PHONY : http_context/fast
-
-#=============================================================================
-# Target rules for targets named client
-
-# Build rule for target.
-client: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 client
-.PHONY : client
-
-# fast build rule for target.
-client/fast:
-	$(MAKE) -f test/CMakeFiles/client.dir/build.make test/CMakeFiles/client.dir/build
-.PHONY : client/fast
 
 #=============================================================================
 # Target rules for targets named check-tests
@@ -280,10 +241,7 @@ help:
 	@echo "... format"
 	@echo "... PINE_SHARED"
 	@echo "... rpc_client"
-	@echo "... multiple_client"
 	@echo "... httpserver"
-	@echo "... http_context"
-	@echo "... client"
 	@echo "... check-tests"
 	@echo "... build-tests"
 .PHONY : help

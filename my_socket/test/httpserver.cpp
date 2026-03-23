@@ -17,9 +17,11 @@
 #include "HttpRequest.h"
 #include "HttpResponse.h"
 #include "Logger.h"
+#include "PageCacheService.h"
 // #include "Metrics.h"
 #include "TimeStamp.h"
 #include "UserRepository.h"
+#include "WarmupWorker.h"
 
 // std::string GetEnvOrDefault(const char *name, const char *default_value) { // 合法检查
 //   const char *value = std::getenv(name);
@@ -48,7 +50,7 @@ const UserRepository &GetUserRepository() {
   return repository;
 }
 
-bool ParseFormField(const std::string &body, const std::string &key, std::string *value) {
+bool ParseFormField(const std::string &body, const std::string &key, std::string *value) {  // 按字段查找
   const std::string field = key + "=";
   const size_t begin = body.find(field);
   if (begin == std::string::npos) {
@@ -124,7 +126,7 @@ std::string BuildFileHtml(const std::string &dir) {
   }
 
   std::string tmp = "<!--filelist-->";
-  std::string body = HttpServer::ReadFileCached("../static/fileserver.html");
+  std::string body = HttpServer::ReadFile("../static/fileserver.html");
   body.replace(body.find(tmp), tmp.length(), file);
   return body;
 }
@@ -142,21 +144,31 @@ std::string BuildAnomFileHtml(const std::string &dir) {
   }
 
   std::string tmp = "<!--filelist-->";
-  std::string body = HttpServer::ReadFileCached("../static/anomfileserver.html");
+  std::string body = HttpServer::ReadFile("../static/anomfileserver.html");
   body.replace(body.find(tmp), tmp.length(), file);
   return body;
 }
 
 void OpenFileSystem(HttpResponse *response) {  // 不设置域名防止别人直接闯入
   response->SetContentType("text/html; charset=UTF-8");
-  response->SetResponseBody(BuildFileHtml("../files"));
+  // response->SetResponseBody(BuildFileHtml("../files"));
+  response->SetResponseBody(
+      PageCacheService::Instance().GetOrBuild("page:filelist:user", 60, []() { return BuildFileHtml("../files"); }));
+  response->SetStatusCode(HttpResponse::HttpStatusCode::K200K);
+  response->SetStatusMessage("OK");
+}
+
+void OpenGuestFileSystem(HttpResponse *response) {
+  response->SetContentType("text/html; charset=UTF-8");
+  response->SetResponseBody(PageCacheService::Instance().GetOrBuild("page:filelist:guest", 60,
+                                                                    []() { return BuildAnomFileHtml("../files"); }));
   response->SetStatusCode(HttpResponse::HttpStatusCode::K200K);
   response->SetStatusMessage("OK");
 }
 
 void Httpopen(const std::string &filename, HttpResponse *response) {
   // std::cout<<"open file "<<filename<<std::endl;
-  if (IsFindInDir(filename, "../files/")) {
+  if (IsFindInDir(filename, "../files/")) {  // 安全检查，防止路径穿越攻击
     std::string s = filename.substr(filename.find_last_of('.') + 1);
     if (s == "txt" || s == "pdf" || s == "doc" || s == "docx" || s == "jpg" || s == "png" || s == "html") {
       if (s == "txt") {
@@ -180,7 +192,8 @@ void Httpopen(const std::string &filename, HttpResponse *response) {
       if (s == "html") {
         response->SetContentType("text/html; charset=UTF-8");
       }
-      response->SetResponseBody(HttpServer::ReadFileCached("../files/" + filename));
+      response->SetResponseBody(PageCacheService::Instance().GetOrBuild(
+          "file:view:" + filename, 60, [&filename]() { return HttpServer::ReadFile("../files/" + filename); }));
       response->SetStatusCode(HttpResponse::HttpStatusCode::K200K);
       response->SetStatusMessage("OK");
       LOG_INFO << "Open file " << filename << " success!";
@@ -197,7 +210,7 @@ void Httpopen(const std::string &filename, HttpResponse *response) {
   }
 }
 void Httpdownload(const std::string &filename, HttpResponse *response) {
-  if (IsFindInDir(filename, "../files/")) {
+  if (IsFindInDir(filename, "../files/")) {  // 安全检查，防止路径穿越攻击
     int filefd = ::open(("../files/" + filename).c_str(), O_RDONLY);
     if (filefd < 0) {
       Errif(true, "Download file failed!");
@@ -218,14 +231,19 @@ void Httpdownload(const std::string &filename, HttpResponse *response) {
   }
 }
 void Httpdelete(const std::string &filename, HttpResponse *response) {
-  if (IsFindInDir(filename, "../files/")) {
+  bool deleted = false;
+  if (IsFindInDir(filename, "../files/")) {  // 安全检查，防止路径穿越攻击
     if (remove(("../files/" + filename).c_str()) != 0) {
       Errif(true, "Delete file failed!");
     } else {
+      deleted = true;
       LOG_INFO << "Delete file " << filename << " success!";
     }
   } else {
     Errif(true, "Delete file failed!");
+  }
+  if (deleted) {
+    PageCacheService::Instance().InvalidateFileListPages();
   }
   OpenFileSystem(response);
 }
@@ -240,20 +258,19 @@ void Http(const HttpRequest &request, HttpResponse *response) {
     const std::string &url = request.GetURL();
     if (url == "/") {
       response->SetContentType("text/html; charset=UTF-8");
-      response->SetResponseBody(HttpServer::ReadFileCached("../static/index.html"));
+      response->SetResponseBody(PageCacheService::Instance().GetOrBuild(
+          "page:home", 60, []() { return HttpServer::ReadFile("../static/index.html"); }));
       response->SetStatusCode(HttpResponse::HttpStatusCode::K200K);
       response->SetStatusMessage("OK");
     } else if (url.substr(0, 5) == "/open") {  // 不包括\0 中文未解码
-      Httpopen(url.substr(6), response);       // 不带斜杠
+      std::string filename = url.substr(6);
+      Httpopen(filename, response);  // 不带斜杠
     } else if (url.substr(0, 9) == "/download") {
       Httpdownload(url.substr(10), response);
     } else if (url.substr(0, 7) == "/delete") {
       Httpdelete(url.substr(8), response);
     } else if (url.substr(0, 5) == "/anom") {
-      response->SetContentType("text/html; charset=UTF-8");
-      response->SetResponseBody(BuildAnomFileHtml("../files"));
-      response->SetStatusCode(HttpResponse::HttpStatusCode::K200K);
-      response->SetStatusMessage("OK");
+      OpenGuestFileSystem(response);
     } else if (url.substr(0, 4) == "/ret") {
       Relocation(response);
     } else {
@@ -289,6 +306,7 @@ void Http(const HttpRequest &request, HttpResponse *response) {
         Relocation(response);
       }
     } else if (request.GetURL() == "/upload") {  // 上传成功才会到这里
+      PageCacheService::Instance().InvalidateFileListPages();
       OpenFileSystem(response);
     } else {
       Errif(true, "Post request failed!");
@@ -319,6 +337,9 @@ int main(int argc, char *argv[]) {
   Logger::SetFlush(AsyncFlush);
   async_log->Start();
   auto httpserver = std::make_unique<HttpServer>(ip.c_str(), port);
+  WarmupWorker::Instance().RegisterPage("page:filelist:user", 60, []() { return BuildFileHtml("../files"); });
+  WarmupWorker::Instance().RegisterPage("page:filelist:guest", 60, []() { return BuildAnomFileHtml("../files"); });
+  WarmupWorker::Instance().Start();
   if (argc == 2) {  // 加一个参数变echo_server
     httpserver->SetMessageCallBack(Message);
   } else {
@@ -327,5 +348,6 @@ int main(int argc, char *argv[]) {
   // httpserver->OnTimerEvery(1.0, LogMetrics);
 
   httpserver->Start();
+  WarmupWorker::Instance().Stop();
   return 0;
 }

@@ -1,5 +1,5 @@
 #pragma once
-
+#include "Macro.h"
 #include <string>
 
 class UserRepository {
@@ -13,4 +13,6 @@ class UserRepository {
   std::string user_;
   std::string password_;
   std::string database_;
+
+  DISALLOW_COPY_AND_ASSIGN(UserRepository);
 };

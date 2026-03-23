@@ -313,44 +313,7 @@ void HttpServer::DisableRpcFlowPool() {
   rpc_flow_pool_.reset();
 }
 
-//////////////////////////////// 文件缓存池
-namespace {
-struct CachedFile {
-  std::string data;
-  size_t size = 0;
-};
-
-constexpr size_t kFileCacheMaxEntries = 128;             // 最大缓存文件数量
-constexpr size_t kFileCacheMaxBytes = 32 * 1024 * 1024;  // 最大缓存总字节数（32MB）
-
-std::mutex g_file_cache_mutex;
-std::unordered_map<std::string, CachedFile> g_file_cache;
-std::deque<std::string> g_file_cache_order;  // 用于记录缓存文件的访问顺序，便于实现FIFO淘汰策略
-size_t g_file_cache_bytes = 0;               // 记录当前缓存的总字节数，便于判断是否超过限制
-
-void EvictCacheIfNeeded(size_t incoming_size) {
-  while (!g_file_cache_order.empty() &&
-         (g_file_cache.size() >= kFileCacheMaxEntries || g_file_cache_bytes + incoming_size > kFileCacheMaxBytes)) {
-    const std::string &key = g_file_cache_order.front();
-    g_file_cache_order.pop_front();
-    auto it = g_file_cache.find(key);
-    if (it != g_file_cache.end()) {
-      g_file_cache_bytes -= it->second.size;
-      g_file_cache.erase(it);
-    }
-  }
-}
-}  // namespace
-
-std::string HttpServer::ReadFileCached(const std::string &filename) {  // 简单缓存/文件内容池
-  {
-    std::lock_guard<std::mutex> lock(g_file_cache_mutex);
-    auto it = g_file_cache.find(filename);
-    if (it != g_file_cache.end()) {
-      return it->second.data;
-    }
-  }
-
+std::string HttpServer::ReadFile(const std::string &filename) {
   std::ifstream is(filename.c_str(), std::ifstream::in | std::ifstream::binary);
   if (!is.is_open()) {
     Errif(true, "ReadFile: open file failed!");
@@ -366,23 +329,78 @@ std::string HttpServer::ReadFileCached(const std::string &filename) {  // 简单
   content.resize(static_cast<size_t>(length));
   is.read(content.data(), length);
   is.close();
-  {
-    std::lock_guard<std::mutex> lock(g_file_cache_mutex);
-    auto it = g_file_cache.find(filename);
-    if (it != g_file_cache.end()) {
-      return it->second.data;
-    }
-    const size_t size = content.size();
-    if (size <= kFileCacheMaxBytes) {
-      EvictCacheIfNeeded(size);
-      g_file_cache_order.push_back(filename);
-      g_file_cache_bytes += size;
-      g_file_cache.emplace(filename, CachedFile{content, size});
-    }
-  }
-
   return content;
 }
+//////////////////////////////// 文件缓存池
+// namespace {
+// struct CachedFile {
+//   std::string data;
+//   size_t size = 0;
+// };
+
+// constexpr size_t kFileCacheMaxEntries = 128;             // 最大缓存文件数量
+// constexpr size_t kFileCacheMaxBytes = 32 * 1024 * 1024;  // 最大缓存总字节数（32MB）
+
+// std::mutex g_file_cache_mutex;
+// std::unordered_map<std::string, CachedFile> g_file_cache;
+// std::deque<std::string> g_file_cache_order;  // 用于记录缓存文件的访问顺序，便于实现FIFO淘汰策略
+// size_t g_file_cache_bytes = 0;               // 记录当前缓存的总字节数，便于判断是否超过限制
+
+// void EvictCacheIfNeeded(size_t incoming_size) {
+//   while (!g_file_cache_order.empty() &&
+//          (g_file_cache.size() >= kFileCacheMaxEntries || g_file_cache_bytes + incoming_size > kFileCacheMaxBytes)) {
+//     const std::string &key = g_file_cache_order.front();
+//     g_file_cache_order.pop_front();
+//     auto it = g_file_cache.find(key);
+//     if (it != g_file_cache.end()) {
+//       g_file_cache_bytes -= it->second.size;
+//       g_file_cache.erase(it);
+//     }
+//   }
+// }
+// }  // namespace
+
+// std::string HttpServer::ReadFileCached(const std::string &filename) {  // 简单缓存/文件内容池
+//   {
+//     std::lock_guard<std::mutex> lock(g_file_cache_mutex);
+//     auto it = g_file_cache.find(filename);
+//     if (it != g_file_cache.end()) {
+//       return it->second.data;
+//     }
+//   }
+
+//   std::ifstream is(filename.c_str(), std::ifstream::in | std::ifstream::binary);
+//   if (!is.is_open()) {
+//     Errif(true, "ReadFile: open file failed!");
+//     return "";
+//   }
+//   is.seekg(0, std::ifstream::end);
+//   std::streamoff length = is.tellg();
+//   if (length <= 0) {
+//     return "";
+//   }
+//   is.seekg(0, std::ifstream::beg);
+//   std::string content;
+//   content.resize(static_cast<size_t>(length));
+//   is.read(content.data(), length);
+//   is.close();
+//   {
+//     std::lock_guard<std::mutex> lock(g_file_cache_mutex);
+//     auto it = g_file_cache.find(filename);
+//     if (it != g_file_cache.end()) {
+//       return it->second.data;
+//     }
+//     const size_t size = content.size();
+//     if (size <= kFileCacheMaxBytes) {
+//       EvictCacheIfNeeded(size);
+//       g_file_cache_order.push_back(filename);
+//       g_file_cache_bytes += size;
+//       g_file_cache.emplace(filename, CachedFile{content, size});
+//     }
+//   }
+
+//   return content;
+// }
 /////////////////////////////////
 HttpServer::HttpServer(const char *ip, uint16_t port) {
   RegisterRpcPlug();

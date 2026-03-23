@@ -11,6 +11,9 @@ test/CMakeFiles/httpserver.dir/httpserver.cpp.o
  ../src/include/LogStream.h
  ../src/include/Logger.h
  ../src/include/Macro.h
+ ../src/include/PageCacheService.h
+ ../src/include/RedisClient.h
  ../src/include/TimeStamp.h
  ../src/include/UserRepository.h
+ ../src/include/WarmupWorker.h
  /home/dachuo/my_socket/test/httpserver.cpp

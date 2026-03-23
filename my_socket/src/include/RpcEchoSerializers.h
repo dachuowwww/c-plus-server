@@ -1,6 +1,8 @@
 #pragma once
+#include <string>
 #include "RpcEchoTypes.h"
 #include "RpcSerialization.h"
+
 
 class EchoRequestJsonSerializer : public ITypeSerializer<rpc_model::EchoRequest> {
  public:

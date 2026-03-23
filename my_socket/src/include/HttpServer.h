@@ -34,7 +34,7 @@ class HttpServer {
 
   static void FileUpload(const HttpRequest *request);
 
-  static std::string ReadFileCached(const std::string &filename);
+  static std::string ReadFile(const std::string &filename);
 
   // static void HandleRpcRequest(const HttpRequest &request, HttpResponse *response);
 

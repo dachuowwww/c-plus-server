@@ -1,0 +1,9 @@
+20260323 21:06:58.693214  22206 INFO    HttpServer Listening on [ 0.0.0.0:80 ]-/home/dachuo/my_socket/src/HttpServer.cpp:413
+20260323 21:07:00.857577  22206 INFO    HttpServer::OnNewConnection : Add connection [ fd#33 ] from 127.0.0.1:57419-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260323 21:07:00.858115  22206 INFO    HttpServer::OnNewConnection : Add connection [ fd#34 ] from 127.0.0.1:57420-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260323 21:07:00.859134  22208 INFO    /, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 21:07:00.861413  22208 ERROR   ReadFile: open file failed! errno=2 msg=No such file or directory-/home/dachuo/my_socket/src/Error.cpp:11
+20260323 21:07:01.061752  22208 INFO    /favicon.ico, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 21:07:02.413011  22206 INFO    HttpServer::OnNewConnection : Add connection [ fd#33 ] from 127.0.0.1:57432-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260323 21:07:02.413790  22209 INFO    /, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 21:07:02.518950  22209 INFO    /favicon.ico, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451

@@ -22,6 +22,26 @@ if(NOT TARGET mysql::concpp)
     )
 endif()
 
+if(NOT TARGET hiredis::hiredis)
+    find_path(HIREDIS_INCLUDE_DIR
+        NAMES hiredis/hiredis.h
+    )
+    find_library(HIREDIS_LIBRARY NAMES hiredis)
+
+    if(NOT HIREDIS_INCLUDE_DIR OR NOT HIREDIS_LIBRARY)
+        message(FATAL_ERROR
+            "hiredis development files not found. Install libhiredis-dev, "
+            "or set HIREDIS_INCLUDE_DIR / HIREDIS_LIBRARY."
+        )
+    endif()
+
+    add_library(hiredis::hiredis UNKNOWN IMPORTED)
+    set_target_properties(hiredis::hiredis PROPERTIES
+        IMPORTED_LOCATION "${HIREDIS_LIBRARY}"
+        INTERFACE_INCLUDE_DIRECTORIES "${HIREDIS_INCLUDE_DIR}"
+    )
+endif()
+
 protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS ${PROJECT_SOURCE_DIR}/proto/rpc.proto) # 生成可执行文件
 set_source_files_properties(${PROTO_SRCS} PROPERTIES SKIP_CLANG_TIDY ON)
 file(GLOB_RECURSE PINE_SOURCES ${PROJECT_SOURCE_DIR}/src/*.cpp)
@@ -42,4 +62,5 @@ PUBLIC
 ${Protobuf_LIBRARIES}
 PRIVATE
 mysql::concpp
+hiredis::hiredis
 )

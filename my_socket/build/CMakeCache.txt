@@ -232,6 +232,12 @@ CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 CPPLINT_BIN:FILEPATH=/home/dachuo/my_socket/build_support/cpplint.py
 
 //Path to a file.
+HIREDIS_INCLUDE_DIR:PATH=/usr/include
+
+//Path to a library.
+HIREDIS_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libhiredis.so
+
+//Path to a file.
 MYSQLCPPCONN_INCLUDE_DIR:PATH=/usr/include
 
 //Path to a library.
@@ -250,7 +256,7 @@ PINE_CLANG_SEARCH_PATH:PATH=/usr/bin
 PINE_INCLUDE_DIR:PATH=/home/dachuo/my_socket/src/include
 
 //Dependencies for the target
-PINE_SHARED_LIB_DEPENDS:STATIC=general;/usr/lib/x86_64-linux-gnu/libprotobuf.so;general;-lpthread;general;mysql::concpp;
+PINE_SHARED_LIB_DEPENDS:STATIC=general;/usr/lib/x86_64-linux-gnu/libprotobuf.so;general;-lpthread;general;mysql::concpp;general;hiredis::hiredis;
 
 //Value Computed by CMake
 PINE_SOURCE_DIR:STATIC=/home/dachuo/my_socket

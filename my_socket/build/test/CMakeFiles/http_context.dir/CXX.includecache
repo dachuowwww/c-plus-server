@@ -6,3 +6,33 @@
 
 #IncludeRegexTransform: 
 
+../src/include/HttpContext.h
+memory
+-
+Macro.h
+../src/include/Macro.h
+
+../src/include/HttpRequest.h
+string
+-
+unordered_map
+-
+Macro.h
+../src/include/Macro.h
+
+../src/include/Macro.h
+
+/home/dachuo/my_socket/test/http_context.cpp
+iostream
+-
+memory
+-
+string
+-
+unordered_map
+-
+HttpContext.h
+/home/dachuo/my_socket/test/HttpContext.h
+HttpRequest.h
+/home/dachuo/my_socket/test/HttpRequest.h
+
