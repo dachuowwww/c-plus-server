@@ -114,13 +114,16 @@ std::string BuildFileHtml(const std::string &dir) {
   FindAllFiles(dir, &files);
   std::string file;
   for (const auto &filename : files) {
-    file += "<tr><td>";
+    file += "<tr><td class=\"file-name\">";
     file += filename;
-    file += "</td><td><a href=\"/open/";
+    file += "</td><td class=\"actions\">";
+    file += "<a class=\"btn btn-view\" href=\"/open/";
     file += filename;
-    file += "\">浏览</a><a href=\"/download/";
+    file += "\">浏览</a>";
+    file += "<a class=\"btn btn-download\" href=\"/download/";
     file += filename;
-    file += "\">下载</a><a href=\"/delete/";
+    file += "\">下载</a>";
+    file += "<a class=\"btn btn-delete\" href=\"/delete/";
     file += filename;
     file += "\">删除</a></td></tr>\n";
   }
@@ -136,11 +139,12 @@ std::string BuildAnomFileHtml(const std::string &dir) {
   FindAllFiles(dir, &files);
   std::string file;
   for (const auto &filename : files) {
-    file += "<tr><td>";
+    file += "<tr><td class=\"file-name\">";
     file += filename;
-    file += "</td><td><a href=\"/open/";
+    file += "</td><td class=\"actions\">";
+    file += "<a class=\"btn btn-view\" href=\"/open/";
     file += filename;
-    file += "\">浏览</a>";
+    file += "\">浏览</a></td></tr>\n";
   }
 
   std::string tmp = "<!--filelist-->";

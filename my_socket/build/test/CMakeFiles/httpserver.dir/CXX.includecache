@@ -101,10 +101,10 @@ functional
 -
 string
 -
-RedisClient.h
-../src/include/RedisClient.h
 Macro.h
 ../src/include/Macro.h
+RedisClient.h
+../src/include/RedisClient.h
 
 ../src/include/RedisClient.h
 hiredis/hiredis.h
@@ -119,20 +119,20 @@ Macro.h
 ../src/include/Macro.h
 
 ../src/include/TimeStamp.h
-Macro.h
-../src/include/Macro.h
 sys/time.h
 -
 cstdint
 -
 string
 -
-
-../src/include/UserRepository.h
 Macro.h
 ../src/include/Macro.h
+
+../src/include/UserRepository.h
 string
 -
+Macro.h
+../src/include/Macro.h
 
 ../src/include/WarmupWorker.h
 atomic
@@ -149,10 +149,10 @@ unordered_map
 -
 vector
 -
-RedisClient.h
-../src/include/RedisClient.h
 Macro.h
 ../src/include/Macro.h
+RedisClient.h
+../src/include/RedisClient.h
 
 /home/dachuo/my_socket/test/httpserver.cpp
 HttpServer.h

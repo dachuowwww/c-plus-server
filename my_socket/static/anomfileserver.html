@@ -1,50 +1,187 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>文件操作</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>游客访问 - 铨欣铨意云盘</title>
     <style>
-        /* 居中对齐的样式 */
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 80vh;
             margin: 0;
+            font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fb 0%, #eef4ff 100%);
+            color: #1f2937;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .panel {
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 12px 35px rgba(31, 41, 55, 0.08);
+            overflow: hidden;
+        }
+
+        .header {
+            padding: 28px 32px 18px;
+            background: linear-gradient(135deg, #64748b, #94a3b8);
+            color: #fff;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .header p {
+            margin: 10px 0 0;
+            font-size: 14px;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 28px 32px 32px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding: 16px;
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+        }
+
+        .topbar span {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .login-link {
+            text-decoration: none;
+            background: #4f7cff;
+            color: #fff;
+            padding: 9px 16px;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .login-link:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px rgba(79, 124, 255, 0.25);
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            border: 1px solid #edf2f7;
+            border-radius: 16px;
         }
 
         table {
-            text-align: center;
-            margin-top: 40px;
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
         }
-        td a {
-            margin-left: 10px; /* 添加下载和删除按钮之间的间距 */
+
+        thead {
+            background: #f8fafc;
+        }
+
+        th, td {
+            padding: 16px 18px;
+            text-align: left;
+            border-bottom: 1px solid #eef2f7;
+        }
+
+        th {
+            font-size: 14px;
+            font-weight: 700;
+            color: #374151;
+        }
+
+        td {
+            font-size: 14px;
+            color: #4b5563;
+        }
+
+        tbody tr:hover {
+            background: #fafcff;
+        }
+
+        .file-name {
+            font-weight: 500;
+            word-break: break-all;
+        }
+
+        .actions .btn {
+            display: inline-block;
+            text-decoration: none;
+            background: #eef4ff;
+            color: #2f5fe3;
+            padding: 7px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            transition: all 0.2s ease;
+        }
+
+        .actions .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 768px) {
+            .header,
+            .content {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="container">
+        <div class="panel">
+            <div class="header">
+                <h1>铨欣铨意云盘</h1>
+                <p>游客模式下仅可浏览文件，登录后可上传、下载和删除</p>
+            </div>
 
-    
+            <div class="content">
+                <div class="topbar">
+                    <span>当前为游客访问模式</span>
+                    <a class="login-link" href="/">返回登录</a>
+                </div>
 
-    <div>
-        <h1>铨欣铨意云盘</h1>
-        <table>
-            <tr>
-                <th>文件名</th>
-                <th>操作</th>
-            </tr>
-            <!--filelist-->
-            <!--
-            <tr> 示例
-                <td>a.txt</td>
-                <td>
-                    <a href="/download/a.txt">下载</a>
-                    <a href="/download/a.txt">删除</a>
-                </td>
-            </tr>
-            -->
-            
-        </table>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 70%;">文件名</th>
+                                <th style="width: 30%;">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--filelist-->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>

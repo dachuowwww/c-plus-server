@@ -1,6 +1,6 @@
 #pragma once
-#include "Macro.h"
 #include <string>
+#include "Macro.h"
 
 class UserRepository {
  public:

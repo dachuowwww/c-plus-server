@@ -44,8 +44,6 @@ void WarmupWorker::Start() {
   worker_ = std::thread(&WarmupWorker::Run, this);
 }
 
-
-
 void WarmupWorker::Run() {
   while (!stop_.load()) {
     const auto top_pages = redis_.ZRevRange(kHotPagesKey, 0, kTopN - 1);

@@ -33,15 +33,11 @@ RedisContextPtr RedisClient::Connect(const std::string &host, int port, const st
   return context;
 }
 
-RedisClient::RedisClient()
-    : host_("127.0.0.1"),
-      port_(6379),
-      password_(""),
-      db_(0) {
-  const char* redis_host = std::getenv("REDIS_HOST");
-  const char* redis_port = std::getenv("REDIS_PORT");
-  const char* redis_password = std::getenv("REDIS_PASSWORD");
-  const char* redis_db = std::getenv("REDIS_DB");
+RedisClient::RedisClient() : host_("127.0.0.1"), port_(6379), password_(""), db_(0) {
+  const char *redis_host = std::getenv("REDIS_HOST");
+  const char *redis_port = std::getenv("REDIS_PORT");
+  const char *redis_password = std::getenv("REDIS_PASSWORD");
+  const char *redis_db = std::getenv("REDIS_DB");
 
   host_ = (redis_host != nullptr) ? redis_host : "127.0.0.1";
   port_ = ParseIntOrDefault(redis_port, 6379);

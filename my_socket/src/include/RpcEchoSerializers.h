@@ -3,7 +3,6 @@
 #include "RpcEchoTypes.h"
 #include "RpcSerialization.h"
 
-
 class EchoRequestJsonSerializer : public ITypeSerializer<rpc_model::EchoRequest> {
  public:
   bool Serialize(const rpc_model::EchoRequest &obj, std::string *output) override;

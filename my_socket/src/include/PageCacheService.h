@@ -3,8 +3,8 @@
 #include <functional>
 #include <string>
 
-#include "RedisClient.h"
 #include "Macro.h"
+#include "RedisClient.h"
 
 class PageCacheService {
  public:

@@ -7,8 +7,8 @@
 #include <unordered_map>
 #include <vector>
 
-#include "RedisClient.h"
 #include "Macro.h"
+#include "RedisClient.h"
 
 class WarmupWorker {
  public:

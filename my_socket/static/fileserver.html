@@ -1,54 +1,248 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>文件操作</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>铨欣铨意云盘</title>
     <style>
-        /* 居中对齐的样式 */
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 80vh;
             margin: 0;
+            font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+            background: linear-gradient(135deg, #eef4ff 0%, #f7f9fc 100%);
+            color: #1f2937;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .panel {
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 12px 35px rgba(31, 41, 55, 0.08);
+            overflow: hidden;
+        }
+
+        .header {
+            padding: 28px 32px 18px;
+            background: linear-gradient(135deg, #4f7cff, #6aa8ff);
+            color: #fff;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 30px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .header p {
+            margin: 10px 0 0;
+            font-size: 14px;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 28px 32px 32px;
+        }
+
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            padding: 16px;
+            background: #f8fbff;
+            border: 1px solid #e5edff;
+            border-radius: 14px;
+        }
+
+        .upload-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+        }
+
+        input[type="file"] {
+            padding: 8px;
+            border: 1px solid #dbe3f0;
+            border-radius: 10px;
+            background: #fff;
+        }
+
+        .hint {
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+        button,
+        .btn {
+            display: inline-block;
+            text-decoration: none;
+            border: none;
+            border-radius: 10px;
+            padding: 9px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        button {
+            background: #4f7cff;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px rgba(79, 124, 255, 0.25);
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            border: 1px solid #edf2f7;
+            border-radius: 16px;
         }
 
         table {
-            text-align: center;
-            margin-top: 40px;
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
         }
-        td a {
-            margin-left: 10px; /* 添加下载和删除按钮之间的间距 */
+
+        thead {
+            background: #f8fafc;
+        }
+
+        th, td {
+            padding: 16px 18px;
+            text-align: left;
+            border-bottom: 1px solid #eef2f7;
+        }
+
+        th {
+            color: #374151;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        td {
+            font-size: 14px;
+            color: #4b5563;
+        }
+
+        tbody tr:hover {
+            background: #f9fbff;
+        }
+
+        .file-name {
+            font-weight: 500;
+            word-break: break-all;
+        }
+
+        .actions {
+            white-space: nowrap;
+        }
+
+        .actions .btn {
+            margin-right: 8px;
+            padding: 7px 14px;
+            font-size: 13px;
+            border-radius: 8px;
+        }
+
+        .btn-view {
+            background: #eef4ff;
+            color: #2f5fe3;
+        }
+
+        .btn-download {
+            background: #ecfdf3;
+            color: #15803d;
+        }
+
+        .btn-delete {
+            background: #fff1f2;
+            color: #dc2626;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .empty-tip {
+            text-align: center;
+            color: #9ca3af;
+            padding: 28px 0;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .header,
+            .content {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .toolbar {
+                align-items: flex-start;
+            }
+
+            th, td {
+                padding: 14px 12px;
+            }
+
+            .actions .btn {
+                display: inline-block;
+                margin-bottom: 6px;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="container">
+        <div class="panel">
+            <div class="header">
+                <h1>铨欣铨意云盘</h1>
+                <p>安全、简洁、易用的文件管理空间</p>
+            </div>
 
-    
+            <div class="content">
+                <div class="toolbar">
+                    <form class="upload-form" action="/upload" method="post" enctype="multipart/form-data">
+                        <input type="file" name="file" id="fileInput" accept=".txt,.pdf,.doc,.docx,.jpg,.png,.html">
+                        <button type="submit">上传文件</button>
+                    </form>
+                    <div class="hint">支持 txt / pdf / doc / docx / jpg / png / html，建议使用英文文件名</div>
+                </div>
 
-    <div>
-        <h1>铨欣铨意云盘</h1>
-        <form action="/upload" method="post" enctype="multipart/form-data">
-            <input type="file" name="file" id="fileInput" accept=".txt,.pdf,.doc,.docx,.jpg,.png,.html">
-            <button type="submit">上传文件（限英文名）</button>
-        </form>
-        <table>
-            <tr>
-                <th>文件名</th>
-                <th>操作</th>
-            </tr>
-            <!--filelist-->
-            <!--
-            <tr> 示例
-                <td>a.txt</td>
-                <td>
-                    <a href="/download/a.txt">下载</a>
-                    <a href="/download/a.txt">删除</a>
-                </td>
-            </tr>
-            -->
-            
-        </table>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 65%;">文件名</th>
+                                <th style="width: 35%;">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--filelist-->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>

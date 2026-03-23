@@ -1,8 +1,8 @@
 #pragma once
-#include "Macro.h"
 #include <sys/time.h>
 #include <cstdint>
 #include <string>
+#include "Macro.h"
 
 const int MICROSECOND_2_SECOND = 1000 * 1000;
 

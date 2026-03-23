@@ -53,7 +53,7 @@ void PageCacheService::InvalidateFileListPages() {
 }
 
 std::string PageCacheService::GenToken() const {
-  static thread_local std::mt19937_64 rng(std::random_device{ }());
+  static thread_local std::mt19937_64 rng(std::random_device{}());
   std::uniform_int_distribution<int64_t> dist;
   std::ostringstream oss;
   oss << std::hex << std::chrono::steady_clock::now().time_since_epoch().count() << "-" << dist(rng)
