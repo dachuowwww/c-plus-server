@@ -73,7 +73,7 @@ class RpcMethodHandler {
                       std::string *error_message) = 0;
 };
 
-template <typename RequestType, typename ResponseType>
+template <typename RequestType, typename ResponseType> // 多态分发，输入输出类型都由模板参数指定
 class TypedRpcMethodHandler : public RpcMethodHandler {  // 方法封装，输入序列化器类型，解码请求内容，输出编码后响应内容
  public:
   using HandlerFunc = std::function<ResponseType(const RequestType &)>;

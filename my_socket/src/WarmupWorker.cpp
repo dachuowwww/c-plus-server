@@ -29,7 +29,7 @@ void WarmupWorker::Stop() {
 WarmupWorker::~WarmupWorker() { Stop(); }
 
 void WarmupWorker::RegisterPage(const std::string &key, int ttl_seconds, Builder builder) {
-  if (key.empty() || ttl_seconds <= 0 || !builder) {
+  if (key.empty() || specs_.find(key) != specs_.end() ||ttl_seconds <= 0 || !builder) {
     return;
   }
   std::lock_guard<std::mutex> lock(mutex_);

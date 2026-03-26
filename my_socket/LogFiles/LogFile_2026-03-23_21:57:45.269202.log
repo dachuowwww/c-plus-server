@@ -1,0 +1,46 @@
+20260323 21:57:45.263301  29661 INFO    HttpServer Listening on [ 0.0.0.0:80 ]-/home/dachuo/my_socket/src/HttpServer.cpp:413
+20260323 21:59:52.875373  29661 INFO    HttpServer::OnNewConnection : Add connection [ fd#32 ] from 10.21.51.108:54256-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260323 21:59:52.878155  29661 INFO    HttpServer::OnNewConnection : Add connection [ fd#33 ] from 10.21.51.108:54257-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260323 21:59:52.878670  29664 INFO    /, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 22:00:01.359785  29663 INFO    /, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 22:00:02.761633  29663 INFO    /anom, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 22:00:23.469977  29664 ERROR   Read EOF, fd 33 disconnected-/home/dachuo/my_socket/src/Connection.cpp:286
+20260323 22:08:49.710747  29661 INFO    HttpServer::OnNewConnection : Add connection [ fd#32 ] from 127.0.0.1:60798-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260323 22:08:49.711120  29665 INFO    /query.php, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 22:11:30.693759  29661 INFO    HttpServer::OnNewConnection : Add connection [ fd#32 ] from 10.21.7.125:59118-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260323 22:11:31.035672  29666 INFO    /, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 22:11:36.825599  29666 INFO    /, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 22:11:38.202417  29666 INFO    /anom, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 22:11:49.764517  29666 ERROR   Read EOF, fd 32 disconnected-/home/dachuo/my_socket/src/Connection.cpp:286
+20260323 22:11:49.770732  29661 INFO    HttpServer::OnNewConnection : Add connection [ fd#32 ] from 10.21.7.125:59132-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260323 22:11:49.770935  29661 INFO    HttpServer::OnNewConnection : Add connection [ fd#33 ] from 10.21.7.125:59133-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260323 22:11:49.771294  29668 INFO    /anom, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 22:11:50.876370  29667 INFO    /open/(1).png, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 22:11:50.897038  29667 INFO    Open file (1).png success!-/home/dachuo/my_socket/test/httpserver.cpp:203
+20260323 22:11:52.947376  29667 INFO    /open/(17).png, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 22:11:52.988150  29667 INFO    Open file (17).png success!-/home/dachuo/my_socket/test/httpserver.cpp:203
+20260323 22:11:55.505990  29667 INFO    /open/117168586377184961.png, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 22:11:55.518821  29667 INFO    Open file 117168586377184961.png success!-/home/dachuo/my_socket/test/httpserver.cpp:203
+20260323 22:11:58.391861  29667 INFO    /open/kitty.jpg, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 22:11:58.397259  29667 INFO    Open file kitty.jpg success!-/home/dachuo/my_socket/test/httpserver.cpp:203
+20260323 22:11:59.959264  29668 ERROR   Read EOF, fd 33 disconnected-/home/dachuo/my_socket/src/Connection.cpp:286
+20260323 22:11:59.978910  29667 INFO    /open/xkx.jpg, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 22:11:59.983503  29667 INFO    Open file xkx.jpg success!-/home/dachuo/my_socket/test/httpserver.cpp:203
+20260323 22:12:01.335698  29667 INFO    /open/select.html, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 22:12:01.340124  29667 INFO    Open file select.html success!-/home/dachuo/my_socket/test/httpserver.cpp:203
+20260323 22:12:02.926754  29667 INFO    /open/select.html, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 22:12:02.928720  29667 INFO    Open file select.html success!-/home/dachuo/my_socket/test/httpserver.cpp:203
+20260323 22:12:05.916952  29667 INFO    /open/20240506192717.jpg, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 22:12:05.921768  29667 INFO    Open file 20240506192717.jpg success!-/home/dachuo/my_socket/test/httpserver.cpp:203
+20260323 22:12:07.719889  29667 INFO    /open/khl20231227233320353.png, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 22:12:07.759945  29667 INFO    Open file khl20231227233320353.png success!-/home/dachuo/my_socket/test/httpserver.cpp:203
+20260323 22:12:35.044984  29661 INFO    HttpServer::OnNewConnection : Add connection [ fd#33 ] from 10.21.7.83:59642-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260323 22:12:35.059051  29661 INFO    HttpServer::OnNewConnection : Add connection [ fd#34 ] from 10.21.7.83:59640-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260323 22:12:35.070325  29669 INFO    /, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 22:12:35.299602  29669 INFO    /favicon.ico, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 22:12:36.578202  29670 ERROR   Read EOF, fd 34 disconnected-/home/dachuo/my_socket/src/Connection.cpp:286
+20260323 22:12:38.213807  29667 ERROR   Read EOF, fd 32 disconnected-/home/dachuo/my_socket/src/Connection.cpp:286
+20260323 22:12:42.151206  29661 INFO    HttpServer::OnNewConnection : Add connection [ fd#32 ] from 10.21.7.83:59649-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260323 22:12:42.239673  29663 INFO    /anom, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260323 22:12:42.260017  29661 INFO    HttpServer::OnNewConnection : Add connection [ fd#33 ] from 10.21.7.83:59651-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260323 22:12:42.331201  29663 INFO    /favicon.ico, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451

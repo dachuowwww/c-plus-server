@@ -134,13 +134,6 @@ src/CMakeFiles/PINE_SHARED.dir/Logger.cpp.o
  ../src/include/Macro.h
  ../src/include/TimeStamp.h
  /home/dachuo/my_socket/src/Logger.cpp
-src/CMakeFiles/PINE_SHARED.dir/Metrics.cpp.o
- ../src/include/Error.h
- ../src/include/LogStream.h
- ../src/include/Logger.h
- ../src/include/Macro.h
- ../src/include/Metrics.h
- /home/dachuo/my_socket/src/Metrics.cpp
 src/CMakeFiles/PINE_SHARED.dir/PageCacheService.cpp.o
  ../src/include/Macro.h
  ../src/include/PageCacheService.h

@@ -134,13 +134,6 @@ src/CMakeFiles/PINE_SHARED.dir/Logger.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/Logger.cpp.o: ../src/include/TimeStamp.h
 src/CMakeFiles/PINE_SHARED.dir/Logger.cpp.o: ../src/Logger.cpp
 
-src/CMakeFiles/PINE_SHARED.dir/Metrics.cpp.o: ../src/include/Error.h
-src/CMakeFiles/PINE_SHARED.dir/Metrics.cpp.o: ../src/include/LogStream.h
-src/CMakeFiles/PINE_SHARED.dir/Metrics.cpp.o: ../src/include/Logger.h
-src/CMakeFiles/PINE_SHARED.dir/Metrics.cpp.o: ../src/include/Macro.h
-src/CMakeFiles/PINE_SHARED.dir/Metrics.cpp.o: ../src/include/Metrics.h
-src/CMakeFiles/PINE_SHARED.dir/Metrics.cpp.o: ../src/Metrics.cpp
-
 src/CMakeFiles/PINE_SHARED.dir/PageCacheService.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/PageCacheService.cpp.o: ../src/include/PageCacheService.h
 src/CMakeFiles/PINE_SHARED.dir/PageCacheService.cpp.o: ../src/include/RedisClient.h

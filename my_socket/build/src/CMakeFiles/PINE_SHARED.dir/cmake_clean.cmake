@@ -19,7 +19,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/PINE_SHARED.dir/LogFile.cpp.o"
   "CMakeFiles/PINE_SHARED.dir/LogStream.cpp.o"
   "CMakeFiles/PINE_SHARED.dir/Logger.cpp.o"
-  "CMakeFiles/PINE_SHARED.dir/Metrics.cpp.o"
   "CMakeFiles/PINE_SHARED.dir/PageCacheService.cpp.o"
   "CMakeFiles/PINE_SHARED.dir/Poller.cpp.o"
   "CMakeFiles/PINE_SHARED.dir/RedisClient.cpp.o"

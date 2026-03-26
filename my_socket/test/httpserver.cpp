@@ -197,7 +197,7 @@ void Httpopen(const std::string &filename, HttpResponse *response) {
         response->SetContentType("text/html; charset=UTF-8");
       }
       response->SetResponseBody(PageCacheService::Instance().GetOrBuild(
-          "file:view:" + filename, 60, [&filename]() { return HttpServer::ReadFile("../files/" + filename); }));
+          "file:view:" + filename, 60, [filename]() { return HttpServer::ReadFile("../files/" + filename); }));
       response->SetStatusCode(HttpResponse::HttpStatusCode::K200K);
       response->SetStatusMessage("OK");
       LOG_INFO << "Open file " << filename << " success!";
