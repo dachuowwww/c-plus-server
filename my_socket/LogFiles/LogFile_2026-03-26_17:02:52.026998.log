@@ -32257,3 +32257,5 @@
 20260326 17:03:12.513873  32197 ERROR   Read EOF, fd 272 disconnected-/home/dachuo/my_socket/src/Connection.cpp:286
 20260326 17:03:12.514009  32197 ERROR   Read EOF, fd 298 disconnected-/home/dachuo/my_socket/src/Connection.cpp:286
 20260326 17:03:12.514430  32197 ERROR   Read EOF, fd 905 disconnected-/home/dachuo/my_socket/src/Connection.cpp:286
+20260326 17:04:46.201263  32191 INFO    HttpServer::OnNewConnection : Add connection [ fd#32 ] from 127.0.0.1:58579-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260326 17:04:46.201601  32194 INFO    /query.php, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451

@@ -15,7 +15,7 @@ class EventLoop;
 class HttpRequest;
 class HttpResponse;
 class ThreadPool;
-const double AUTOCLOSETIMEOUT = 10.0;
+const double AUTOCLOSETIMEOUT = 60.0;
 
 class HttpServer {
  public:

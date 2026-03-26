@@ -1,6 +1,16 @@
 #include "RedisClient.h"
+
+#include <chrono>
 #include <cerrno>
+#include <cstdint>
 #include <cstdlib>
+#include <limits>
+#include <string>
+
+namespace {
+constexpr int kDefaultPoolSize = 16;
+constexpr int kPoolAcquireWaitMs = 200;
+}  // namespace
 
 RedisReplyPtr RedisClient::MakeReply(void *raw) {
   return RedisReplyPtr(static_cast<redisReply *>(raw), &freeReplyObject);
@@ -8,22 +18,22 @@ RedisReplyPtr RedisClient::MakeReply(void *raw) {
 
 RedisContextPtr RedisClient::Connect(const std::string &host, int port, const std::string &password, int db) {
   const struct timeval timeout = {1, 0};
-  RedisContextPtr context(redisConnectWithTimeout(host.c_str(), port, timeout), &redisFree);  // 登录获取上下文
+  RedisContextPtr context(redisConnectWithTimeout(host.c_str(), port, timeout), &redisFree);
   if (!context || context->err) {
     return RedisContextPtr(nullptr, &redisFree);
   }
 
   if (!password.empty()) {
-    RedisReplyPtr auth_reply(static_cast<redisReply *>(
-                                 redisCommand(context.get(), "AUTH %b", password.data(), password.size())),  // 检查密码
-                             &freeReplyObject);
+    RedisReplyPtr auth_reply(
+        static_cast<redisReply *>(redisCommand(context.get(), "AUTH %b", password.data(), password.size())),
+        &freeReplyObject);
     if (!auth_reply || auth_reply->type == REDIS_REPLY_ERROR) {
       return RedisContextPtr(nullptr, &redisFree);
     }
   }
 
   if (db > 0) {
-    RedisReplyPtr select_reply(static_cast<redisReply *>(redisCommand(context.get(), "SELECT %d", db)),  // 选择数据库
+    RedisReplyPtr select_reply(static_cast<redisReply *>(redisCommand(context.get(), "SELECT %d", db)),
                                &freeReplyObject);
     if (!select_reply || select_reply->type == REDIS_REPLY_ERROR) {
       return RedisContextPtr(nullptr, &redisFree);
@@ -33,20 +43,42 @@ RedisContextPtr RedisClient::Connect(const std::string &host, int port, const st
   return context;
 }
 
-RedisClient::RedisClient() : host_("127.0.0.1"), port_(6379), password_(""), db_(0) {
+RedisClient::RedisClient() : host_("127.0.0.1"), port_(6379), password_(""), db_(0), pool_size_(kDefaultPoolSize), in_use_count_(0) {
   const char *redis_host = std::getenv("REDIS_HOST");
   const char *redis_port = std::getenv("REDIS_PORT");
   const char *redis_password = std::getenv("REDIS_PASSWORD");
   const char *redis_db = std::getenv("REDIS_DB");
+  const char *redis_pool_size = std::getenv("REDIS_POOL_SIZE");
 
   host_ = (redis_host != nullptr) ? redis_host : "127.0.0.1";
   port_ = ParseIntOrDefault(redis_port, 6379);
   password_ = (redis_password != nullptr) ? redis_password : "";
   db_ = ParseIntOrDefault(redis_db, 0);
+  const int configured_pool_size = ParseIntOrDefault(redis_pool_size, kDefaultPoolSize);
+  if (configured_pool_size <= 0) {
+    pool_size_ = kDefaultPoolSize;
+  } else {
+    pool_size_ = static_cast<size_t>(configured_pool_size);
+  }
 }
 
 RedisClient::RedisClient(std::string host, int port, std::string password, int db)
-    : host_(std::move(host)), port_(port), password_(std::move(password)), db_(db) {}
+    : host_(std::move(host)),
+      port_(port),
+      password_(std::move(password)),
+      db_(db),
+      pool_size_(kDefaultPoolSize),
+      in_use_count_(0) {
+  const char *redis_pool_size = std::getenv("REDIS_POOL_SIZE");
+  const int configured_pool_size = ParseIntOrDefault(redis_pool_size, kDefaultPoolSize);
+  if (configured_pool_size <= 0) {
+    pool_size_ = kDefaultPoolSize;
+  } else {
+    pool_size_ = static_cast<size_t>(configured_pool_size);
+  }
+}
+
+RedisClient::~RedisClient() { ClearPool(); }
 
 int RedisClient::ParseIntOrDefault(const char *text, int default_value) {
   if (text == nullptr || text[0] == '\0') {
@@ -55,101 +87,205 @@ int RedisClient::ParseIntOrDefault(const char *text, int default_value) {
 
   char *end = nullptr;
   errno = 0;
-  const int32_t parsed = std::strtol(text, &end, 10);
+  const long parsed = std::strtol(text, &end, 10);
   if (errno != 0 || end == text || *end != '\0') {
+    return default_value;
+  }
+  if (parsed < std::numeric_limits<int>::min() || parsed > std::numeric_limits<int>::max()) {
     return default_value;
   }
   return static_cast<int>(parsed);
 }
 
-bool RedisClient::Get(const std::string &key, std::string *value) {
-  if (value == nullptr) {
-    return false;
-  }
+redisContext *RedisClient::AcquireContext() {
+  std::unique_lock<std::mutex> lock(pool_mutex_); // 锁内只做状态判断和名额预留
+  const auto deadline = std::chrono::steady_clock::now() + std::chrono::milliseconds(kPoolAcquireWaitMs);
 
-  RedisContextPtr context = Connect(host_, port_, password_, db_);
-  if (!context) {
-    return false;
-  }
+  while (true) {
+    if (!pool_.empty()) {
+      redisContext *context = pool_.back();
+      pool_.pop_back();
+      ++in_use_count_;
+      return context;
+    }
 
-  RedisReplyPtr reply =
-      MakeReply(redisCommand(context.get(), "GET %b", key.data(), key.size()));  // RESP 协议格式化命令，二进制安全
-  if (!reply || reply->type != REDIS_REPLY_STRING) {
-    return false;
+    if (static_cast<size_t>(in_use_count_) < pool_size_) { // 预留名额，创建新链接，后续判断
+      ++in_use_count_; // 防并发
+      lock.unlock();
+      RedisContextPtr created = Connect(host_, port_, password_, db_);
+      if (!created) {
+        lock.lock();
+        --in_use_count_;
+        pool_cv_.notify_one();
+        return nullptr;
+      }
+      return created.release();
+    }
+
+    if (pool_cv_.wait_until(lock, deadline) == std::cv_status::timeout) { // 等待超时
+      return nullptr;
+    }
   }
-  value->assign(reply->str, static_cast<size_t>(reply->len));
-  return true;
 }
 
+void RedisClient::ReleaseContext(redisContext *context, bool reusable) {
+  std::lock_guard<std::mutex> lock(pool_mutex_);
+  if (in_use_count_ > 0) {
+    --in_use_count_;
+  }
+
+  if (context != nullptr) {
+    if (reusable) {
+      pool_.push_back(context);
+    } else {
+      redisFree(context);
+    }
+  }
+  pool_cv_.notify_one();
+}
+
+bool RedisClient::IsContextReusable(redisContext *context, const redisReply *reply) const {
+  if (context == nullptr || context->err != 0) {
+    return false;
+  }
+  return reply != nullptr;
+}
+
+void RedisClient::ClearPool() {
+  std::lock_guard<std::mutex> lock(pool_mutex_);
+  for (auto *context : pool_) {
+    if (context != nullptr) {
+      redisFree(context);
+    }
+  }
+  pool_.clear();
+}
+
+RedisClient::GetResult RedisClient::GetWithStatus(const std::string &key, std::string *value) {
+  if (value == nullptr) {
+    return GetResult::kError;
+  }
+
+  redisContext *context = AcquireContext();
+  if (context == nullptr) {
+    return GetResult::kError;
+  }
+
+  RedisReplyPtr reply = MakeReply(redisCommand(context, "GET %b", key.data(), key.size()));
+  const bool reusable = IsContextReusable(context, reply.get());
+  GetResult result = GetResult::kError;
+  if (reply && reply->type == REDIS_REPLY_STRING) {
+    value->assign(reply->str, static_cast<size_t>(reply->len));
+    result = GetResult::kHit;
+  } else if (reply && reply->type == REDIS_REPLY_NIL) {
+    result = GetResult::kMiss;
+  }
+  ReleaseContext(context, reusable);
+  return result;
+}
+
+bool RedisClient::Get(const std::string &key, std::string *value) {
+  return GetWithStatus(key, value) == GetResult::kHit;
+}
 bool RedisClient::SetEx(const std::string &key, int ttl_seconds, const std::string &value) {
   if (ttl_seconds <= 0) {
     return false;
   }
 
-  RedisContextPtr context = Connect(host_, port_, password_, db_);
-  if (!context) {
+  redisContext *context = AcquireContext();
+  if (context == nullptr) {
     return false;
   }
 
   RedisReplyPtr reply = MakeReply(
-      redisCommand(context.get(), "SETEX %b %d %b", key.data(), key.size(), ttl_seconds, value.data(), value.size()));
-  return reply && reply->type == REDIS_REPLY_STATUS && std::string(reply->str, static_cast<size_t>(reply->len)) == "OK";
+      redisCommand(context, "SETEX %b %d %b", key.data(), key.size(), ttl_seconds, value.data(), value.size()));
+  const bool reusable = IsContextReusable(context, reply.get());
+  const bool ok =
+      reply && reply->type == REDIS_REPLY_STATUS && std::string(reply->str, static_cast<size_t>(reply->len)) == "OK";
+  ReleaseContext(context, reusable);
+  return ok;
+}
+
+bool RedisClient::Expire(const std::string &key, int ttl_seconds) {
+  if (ttl_seconds <= 0) {
+    return false;
+  }
+
+  redisContext *context = AcquireContext();
+  if (context == nullptr) {
+    return false;
+  }
+
+  RedisReplyPtr reply = MakeReply(redisCommand(context, "EXPIRE %b %d", key.data(), key.size(), ttl_seconds));
+  const bool reusable = IsContextReusable(context, reply.get());
+  const bool ok = reply && reply->type == REDIS_REPLY_INTEGER && reply->integer == 1;
+  ReleaseContext(context, reusable);
+  return ok;
 }
 
 bool RedisClient::Del(const std::string &key) {
-  RedisContextPtr context = Connect(host_, port_, password_, db_);
-  if (!context) {
+  redisContext *context = AcquireContext();
+  if (context == nullptr) {
     return false;
   }
 
-  RedisReplyPtr reply = MakeReply(redisCommand(context.get(), "DEL %b", key.data(), key.size()));
-  return reply && reply->type == REDIS_REPLY_INTEGER && reply->integer >= 0;
+  RedisReplyPtr reply = MakeReply(redisCommand(context, "DEL %b", key.data(), key.size()));
+  const bool reusable = IsContextReusable(context, reply.get());
+  const bool ok = reply && reply->type == REDIS_REPLY_INTEGER && reply->integer >= 0;
+  ReleaseContext(context, reusable);
+  return ok;
 }
 
 int RedisClient::TTL(const std::string &key) {
-  RedisContextPtr context = Connect(host_, port_, password_, db_);
-  if (!context) {
+  redisContext *context = AcquireContext();
+  if (context == nullptr) {
     return -2;
   }
 
-  RedisReplyPtr reply = MakeReply(redisCommand(context.get(), "TTL %b", key.data(), key.size()));
-  if (!reply || reply->type != REDIS_REPLY_INTEGER) {
-    return -2;
+  RedisReplyPtr reply = MakeReply(redisCommand(context, "TTL %b", key.data(), key.size()));
+  const bool reusable = IsContextReusable(context, reply.get());
+  int ttl = -2;
+  if (reply && reply->type == REDIS_REPLY_INTEGER) {
+    ttl = static_cast<int>(reply->integer);
   }
-  return static_cast<int>(reply->integer);
+  ReleaseContext(context, reusable);
+  return ttl;
 }
 
 bool RedisClient::ZIncrBy(const std::string &key, double increment, const std::string &member) {
-  RedisContextPtr context = Connect(host_, port_, password_, db_);
-  if (!context) {
+  redisContext *context = AcquireContext();
+  if (context == nullptr) {
     return false;
   }
 
-  RedisReplyPtr reply = MakeReply(
-      redisCommand(context.get(), "ZINCRBY %b %f %b", key.data(), key.size(), increment, member.data(), member.size()));
-  return reply && (reply->type == REDIS_REPLY_STRING || reply->type == REDIS_REPLY_STATUS);
+  RedisReplyPtr reply =
+      MakeReply(redisCommand(context, "ZINCRBY %b %f %b", key.data(), key.size(), increment, member.data(),
+                             member.size()));
+  const bool reusable = IsContextReusable(context, reply.get());
+  const bool ok = reply && (reply->type == REDIS_REPLY_STRING || reply->type == REDIS_REPLY_STATUS);
+  ReleaseContext(context, reusable);
+  return ok;
 }
 
 std::vector<std::string> RedisClient::ZRevRange(const std::string &key, int start, int stop) {
-  RedisContextPtr context = Connect(host_, port_, password_, db_);
-  if (!context) {
+  redisContext *context = AcquireContext();
+  if (context == nullptr) {
     return {};
   }
 
-  RedisReplyPtr reply = MakeReply(redisCommand(context.get(), "ZREVRANGE %b %d %d", key.data(), key.size(), start,
-                                               stop));  // 从大到小取 top_n 个元素，包含 stop
-  if (!reply || reply->type != REDIS_REPLY_ARRAY) {
-    return {};
-  }
-
+  RedisReplyPtr reply = MakeReply(redisCommand(context, "ZREVRANGE %b %d %d", key.data(), key.size(), start, stop));
+  const bool reusable = IsContextReusable(context, reply.get());
   std::vector<std::string> result;
-  result.reserve(static_cast<size_t>(reply->elements));
-  for (size_t i = 0; i < reply->elements; ++i) {
-    const redisReply *item = reply->element[i];
-    if (item != nullptr && item->type == REDIS_REPLY_STRING) {
-      result.emplace_back(item->str, static_cast<size_t>(item->len));
+  if (reply && reply->type == REDIS_REPLY_ARRAY) {
+    result.reserve(static_cast<size_t>(reply->elements));
+    for (size_t i = 0; i < reply->elements; ++i) {
+      const redisReply *item = reply->element[i];
+      if (item != nullptr && item->type == REDIS_REPLY_STRING) {
+        result.emplace_back(item->str, static_cast<size_t>(item->len));
+      }
     }
   }
+  ReleaseContext(context, reusable);
   return result;
 }
 
@@ -158,27 +294,35 @@ bool RedisClient::TryLock(const std::string &key, const std::string &token, int 
     return false;
   }
 
-  RedisContextPtr context = Connect(host_, port_, password_, db_);
-  if (!context) {
+  redisContext *context = AcquireContext();
+  if (context == nullptr) {
     return false;
   }
 
-  RedisReplyPtr reply = MakeReply(redisCommand(context.get(), "SET %b %b NX EX %d", key.data(), key.size(),
-                                               token.data(), token.size(), ttl_seconds));
-  return reply && reply->type == REDIS_REPLY_STATUS && std::string(reply->str, static_cast<size_t>(reply->len)) == "OK";
+  RedisReplyPtr reply = MakeReply(
+      redisCommand(context, "SET %b %b NX EX %d", key.data(), key.size(), token.data(), token.size(), ttl_seconds));
+  const bool reusable = IsContextReusable(context, reply.get());
+  const bool ok =
+      reply && reply->type == REDIS_REPLY_STATUS && std::string(reply->str, static_cast<size_t>(reply->len)) == "OK";
+  ReleaseContext(context, reusable);
+  return ok;
 }
 
 bool RedisClient::Unlock(const std::string &key, const std::string &token) {
   static const char kUnlockScript[] =
-      "if redis.call('GET', KEYS[1]) == ARGV[1] then "  // Lua脚本
+      "if redis.call('GET', KEYS[1]) == ARGV[1] then "
       "return redis.call('DEL', KEYS[1]) else return 0 end";
 
-  RedisContextPtr context = Connect(host_, port_, password_, db_);
-  if (!context) {
+  redisContext *context = AcquireContext();
+  if (context == nullptr) {
     return false;
   }
 
-  RedisReplyPtr reply = MakeReply(redisCommand(context.get(), "EVAL %s 1 %b %b", kUnlockScript, key.data(), key.size(),
-                                               token.data(), token.size()));
-  return reply && reply->type == REDIS_REPLY_INTEGER && reply->integer == 1;
+  RedisReplyPtr reply =
+      MakeReply(redisCommand(context, "EVAL %s 1 %b %b", kUnlockScript, key.data(), key.size(), token.data(),
+                             token.size()));
+  const bool reusable = IsContextReusable(context, reply.get());
+  const bool ok = reply && reply->type == REDIS_REPLY_INTEGER && reply->integer == 1;
+  ReleaseContext(context, reusable);
+  return ok;
 }

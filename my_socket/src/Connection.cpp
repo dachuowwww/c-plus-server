@@ -283,7 +283,7 @@ void Connection::ReadNonBlocking() {
       break;
     }
     if (bytes_read == 0) {  // EOF，对方断开连接
-      LOG_ERROR << "Read EOF, fd " << conn_socket_->GetFd() << " disconnected";
+      LOG_DEBUG << "Read EOF, fd " << conn_socket_->GetFd() << " disconnected";
       SetState(State::Closed);
       RemoveConnection();
       break;
@@ -307,7 +307,7 @@ void Connection::ReadBlocking() {
     UpdateTimeStamp();
     // input_buffer_->Append("\0");
   } else if (had_read == 0) {  // EOF，对方断开连接
-    LOG_ERROR << "Read EOF, fd " << conn_socket_->GetFd() << " disconnected";
+    LOG_DEBUG << "Read EOF, fd " << conn_socket_->GetFd() << " disconnected";
     SetState(State::Closed);
     if (remove_) {
       RemoveConnection();
@@ -382,7 +382,19 @@ std::string Connection::ReadInputBuffer() const { return input_buffer_->PeekAllS
 
 int Connection::ReadInputBufferSize() const { return input_buffer_->ReadableBytes(); }
 
-// void Connection::ConsumeInputBuffer(int len) { input_buffer_->Retreive(len); }
+// void Connection::ConsumeInputBuffer(int len) {
+//   if (len <= 0) {
+//     return;
+//   }
+//   const int readable = input_buffer_->ReadableBytes();
+//   if (readable <= 0) {
+//     return;
+//   }
+//   if (len > readable) {
+//     len = readable;
+//   }
+//   input_buffer_->Retreive(len);
+// }
 
 std::string Connection::ReadOutputBuffer() const { return output_buffer_->PeekAllString(); }
 
@@ -438,17 +450,21 @@ void Connection::SendFileInLoop() {
     } else if (bytes_write == -1 && (errno == EINTR || errno == EAGAIN || errno == EWOULDBLOCK)) {
       // Metrics::OnSendfileEagain();
       conn_channel_->EnableWriting();
-    }
-    LOG_ERROR << "Connection::SendFile - sendfile error, errno=" << errno;
-    // Metrics::OnSendfileError();
-    if (sendfile_fd_ != -1) {
-      ::close(sendfile_fd_);
-      sendfile_fd_ = -1;
-    }
-    sending_file_ = false;
-    SetState(State::Closed);
-    if (remove_) {
-      RemoveConnection();
+      return;
+    } else {
+      if(bytes_write == 0)LOG_ERROR << "Connection::SendFile - peer closed while sending file";
+      else{LOG_ERROR << "Connection::SendFile - sendfile error, errno=" << errno;}
+      // Metrics::OnSendfileError();
+      if (sendfile_fd_ != -1) {
+        ::close(sendfile_fd_);
+        sendfile_fd_ = -1;
+      }
+      sending_file_ = false;
+      SetState(State::Closed);
+      if (remove_) {
+        RemoveConnection();
+      }
+      return;
     }
   }
   if (sendfile_remaining_ == 0) {

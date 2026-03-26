@@ -341,8 +341,8 @@ int main(int argc, char *argv[]) {
   Logger::SetFlush(AsyncFlush);
   async_log->Start();
   auto httpserver = std::make_unique<HttpServer>(ip.c_str(), port);
-  WarmupWorker::Instance().RegisterPage("page:filelist:user", 60, []() { return BuildFileHtml("../files"); });
-  WarmupWorker::Instance().RegisterPage("page:filelist:guest", 60, []() { return BuildAnomFileHtml("../files"); });
+  PageCacheService::Instance().GetOrBuild(
+          "page:home", 60, []() { return HttpServer::ReadFile("../static/index.html"); });  // 预热首页缓存
   WarmupWorker::Instance().Start();
   if (argc == 2) {  // 加一个参数变echo_server
     httpserver->SetMessageCallBack(Message);

@@ -21,10 +21,10 @@ std::string HttpResponse::GetPreBody() {
   response += status_message_;
   response += "\r\n";
   if (close_) {
-    response += "Connection:close\r\n";
+    response += "Connection: close\r\n";
   } else {
-    response += "Connection:keep-alive\r\n";
-    response += "Keep-Alive: timeout=10\r\n";
+    response += "Connection: keep-alive\r\n";
+    response += "Keep-Alive: timeout=60\r\n";
   }
   int body_len = (body_type_ == "FILE_TYPE") ? content_length_ : static_cast<int>(body_.size());
   if (body_len >= 0) {

@@ -1,39 +1,35 @@
 #pragma once
 #include <atomic>
-#include <functional>
 #include <mutex>
 #include <string>
 #include <thread>
 #include <unordered_map>
-#include <vector>
 
 #include "Macro.h"
 #include "RedisClient.h"
 
 class WarmupWorker {
  public:
-  using Builder = std::function<std::string()>;
-
   WarmupWorker() = default;
   ~WarmupWorker();
   static WarmupWorker &Instance();
 
-  void RegisterPage(const std::string &key, int ttl_seconds, Builder builder);
+  void RegisterPage(const std::string &key, int ttl_seconds);
   void Hit(const std::string &target, double score);
   void Start();
   void Stop();
   void Run();
 
  private:
-  struct PageSpec {
-    int ttl_seconds = 0;
-    Builder builder;
-  };
+  void FlushPendingHits();
+  void RefreshHotPages();
 
   std::atomic<bool> stop_{false};
   std::thread worker_;
   std::mutex mutex_;
-  std::unordered_map<std::string, PageSpec> specs_;
+  std::unordered_map<std::string, int> specs_;
+  std::mutex hit_mutex_;
+  std::unordered_map<std::string, double> pending_hits_;
   RedisClient redis_;
 
   DISALLOW_COPY_AND_ASSIGN(WarmupWorker);
