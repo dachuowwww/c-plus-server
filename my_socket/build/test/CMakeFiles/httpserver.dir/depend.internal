@@ -3,8 +3,10 @@
 
 test/CMakeFiles/httpserver.dir/httpserver.cpp.o
  ../src/include/AsyncLogging.h
+ ../src/include/Config.h
  ../src/include/Connection.h
  ../src/include/Error.h
+ ../src/include/FileMetaRepository.h
  ../src/include/HttpRequest.h
  ../src/include/HttpResponse.h
  ../src/include/HttpServer.h
@@ -13,6 +15,7 @@ test/CMakeFiles/httpserver.dir/httpserver.cpp.o
  ../src/include/Macro.h
  ../src/include/PageCacheService.h
  ../src/include/RedisClient.h
+ ../src/include/SessionManager.h
  ../src/include/TimeStamp.h
  ../src/include/UserRepository.h
  ../src/include/WarmupWorker.h

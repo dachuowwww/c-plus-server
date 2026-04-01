@@ -3,7 +3,7 @@
 #include <iostream>
 #include "Error.h"
 
-Buffer::Buffer() : read_index_(KPREPENDINDEX), write_index_(KPREPENDINDEX) { buffer_.reserve(KINITALSIZE); }
+Buffer::Buffer() : read_index_(KPREPENDINDEX), write_index_(KPREPENDINDEX) { buffer_.resize(KINITALSIZE); }
 
 void Buffer::Append(const char *data) { Append(data, static_cast<int>(strlen(data))); }
 void Buffer::Append(const std::string &data) { Append(data.data(), data.size()); }

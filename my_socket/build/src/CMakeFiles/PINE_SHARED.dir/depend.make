@@ -32,6 +32,9 @@ src/CMakeFiles/PINE_SHARED.dir/Channel.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/Channel.cpp.o: ../src/include/TimeStamp.h
 src/CMakeFiles/PINE_SHARED.dir/Channel.cpp.o: ../src/Channel.cpp
 
+src/CMakeFiles/PINE_SHARED.dir/Config.cpp.o: ../src/include/Config.h
+src/CMakeFiles/PINE_SHARED.dir/Config.cpp.o: ../src/Config.cpp
+
 src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/include/Buffer.h
 src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/include/Channel.h
 src/CMakeFiles/PINE_SHARED.dir/Connection.cpp.o: ../src/include/Connection.h
@@ -75,6 +78,11 @@ src/CMakeFiles/PINE_SHARED.dir/EventLoopThreadPool.cpp.o: ../src/include/EventLo
 src/CMakeFiles/PINE_SHARED.dir/EventLoopThreadPool.cpp.o: ../src/include/EventLoopThreadPool.h
 src/CMakeFiles/PINE_SHARED.dir/EventLoopThreadPool.cpp.o: ../src/include/Macro.h
 src/CMakeFiles/PINE_SHARED.dir/EventLoopThreadPool.cpp.o: ../src/EventLoopThreadPool.cpp
+
+src/CMakeFiles/PINE_SHARED.dir/FileMetaRepository.cpp.o: ../src/include/FileMetaRepository.h
+src/CMakeFiles/PINE_SHARED.dir/FileMetaRepository.cpp.o: ../src/include/Macro.h
+src/CMakeFiles/PINE_SHARED.dir/FileMetaRepository.cpp.o: ../src/include/RedisClient.h
+src/CMakeFiles/PINE_SHARED.dir/FileMetaRepository.cpp.o: ../src/FileMetaRepository.cpp
 
 src/CMakeFiles/PINE_SHARED.dir/HttpContext.cpp.o: ../src/include/Error.h
 src/CMakeFiles/PINE_SHARED.dir/HttpContext.cpp.o: ../src/include/HttpContext.h
@@ -176,6 +184,11 @@ src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/include/Server.h
 src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/include/TimeStamp.h
 src/CMakeFiles/PINE_SHARED.dir/Server.cpp.o: ../src/Server.cpp
 
+src/CMakeFiles/PINE_SHARED.dir/SessionManager.cpp.o: ../src/include/Macro.h
+src/CMakeFiles/PINE_SHARED.dir/SessionManager.cpp.o: ../src/include/RedisClient.h
+src/CMakeFiles/PINE_SHARED.dir/SessionManager.cpp.o: ../src/include/SessionManager.h
+src/CMakeFiles/PINE_SHARED.dir/SessionManager.cpp.o: ../src/SessionManager.cpp
+
 src/CMakeFiles/PINE_SHARED.dir/Socket.cpp.o: ../src/include/Error.h
 src/CMakeFiles/PINE_SHARED.dir/Socket.cpp.o: ../src/include/LogStream.h
 src/CMakeFiles/PINE_SHARED.dir/Socket.cpp.o: ../src/include/Logger.h
@@ -206,7 +219,9 @@ src/CMakeFiles/PINE_SHARED.dir/Timer.cpp.o: ../src/include/TimeStamp.h
 src/CMakeFiles/PINE_SHARED.dir/Timer.cpp.o: ../src/include/Timer.h
 src/CMakeFiles/PINE_SHARED.dir/Timer.cpp.o: ../src/Timer.cpp
 
+src/CMakeFiles/PINE_SHARED.dir/UserRepository.cpp.o: ../src/include/FileMetaRepository.h
 src/CMakeFiles/PINE_SHARED.dir/UserRepository.cpp.o: ../src/include/Macro.h
+src/CMakeFiles/PINE_SHARED.dir/UserRepository.cpp.o: ../src/include/RedisClient.h
 src/CMakeFiles/PINE_SHARED.dir/UserRepository.cpp.o: ../src/include/UserRepository.h
 src/CMakeFiles/PINE_SHARED.dir/UserRepository.cpp.o: ../src/UserRepository.cpp
 

@@ -22,6 +22,10 @@ LogStream.h
 Macro.h
 ../src/include/Macro.h
 
+../src/include/Config.h
+string
+-
+
 ../src/include/Connection.h
 functional
 -
@@ -35,6 +39,16 @@ TimeStamp.h
 ../src/include/TimeStamp.h
 
 ../src/include/Error.h
+
+../src/include/FileMetaRepository.h
+cstdint
+-
+string
+-
+vector
+-
+Macro.h
+../src/include/Macro.h
 
 ../src/include/HttpRequest.h
 string
@@ -97,25 +111,19 @@ Macro.h
 ../src/include/Macro.h
 
 ../src/include/PageCacheService.h
-chrono
--
 functional
--
-mutex
 -
 string
 -
-unordered_map
--
 Macro.h
 ../src/include/Macro.h
-RedisClient.h
-../src/include/RedisClient.h
 
 ../src/include/RedisClient.h
 hiredis/hiredis.h
 -
 condition_variable
+-
+cstdint
 -
 memory
 -
@@ -124,6 +132,14 @@ mutex
 string
 -
 vector
+-
+Macro.h
+../src/include/Macro.h
+
+../src/include/SessionManager.h
+cstdint
+-
+string
 -
 Macro.h
 ../src/include/Macro.h
@@ -139,6 +155,8 @@ Macro.h
 ../src/include/Macro.h
 
 ../src/include/UserRepository.h
+cstdint
+-
 string
 -
 Macro.h
@@ -157,8 +175,6 @@ unordered_map
 -
 Macro.h
 ../src/include/Macro.h
-RedisClient.h
-../src/include/RedisClient.h
 
 /home/dachuo/my_socket/test/httpserver.cpp
 HttpServer.h
@@ -171,7 +187,17 @@ sys/stat.h
 -
 unistd.h
 -
+algorithm
+-
+cctype
+-
+chrono
+-
+cstdint
+-
 cstdlib
+-
+ctime
 -
 exception
 -
@@ -182,6 +208,10 @@ functional
 iostream
 -
 memory
+-
+random
+-
+sstream
 -
 string
 -
@@ -201,6 +231,14 @@ Logger.h
 /home/dachuo/my_socket/test/Logger.h
 PageCacheService.h
 /home/dachuo/my_socket/test/PageCacheService.h
+Config.h
+/home/dachuo/my_socket/test/Config.h
+FileMetaRepository.h
+/home/dachuo/my_socket/test/FileMetaRepository.h
+RedisClient.h
+/home/dachuo/my_socket/test/RedisClient.h
+SessionManager.h
+/home/dachuo/my_socket/test/SessionManager.h
 TimeStamp.h
 /home/dachuo/my_socket/test/TimeStamp.h
 UserRepository.h

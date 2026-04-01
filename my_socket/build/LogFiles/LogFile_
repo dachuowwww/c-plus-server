@@ -1,0 +1,71 @@
+20260327 22:49:50.366597  19673 INFO    HttpServer Listening on [ 127.0.0.1:8081 ]-/home/dachuo/my_socket/src/HttpServer.cpp:414
+20260327 22:49:50.571610  19673 ERROR   ReadFile: open file failed! errno=2 msg=No such file or directory-/home/dachuo/my_socket/src/Error.cpp:11
+20260327 22:50:22.049712  19673 INFO    HttpServer::OnNewConnection : Add connection [ fd#32 ] from 127.0.0.1:55975-/home/dachuo/my_socket/src/HttpServer.cpp:427
+20260327 22:50:22.050393  19682 INFO    /healthz, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:452
+20260327 22:50:22.051180  19673 INFO    HttpServer::OnNewConnection : Add connection [ fd#33 ] from 127.0.0.1:55973-/home/dachuo/my_socket/src/HttpServer.cpp:427
+20260327 22:50:22.051340  19683 INFO    /whoami, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:452
+20260327 22:50:22.051418  19673 INFO    HttpServer::OnNewConnection : Add connection [ fd#34 ] from 127.0.0.1:55974-/home/dachuo/my_socket/src/HttpServer.cpp:427
+20260327 22:50:22.051618  19684 INFO    /whoami, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:452
+20260327 22:50:55.489385  19781 INFO    HttpServer Listening on [ 127.0.0.1:8081 ]-/home/dachuo/my_socket/src/HttpServer.cpp:414
+20260327 22:50:55.705745  19781 ERROR   ReadFile: open file failed! errno=2 msg=No such file or directory-/home/dachuo/my_socket/src/Error.cpp:11
+20260327 22:50:55.494178  19782 INFO    HttpServer Listening on [ 127.0.0.1:8082 ]-/home/dachuo/my_socket/src/HttpServer.cpp:414
+20260327 22:50:55.705738  19782 ERROR   ReadFile: open file failed! errno=2 msg=No such file or directory-/home/dachuo/my_socket/src/Error.cpp:11
+20260327 22:50:55.529892  19787 INFO    HttpServer Listening on [ 127.0.0.1:8083 ]-/home/dachuo/my_socket/src/HttpServer.cpp:414
+20260327 22:50:55.735673  19787 ERROR   ReadFile: open file failed! errno=2 msg=No such file or directory-/home/dachuo/my_socket/src/Error.cpp:11
+20260327 22:51:18.005630  19806 INFO    /whoami, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:452
+20260327 22:51:18.005206  19781 INFO    HttpServer::OnNewConnection : Add connection [ fd#32 ] from 127.0.0.1:55992-/home/dachuo/my_socket/src/HttpServer.cpp:427
+20260327 22:51:18.138605  19781 INFO    HttpServer::OnNewConnection : Add connection [ fd#33 ] from 127.0.0.1:55996-/home/dachuo/my_socket/src/HttpServer.cpp:427
+20260327 22:51:18.138835  19807 INFO    /healthz, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:452
+20260327 22:51:18.046543  19782 INFO    HttpServer::OnNewConnection : Add connection [ fd#32 ] from 127.0.0.1:55993-/home/dachuo/my_socket/src/HttpServer.cpp:427
+20260327 22:51:18.047026  19808 INFO    /whoami, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:452
+20260327 22:51:18.105875  19782 INFO    HttpServer::OnNewConnection : Add connection [ fd#33 ] from 127.0.0.1:55995-/home/dachuo/my_socket/src/HttpServer.cpp:427
+20260327 22:51:18.106127  19810 INFO    /healthz, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:452
+20260327 22:51:18.080460  19787 INFO    HttpServer::OnNewConnection : Add connection [ fd#32 ] from 127.0.0.1:55994-/home/dachuo/my_socket/src/HttpServer.cpp:427
+20260327 22:51:18.080879  19839 INFO    /whoami, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:452
+20260327 22:51:18.162736  19787 INFO    HttpServer::OnNewConnection : Add connection [ fd#33 ] from 127.0.0.1:55997-/home/dachuo/my_socket/src/HttpServer.cpp:427
+20260327 22:51:18.162995  19840 INFO    /healthz, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:452
+20260327 22:53:33.560854  20152 INFO    HttpServer Listening on [ 127.0.0.1:8082 ]-/home/dachuo/my_socket/src/HttpServer.cpp:414
+20260327 22:53:33.567289  20152 ERROR   ReadFile: open file failed! errno=2 msg=No such file or directory-/home/dachuo/my_socket/src/Error.cpp:11
+20260327 22:53:51.481125  20152 INFO    HttpServer::OnNewConnection : Add connection [ fd#33 ] from 127.0.0.1:56252-/home/dachuo/my_socket/src/HttpServer.cpp:427
+20260327 22:53:51.481522  20161 INFO    /healthz, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:452
+20260327 22:53:51.499292  20152 INFO    HttpServer::OnNewConnection : Add connection [ fd#33 ] from 127.0.0.1:56254-/home/dachuo/my_socket/src/HttpServer.cpp:427
+20260327 22:53:51.499573  20162 INFO    /whoami, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:452
+20260327 22:54:11.134515  20152 INFO    HttpServer::OnNewConnection : Add connection [ fd#33 ] from 127.0.0.1:56262-/home/dachuo/my_socket/src/HttpServer.cpp:427
+20260327 22:54:11.134908  20163 INFO    /healthz, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:452
+20260327 22:54:11.173171  20152 INFO    HttpServer::OnNewConnection : Add connection [ fd#33 ] from 127.0.0.1:56263-/home/dachuo/my_socket/src/HttpServer.cpp:427
+20260327 22:54:11.173370  20164 INFO    /whoami, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:452
+20260327 22:54:34.941386  20152 INFO    HttpServer::OnNewConnection : Add connection [ fd#33 ] from 127.0.0.1:56281-/home/dachuo/my_socket/src/HttpServer.cpp:427
+20260327 22:54:34.941572  20165 INFO    /files, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:452
+20260327 22:56:15.590029  20465 INFO    HttpServer Listening on [ 127.0.0.1:8082 ]-/home/dachuo/my_socket/src/HttpServer.cpp:414
+20260327 22:56:15.593981  20465 ERROR   ReadFile: open file failed! errno=2 msg=No such file or directory-/home/dachuo/my_socket/src/Error.cpp:11
+20260327 22:56:31.477379  20465 INFO    HttpServer::OnNewConnection : Add connection [ fd#33 ] from 127.0.0.1:56490-/home/dachuo/my_socket/src/HttpServer.cpp:427
+20260327 22:56:31.477825  20474 INFO    /healthz, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:452
+20260327 22:56:31.497166  20465 INFO    HttpServer::OnNewConnection : Add connection [ fd#33 ] from 127.0.0.1:56491-/home/dachuo/my_socket/src/HttpServer.cpp:427
+20260327 22:56:31.497327  20475 INFO    /whoami, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:452
+20260327 22:56:31.519758  20465 INFO    HttpServer::OnNewConnection : Add connection [ fd#33 ] from 127.0.0.1:56493-/home/dachuo/my_socket/src/HttpServer.cpp:427
+20260327 22:56:31.519912  20476 INFO    /files, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:452
+20260327 22:56:46.504008  20465 INFO    HttpServer::OnNewConnection : Add connection [ fd#33 ] from 127.0.0.1:56505-/home/dachuo/my_socket/src/HttpServer.cpp:427
+20260327 22:56:46.504212  20477 INFO    /healthz, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:452
+20260327 22:56:46.540427  20465 INFO    HttpServer::OnNewConnection : Add connection [ fd#33 ] from 127.0.0.1:56506-/home/dachuo/my_socket/src/HttpServer.cpp:427
+20260327 22:56:46.540614  20478 INFO    /whoami, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:452
+20260327 22:59:11.306064  20700 INFO    HttpServer Listening on [ 127.0.0.1:8081 ]-/home/dachuo/my_socket/src/HttpServer.cpp:414
+20260327 22:59:11.311240  20700 ERROR   ReadFile: open file failed! errno=2 msg=No such file or directory-/home/dachuo/my_socket/src/Error.cpp:11
+20260327 22:59:11.346088  20703 INFO    HttpServer Listening on [ 127.0.0.1:8083 ]-/home/dachuo/my_socket/src/HttpServer.cpp:414
+20260327 22:59:11.360945  20706 INFO    HttpServer Listening on [ 127.0.0.1:8082 ]-/home/dachuo/my_socket/src/HttpServer.cpp:414
+20260327 22:59:43.850526  20700 INFO    HttpServer::OnNewConnection : Add connection [ fd#33 ] from 127.0.0.1:56583-/home/dachuo/my_socket/src/HttpServer.cpp:427
+20260327 22:59:43.850812  20724 INFO    /whoami, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:452
+20260327 22:59:43.873652  20700 INFO    HttpServer::OnNewConnection : Add connection [ fd#33 ] from 127.0.0.1:56584-/home/dachuo/my_socket/src/HttpServer.cpp:427
+20260327 22:59:43.873794  20725 INFO    /healthz, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:452
+20260327 22:59:43.823153  20706 INFO    HttpServer::OnNewConnection : Add connection [ fd#33 ] from 127.0.0.1:56582-/home/dachuo/my_socket/src/HttpServer.cpp:427
+20260327 22:59:43.823440  20759 INFO    /whoami, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:452
+20260327 22:59:43.890197  20703 INFO    HttpServer::OnNewConnection : Add connection [ fd#33 ] from 127.0.0.1:56585-/home/dachuo/my_socket/src/HttpServer.cpp:427
+20260327 22:59:43.890808  20742 INFO    /whoami, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:452
+20260327 23:36:17.277775  23642 INFO    HttpServer Listening on [ 127.0.0.1:8082 ]-/home/dachuo/my_socket/src/HttpServer.cpp:413
+20260327 23:36:17.284202  23642 ERROR   ReadFile: open file failed! errno=2 msg=No such file or directory-/home/dachuo/my_socket/src/Error.cpp:11
+20260327 23:36:51.674998  23642 INFO    HttpServer::OnNewConnection : Add connection [ fd#33 ] from 127.0.0.1:58037-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260327 23:36:51.675227  23651 INFO    /whoami, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260327 23:36:51.683997  23642 INFO    HttpServer::OnNewConnection : Add connection [ fd#33 ] from 127.0.0.1:58038-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260327 23:36:51.684161  23652 INFO    /healthz, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260327 23:36:51.706792  23642 INFO    HttpServer::OnNewConnection : Add connection [ fd#33 ] from 127.0.0.1:58039-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260327 23:36:51.706999  23653 INFO    /api/list, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260327 23:36:51.708644  23653 ERROR   Open directory failed! errno=2 msg=No such file or directory-/home/dachuo/my_socket/src/Error.cpp:11

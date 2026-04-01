@@ -233,6 +233,33 @@ Channel.cpp.s:
 	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/Channel.cpp.s
 .PHONY : Channel.cpp.s
 
+Config.o: Config.cpp.o
+
+.PHONY : Config.o
+
+# target to build an object file
+Config.cpp.o:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/Config.cpp.o
+.PHONY : Config.cpp.o
+
+Config.i: Config.cpp.i
+
+.PHONY : Config.i
+
+# target to preprocess a source file
+Config.cpp.i:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/Config.cpp.i
+.PHONY : Config.cpp.i
+
+Config.s: Config.cpp.s
+
+.PHONY : Config.s
+
+# target to generate assembly for a file
+Config.cpp.s:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/Config.cpp.s
+.PHONY : Config.cpp.s
+
 Connection.o: Connection.cpp.o
 
 .PHONY : Connection.o
@@ -394,6 +421,33 @@ EventLoopThreadPool.s: EventLoopThreadPool.cpp.s
 EventLoopThreadPool.cpp.s:
 	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/EventLoopThreadPool.cpp.s
 .PHONY : EventLoopThreadPool.cpp.s
+
+FileMetaRepository.o: FileMetaRepository.cpp.o
+
+.PHONY : FileMetaRepository.o
+
+# target to build an object file
+FileMetaRepository.cpp.o:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/FileMetaRepository.cpp.o
+.PHONY : FileMetaRepository.cpp.o
+
+FileMetaRepository.i: FileMetaRepository.cpp.i
+
+.PHONY : FileMetaRepository.i
+
+# target to preprocess a source file
+FileMetaRepository.cpp.i:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/FileMetaRepository.cpp.i
+.PHONY : FileMetaRepository.cpp.i
+
+FileMetaRepository.s: FileMetaRepository.cpp.s
+
+.PHONY : FileMetaRepository.s
+
+# target to generate assembly for a file
+FileMetaRepository.cpp.s:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/FileMetaRepository.cpp.s
+.PHONY : FileMetaRepository.cpp.s
 
 HttpContext.o: HttpContext.cpp.o
 
@@ -800,6 +854,33 @@ Server.cpp.s:
 	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/Server.cpp.s
 .PHONY : Server.cpp.s
 
+SessionManager.o: SessionManager.cpp.o
+
+.PHONY : SessionManager.o
+
+# target to build an object file
+SessionManager.cpp.o:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/SessionManager.cpp.o
+.PHONY : SessionManager.cpp.o
+
+SessionManager.i: SessionManager.cpp.i
+
+.PHONY : SessionManager.i
+
+# target to preprocess a source file
+SessionManager.cpp.i:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/SessionManager.cpp.i
+.PHONY : SessionManager.cpp.i
+
+SessionManager.s: SessionManager.cpp.s
+
+.PHONY : SessionManager.s
+
+# target to generate assembly for a file
+SessionManager.cpp.s:
+	cd /home/dachuo/my_socket/build && $(MAKE) -f src/CMakeFiles/PINE_SHARED.dir/build.make src/CMakeFiles/PINE_SHARED.dir/SessionManager.cpp.s
+.PHONY : SessionManager.cpp.s
+
 Socket.o: Socket.cpp.o
 
 .PHONY : Socket.o
@@ -1037,6 +1118,9 @@ help:
 	@echo "... Channel.o"
 	@echo "... Channel.i"
 	@echo "... Channel.s"
+	@echo "... Config.o"
+	@echo "... Config.i"
+	@echo "... Config.s"
 	@echo "... Connection.o"
 	@echo "... Connection.i"
 	@echo "... Connection.s"
@@ -1055,6 +1139,9 @@ help:
 	@echo "... EventLoopThreadPool.o"
 	@echo "... EventLoopThreadPool.i"
 	@echo "... EventLoopThreadPool.s"
+	@echo "... FileMetaRepository.o"
+	@echo "... FileMetaRepository.i"
+	@echo "... FileMetaRepository.s"
 	@echo "... HttpContext.o"
 	@echo "... HttpContext.i"
 	@echo "... HttpContext.s"
@@ -1100,6 +1187,9 @@ help:
 	@echo "... Server.o"
 	@echo "... Server.i"
 	@echo "... Server.s"
+	@echo "... SessionManager.o"
+	@echo "... SessionManager.i"
+	@echo "... SessionManager.s"
 	@echo "... Socket.o"
 	@echo "... Socket.i"
 	@echo "... Socket.s"

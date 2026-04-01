@@ -138,6 +138,10 @@ void Connection::Send(const std::string &data) { Send(data.c_str(), data.size())
 void Connection::Send(const char *data) { Send(data, static_cast<int>(strlen(data))); }
 
 void Connection::Send(const char *data, int size) {
+  if (size <= 0) {
+    return;
+  }
+
   int remaining = size;
   int send_size = 0;
   if (output_buffer_->ReadableBytes() == 0) {
@@ -179,19 +183,32 @@ void Connection::SendFile(int fd, int size) {
   sendfile_fd_ = fd;
   sendfile_offset_ = 0;
   sendfile_remaining_ = static_cast<size_t>(size);
-  // sending_file_ = true;
-  // while (send_size < data_size) {
-  int bytes_write = sendfile(GetFd(), fd, &sendfile_offset_, sendfile_remaining_);  // off已经改变偏移量
-  if (bytes_write >= 0) {
+
+  // 头部还在 output_buffer 时，先等待头部发完，避免 file body 插到 header 中间。
+  if (output_buffer_->ReadableBytes() > 0) {
+    sending_file_ = true;
+    conn_channel_->EnableWriting();
+    return;
+  }
+
+  while (sendfile_remaining_ > 0) {
+    int bytes_write = sendfile(GetFd(), sendfile_fd_, &sendfile_offset_, sendfile_remaining_);  // off已经改变偏移量
     if (bytes_write > 0) {
       sendfile_remaining_ -= bytes_write;
       // Metrics::AddSendfileBytes(static_cast<uint64_t>(bytes_write));
       UpdateTimeStamp();  // 写更新时间戳
+      continue;
     }
-  } else if (bytes_write == -1 && ((errno == EAGAIN) || (errno == EWOULDBLOCK))) {
-    cout << "buffer full, wait for writing" << endl;
-    // Metrics::OnSendfileEagain();
-  } else {
+    if (bytes_write == -1 && errno == EINTR) {
+      continue;
+    }
+    if (bytes_write == -1 && ((errno == EAGAIN) || (errno == EWOULDBLOCK))) {
+      cout << "buffer full, wait for writing" << endl;
+      // Metrics::OnSendfileEagain();
+      sending_file_ = true;
+      conn_channel_->EnableWriting();
+      return;
+    }
     cout << "other write error" << endl;
     LOG_ERROR << "TcpConnection::Send - TcpConnection Send ERROR";
     // Metrics::OnSendfileError();
@@ -199,18 +216,17 @@ void Connection::SendFile(int fd, int size) {
     RemoveConnection();
     return;
   }
-  if (sendfile_remaining_ > 0) {
-    sending_file_ = true;
-    conn_channel_->EnableWriting();
+
+  int ret = ::close(sendfile_fd_);
+  if (ret == -1) {
+    LOG_ERROR << "close file error";
   } else {
-    int ret = ::close(sendfile_fd_);
-    if (ret == -1) {
-      LOG_ERROR << "close file error";
-    } else {
-      LOG_INFO << "close file success";
-    }
-    sendfile_fd_ = -1;
-    sending_file_ = false;
+    LOG_INFO << "close file success";
+  }
+  sendfile_fd_ = -1;
+  sending_file_ = false;
+  if (output_buffer_->ReadableBytes() == 0) {
+    conn_channel_->DisableWriting();
   }
   // }
 
@@ -343,7 +359,14 @@ void Connection::WriteNonBlocking() {  // 无需循环，一次写入
     // Metrics::OnWriteError();
     SetState(State::Closed);
     RemoveConnection();
+    return;
   }
+
+  if (sending_file_) {
+    SendFileInLoop();
+    return;
+  }
+  conn_channel_->DisableWriting();
 }
 void Connection::WriteBlocking() {
   // std::cout << "blocking write" << std::endl;
@@ -451,6 +474,9 @@ void Connection::SendFileInLoop() {
       // Metrics::OnSendfileEagain();
       conn_channel_->EnableWriting();
       return;
+    }
+    if (bytes_write == 0) {
+      LOG_ERROR << "Connection::SendFile - peer closed while sending file";
     } else {
       if(bytes_write == 0)LOG_ERROR << "Connection::SendFile - peer closed while sending file";
       else{LOG_ERROR << "Connection::SendFile - sendfile error, errno=" << errno;}

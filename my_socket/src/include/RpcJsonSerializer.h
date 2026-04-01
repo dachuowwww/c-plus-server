@@ -1,7 +1,7 @@
 #pragma once
-#include <nlohmann/json.hpp>
-#include <string>
 #include "RpcSerialization.h"
+#include <string>
+#include <nlohmann/json.hpp>
 
 class RpcJsonSerializer : public ISerializer {
  public:

@@ -64,7 +64,6 @@
 // }
 namespace {
 using RpcCode = HttpResponse::RpcCode;
-constexpr int kRpcTimeoutMs = 2000;
 
 class RpcMethodHandler {
  public:
@@ -73,7 +72,7 @@ class RpcMethodHandler {
                       std::string *error_message) = 0;
 };
 
-template <typename RequestType, typename ResponseType> // 多态分发，输入输出类型都由模板参数指定
+template <typename RequestType, typename ResponseType>  // 多态分发，输入输出类型都由模板参数指定
 class TypedRpcMethodHandler : public RpcMethodHandler {  // 方法封装，输入序列化器类型，解码请求内容，输出编码后响应内容
  public:
   using HandlerFunc = std::function<ResponseType(const RequestType &)>;
@@ -402,7 +401,8 @@ std::string HttpServer::ReadFile(const std::string &filename) {
 //   return content;
 // }
 /////////////////////////////////
-HttpServer::HttpServer(const char *ip, uint16_t port) {
+HttpServer::HttpServer(const char *ip, uint16_t port, const std::string &instance_name)
+    : instance_name_(instance_name) {
   RegisterRpcPlug();
   loop_ = std::make_unique<EventLoop>();
   server_ = std::make_unique<Server>(loop_.get(), ip, port);
@@ -464,9 +464,6 @@ void HttpServer::OnHttpReponse(const std::shared_ptr<Connection> &conn) {
   if (use_rpc_flow_pool_ && rpc_flow_pool_ && request->GetURL() == "/rpc") {
     HandleRpcRequestInPool(conn, *request, close);
     return;  // 有流程池需要自己决定响应报文和时间
-  }
-  if (request->GetHeader("Content-Type").find("multipart/form-data") != std::string::npos) {  // 处理文件上传
-    FileUpload(request);
   }
   auto response = std::make_unique<HttpResponse>(close);
   http_call_back_(*request, response.get());
@@ -548,7 +545,7 @@ void HttpServer::HandleRpcRequestInPool(const std::shared_ptr<Connection> &conn,
   std::weak_ptr<Connection> weak_conn =
       conn;  // 捕获连接的弱指针，避免妨碍连接的正常生命周期管理，同时在异步操作中安全地访问连接对象。
   conn->GetLoop()->RunAfter(
-      static_cast<double>(kRpcTimeoutMs) / 1000.0, [this, token, id, close, weak_conn, serializer_type]() mutable {
+      static_cast<double>(rpc_timeout_ms_) / 1000.0, [this, token, id, close, weak_conn, serializer_type]() mutable {
         bool should_send = false;
         {
           std::lock_guard<std::mutex> lock(rpc_pending_mtx_);
@@ -653,4 +650,12 @@ void HttpServer::FileUpload(const HttpRequest *request) {
   std::ofstream ofs("../files/" + filename, std::ios::out | std::ios::binary);
   ofs.write(file_data.data(), file_data.size());
   ofs.close();
+}
+
+void HttpServer::SetInstanceName(const std::string &name) { instance_name_ = name; }
+
+void HttpServer::SetRpcTimeoutMs(int timeout_ms) {
+  if (timeout_ms > 0) {
+    rpc_timeout_ms_ = timeout_ms;
+  }
 }

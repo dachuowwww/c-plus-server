@@ -1,0 +1,56 @@
+20260327 13:19:25.807262  13433 INFO    HttpServer Listening on [ 0.0.0.0:80 ]-/home/dachuo/my_socket/src/HttpServer.cpp:413
+20260327 13:19:53.154081  13433 INFO    HttpServer::OnNewConnection : Add connection [ fd#34 ] from 10.21.51.35:49227-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260327 13:19:53.155656  13433 INFO    HttpServer::OnNewConnection : Add connection [ fd#35 ] from 10.21.51.35:49228-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260327 13:19:53.156985  13436 INFO    /anom, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260327 13:19:53.712418  13436 INFO    /favicon.ico, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260327 13:20:14.334698  13433 INFO    HttpServer::OnNewConnection : Add connection [ fd#34 ] from 10.21.51.35:49276-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260327 13:20:14.340618  13437 INFO    /, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260327 13:20:14.511996  13437 INFO    /favicon.ico, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260327 13:20:44.009532  13433 INFO    HttpServer::OnNewConnection : Add connection [ fd#35 ] from 10.21.51.35:49287-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260327 13:20:44.011000  13438 INFO    /anom, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260327 13:20:44.172139  13438 INFO    /favicon.ico, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260327 13:20:45.598499  13433 INFO    HttpServer::OnNewConnection : Add connection [ fd#34 ] from 10.21.51.35:49288-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260327 13:20:45.599244  13439 INFO    /, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260327 13:20:45.752784  13439 INFO    /favicon.ico, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260327 13:20:50.673094  13433 INFO    HttpServer::OnNewConnection : Add connection [ fd#35 ] from 10.21.51.35:49290-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260327 13:20:50.675347  13440 INFO    /login, request successfully. Method:POST-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260327 13:20:50.675481  13440 INFO    New login request user=xkx-/home/dachuo/my_socket/test/httpserver.cpp:299
+20260327 13:20:50.701047  13440 ERROR   MySQL login verify failed, user=xkx, error=Can't connect to MySQL server on '127.0.0.1:3306' (111)-/home/dachuo/my_socket/test/httpserver.cpp:309
+20260327 13:20:50.706857  13441 INFO    /, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260327 13:20:50.867436  13441 INFO    /favicon.ico, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260327 13:20:57.939178  13433 INFO    HttpServer::OnNewConnection : Add connection [ fd#34 ] from 10.21.51.35:49299-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260327 13:20:57.939430  13433 INFO    HttpServer::OnNewConnection : Add connection [ fd#35 ] from 10.21.51.35:49300-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260327 13:20:57.944796  13442 INFO    /login, request successfully. Method:POST-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260327 13:20:57.944963  13442 INFO    New login request user=xkx-/home/dachuo/my_socket/test/httpserver.cpp:299
+20260327 13:20:57.945733  13442 ERROR   MySQL login verify failed, user=xkx, error=Can't connect to MySQL server on '127.0.0.1:3306' (111)-/home/dachuo/my_socket/test/httpserver.cpp:309
+20260327 13:20:57.951222  13444 INFO    /, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260327 13:20:58.122234  13444 INFO    /favicon.ico, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260327 13:21:53.403654  13433 INFO    HttpServer::OnNewConnection : Add connection [ fd#34 ] from 10.21.51.35:49354-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260327 13:21:53.403841  13433 INFO    HttpServer::OnNewConnection : Add connection [ fd#35 ] from 10.21.51.35:49355-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260327 13:21:53.405240  13436 INFO    /login, request successfully. Method:POST-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260327 13:21:53.405306  13436 INFO    New login request user=xkx-/home/dachuo/my_socket/test/httpserver.cpp:299
+20260327 13:21:53.405897  13436 ERROR   MySQL login verify failed, user=xkx, error=Can't connect to MySQL server on '127.0.0.1:3306' (111)-/home/dachuo/my_socket/test/httpserver.cpp:309
+20260327 13:21:53.417349  13437 INFO    /, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260327 13:21:53.590293  13437 INFO    /favicon.ico, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260327 13:22:51.472857  13433 INFO    HttpServer::OnNewConnection : Add connection [ fd#34 ] from 127.0.0.1:49371-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260327 13:22:51.473115  13438 INFO    /query.php, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260327 13:40:50.357002  13433 INFO    HttpServer::OnNewConnection : Add connection [ fd#34 ] from 10.21.51.35:50604-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260327 13:40:50.357180  13433 INFO    HttpServer::OnNewConnection : Add connection [ fd#35 ] from 10.21.51.35:50605-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260327 13:40:50.358324  13439 INFO    /login, request successfully. Method:POST-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260327 13:40:50.358485  13439 INFO    New login request user=xkx-/home/dachuo/my_socket/test/httpserver.cpp:299
+20260327 13:40:50.400871  13439 INFO    xkx login success!-/home/dachuo/my_socket/test/httpserver.cpp:302
+20260327 13:40:50.730592  13439 INFO    /favicon.ico, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260327 13:42:55.691386  13433 INFO    HttpServer::OnNewConnection : Add connection [ fd#34 ] from 127.0.0.1:50830-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260327 13:42:55.691622  13441 INFO    /query.php, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260327 14:02:59.891824  13433 INFO    HttpServer::OnNewConnection : Add connection [ fd#34 ] from 127.0.0.1:52111-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260327 14:02:59.907195  13442 INFO    /query.php, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260327 14:23:04.150060  13433 INFO    HttpServer::OnNewConnection : Add connection [ fd#34 ] from 127.0.0.1:52473-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260327 14:23:04.150422  13444 INFO    /query.php, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260327 14:43:08.352150  13433 INFO    HttpServer::OnNewConnection : Add connection [ fd#34 ] from 127.0.0.1:52955-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260327 14:43:08.352488  13436 INFO    /query.php, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260327 15:03:12.719855  13433 INFO    HttpServer::OnNewConnection : Add connection [ fd#34 ] from 127.0.0.1:53328-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260327 15:03:12.734727  13437 INFO    /query.php, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260327 15:23:16.958499  13433 INFO    HttpServer::OnNewConnection : Add connection [ fd#34 ] from 127.0.0.1:53626-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260327 15:23:16.974292  13438 INFO    /query.php, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
+20260327 15:43:22.725191  13433 INFO    HttpServer::OnNewConnection : Add connection [ fd#34 ] from 127.0.0.1:54043-/home/dachuo/my_socket/src/HttpServer.cpp:426
+20260327 15:43:22.725379  13439 INFO    /query.php, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451

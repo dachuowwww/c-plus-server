@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>铨欣铨意云盘</title>
+    <title>QXQY云盘</title>
     <style>
         * {
             box-sizing: border-box;
@@ -68,6 +68,13 @@
         }
 
         .upload-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .toolbar-main {
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
@@ -177,6 +184,12 @@
             color: #dc2626;
         }
 
+        .btn-logout {
+            background: #111827;
+            color: #ffffff;
+            font-weight: 600;
+        }
+
         .btn:hover {
             opacity: 0.9;
             transform: translateY(-1px);
@@ -215,17 +228,22 @@
     <div class="container">
         <div class="panel">
             <div class="header">
-                <h1>铨欣铨意云盘</h1>
+                <h1>QXQY云盘</h1>
                 <p>安全、简洁、易用的文件管理空间</p>
             </div>
 
             <div class="content">
                 <div class="toolbar">
-                    <form class="upload-form" action="/upload" method="post" enctype="multipart/form-data">
-                        <input type="file" name="file" id="fileInput" accept=".txt,.pdf,.doc,.docx,.jpg,.png,.html">
-                        <button type="submit">上传文件</button>
+                    <div class="toolbar-main">
+                        <form class="upload-form" action="/upload" method="post" enctype="multipart/form-data">
+                            <input type="file" name="file" id="fileInput" accept=".txt,.pdf,.doc,.docx,.jpg,.png,.html">
+                            <button type="submit">上传文件</button>
+                        </form>
+                        <div class="hint">支持 txt / pdf / doc / docx / jpg / png / html</div>
+                    </div>
+                    <form class="logout-form" action="/logout" method="post">
+                        <button type="submit" class="btn-logout">退出登录</button>
                     </form>
-                    <div class="hint">支持 txt / pdf / doc / docx / jpg / png / html，建议使用英文文件名</div>
                 </div>
 
                 <div class="table-wrap">

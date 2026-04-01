@@ -256,7 +256,7 @@ PINE_CLANG_SEARCH_PATH:PATH=/usr/bin
 PINE_INCLUDE_DIR:PATH=/home/dachuo/my_socket/src/include
 
 //Dependencies for the target
-PINE_SHARED_LIB_DEPENDS:STATIC=general;/usr/lib/x86_64-linux-gnu/libprotobuf.so;general;-lpthread;general;mysql::concpp;general;hiredis::hiredis;
+PINE_SHARED_LIB_DEPENDS:STATIC=general;/usr/lib/x86_64-linux-gnu/libprotobuf.so;general;-lpthread;general;mysql::concpp;general;hiredis::hiredis;general;yaml-cpp;
 
 //Value Computed by CMake
 PINE_SOURCE_DIR:STATIC=/home/dachuo/my_socket
@@ -287,6 +287,9 @@ Protobuf_PROTOC_LIBRARY_RELEASE:FILEPATH=Protobuf_PROTOC_LIBRARY_RELEASE-NOTFOUN
 
 //The directory containing a CMake configuration file for mysql-concpp.
 mysql-concpp_DIR:PATH=mysql-concpp_DIR-NOTFOUND
+
+//The directory containing a CMake configuration file for yaml-cpp.
+yaml-cpp_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/yaml-cpp
 
 
 ########################

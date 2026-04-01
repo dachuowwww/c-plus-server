@@ -1,6 +1,6 @@
 find_package(Protobuf REQUIRED)
 find_package(mysql-concpp QUIET)
-
+find_package(yaml-cpp REQUIRED)
 if(NOT TARGET mysql::concpp)
     find_path(MYSQLCPPCONN_INCLUDE_DIR
         NAMES mysql_driver.h
@@ -63,4 +63,5 @@ ${Protobuf_LIBRARIES}
 PRIVATE
 mysql::concpp
 hiredis::hiredis
+yaml-cpp
 )

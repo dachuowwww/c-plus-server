@@ -19,7 +19,7 @@ const double AUTOCLOSETIMEOUT = 60.0;
 
 class HttpServer {
  public:
-  HttpServer(const char *ip, uint16_t port);
+  HttpServer(const char *ip, uint16_t port, const std::string &instance_name = "default");
   ~HttpServer();
   void SetMessageCallBack(std::function<void(const std::shared_ptr<Connection> &conn)> &&cb);
   void SetHttpResponseCallBack(std::function<void(const HttpRequest &request, HttpResponse *response)> &&cb);
@@ -29,8 +29,10 @@ class HttpServer {
   void OnTimerEvery(double interval, std::function<void()> &&cb);
   void EnableRpcFlowPool(unsigned int size = std::thread::hardware_concurrency());
   void DisableRpcFlowPool();
+  void SetRpcTimeoutMs(int timeout_ms);
   void Start();
   void OverTime(const std::weak_ptr<Connection> &conn);
+  void SetInstanceName(const std::string &name);
 
   static void FileUpload(const HttpRequest *request);
 
@@ -44,11 +46,14 @@ class HttpServer {
   std::atomic<uint64_t> rpc_token_{1};
   std::unordered_set<uint64_t> rpc_pending_;
   std::mutex rpc_pending_mtx_;
+  int rpc_timeout_ms_ = 2000;
   std::unique_ptr<Server> server_;
   std::unique_ptr<EventLoop> loop_;
   std::unique_ptr<ThreadPool> rpc_flow_pool_;
   // std::function<void(const std::shared_ptr<Connection> &conn)> message_call_back_;
   std::function<void(const HttpRequest &request, HttpResponse *response)> http_call_back_;
   void HandleRpcRequestInPool(const std::shared_ptr<Connection> &conn, const HttpRequest &request, bool close);
+
+  std::string instance_name_;
   DISALLOW_COPY_AND_ASSIGN(HttpServer);
 };
