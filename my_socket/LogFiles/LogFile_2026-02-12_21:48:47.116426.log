@@ -1,8 +1,0 @@
-20260212 21:48:47.102416  18876 ERROR   socket bind error errno=98 msg=Address already in use-/home/dachuo/my_socket/src/Error.cpp:11
-20260212 21:48:47.110233  18876 INFO    HttpServer Listening on [ 0.0.0.0:80 ]-/home/dachuo/my_socket/src/HttpServer.cpp:203
-20260212 21:48:48.111293  18876 INFO    metrics active=0 accept/s=0 close/s=0 req/s=0 parse_err/s=0 in_kbps=0 out_kbps=0 rd_eagain/s=0 wr_eagain/s=0 rd_err/s=0 wr_err/s=0 sf_kbps=0 sf_eagain/s=0 sf_err/s=0-/home/dachuo/my_socket/src/Metrics.cpp:99
-20260212 21:48:49.111793  18876 INFO    metrics active=0 accept/s=0 close/s=0 req/s=0 parse_err/s=0 in_kbps=0 out_kbps=0 rd_eagain/s=0 wr_eagain/s=0 rd_err/s=0 wr_err/s=0 sf_kbps=0 sf_eagain/s=0 sf_err/s=0-/home/dachuo/my_socket/src/Metrics.cpp:99
-20260212 21:48:50.112662  18876 INFO    metrics active=0 accept/s=0 close/s=0 req/s=0 parse_err/s=0 in_kbps=0 out_kbps=0 rd_eagain/s=0 wr_eagain/s=0 rd_err/s=0 wr_err/s=0 sf_kbps=0 sf_eagain/s=0 sf_err/s=0-/home/dachuo/my_socket/src/Metrics.cpp:99
-20260212 21:48:51.112937  18876 INFO    metrics active=0 accept/s=0 close/s=0 req/s=0 parse_err/s=0 in_kbps=0 out_kbps=0 rd_eagain/s=0 wr_eagain/s=0 rd_err/s=0 wr_err/s=0 sf_kbps=0 sf_eagain/s=0 sf_err/s=0-/home/dachuo/my_socket/src/Metrics.cpp:99
-20260212 21:48:52.113595  18876 INFO    metrics active=0 accept/s=0 close/s=0 req/s=0 parse_err/s=0 in_kbps=0 out_kbps=0 rd_eagain/s=0 wr_eagain/s=0 rd_err/s=0 wr_err/s=0 sf_kbps=0 sf_eagain/s=0 sf_err/s=0-/home/dachuo/my_socket/src/Metrics.cpp:99
-20260212 21:48:53.114466  18876 INFO    metrics active=0 accept/s=0 close/s=0 req/s=0 parse_err/s=0 in_kbps=0 out_kbps=0 rd_eagain/s=0 wr_eagain/s=0 rd_err/s=0 wr_err/s=0 sf_kbps=0 sf_eagain/s=0 sf_err/s=0-/home/dachuo/my_socket/src/Metrics.cpp:99

@@ -1,5 +1,0 @@
-20260323 21:27:47.883937  24721 INFO    HttpServer Listening on [ 0.0.0.0:80 ]-/home/dachuo/my_socket/src/HttpServer.cpp:413
-20260323 21:27:50.739773  24721 INFO    HttpServer::OnNewConnection : Add connection [ fd#33 ] from 127.0.0.1:58505-/home/dachuo/my_socket/src/HttpServer.cpp:426
-20260323 21:27:50.740646  24721 INFO    HttpServer::OnNewConnection : Add connection [ fd#34 ] from 127.0.0.1:58506-/home/dachuo/my_socket/src/HttpServer.cpp:426
-20260323 21:27:50.741023  24723 INFO    /, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
-20260323 21:27:50.992035  24723 INFO    /favicon.ico, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451

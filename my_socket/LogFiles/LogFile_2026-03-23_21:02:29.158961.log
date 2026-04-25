@@ -1,6 +1,0 @@
-20260323 21:02:29.149506  21744 INFO    HttpServer Listening on [ 0.0.0.0:80 ]-/home/dachuo/my_socket/src/HttpServer.cpp:413
-20260323 21:02:49.073792  21744 INFO    HttpServer::OnNewConnection : Add connection [ fd#33 ] from 127.0.0.1:57259-/home/dachuo/my_socket/src/HttpServer.cpp:426
-20260323 21:02:49.074174  21744 INFO    HttpServer::OnNewConnection : Add connection [ fd#34 ] from 127.0.0.1:57260-/home/dachuo/my_socket/src/HttpServer.cpp:426
-20260323 21:02:49.076048  21746 INFO    /, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
-20260323 21:02:49.078950  21746 ERROR   ReadFile: open file failed! errno=2 msg=No such file or directory-/home/dachuo/my_socket/src/Error.cpp:11
-20260323 21:02:49.371431  21746 INFO    /favicon.ico, request successfully. Method:GET-/home/dachuo/my_socket/src/HttpServer.cpp:451
